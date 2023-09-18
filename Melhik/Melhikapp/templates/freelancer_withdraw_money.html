@@ -1,0 +1,224 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body class="dashboard-page">
+
+    <div class="main-wrapper">
+        {% include 'freelance_header.html' %}
+
+        <div class="bread-crumb-bar">
+            <div class="container">
+                <div class="row align-items-center inner-banner">
+                    <div class="col-md-12 col-12 text-center">
+                        <div class="breadcrumb-list">
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'index' %}"><img
+                                                src="{% static 'assets/img/home-icon.svg' %}" alt="Post Author">
+                                            Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page">Freelancer</li>
+                                    <li class="breadcrumb-item" aria-current="page">Payments</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="content content-page">
+            <div class="container-fluid">
+                <div class="row">
+                    {% include 'dashboard_free_navbar_link.html' %}
+
+                    <div class="settings-menu">
+                        <ul>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_dashboard' %}" class="nav-link">
+                        <i class="material-icons">verified_user</i> Dashboard
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_project_proposals' %}" class="nav-link">
+                        <i class="material-icons">business_center</i> Projects
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_favourites' %}" class="nav-link">
+                        <i class="material-icons">local_play</i> Favourites
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_review' %}" class="nav-link">
+                        <i class="material-icons">record_voice_over</i> Reviews
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_chats' %}" class="nav-link">
+                        <i class="material-icons">chat</i> Messages
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_membership' %}" class="nav-link">
+                        <i class="material-icons">person_add</i> Membership
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_verify_identity' %}" class="nav-link">
+                        <i class="material-icons">person_pin</i> Verify Identity
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_withdraw_money' %}" class="nav-link active">
+                        <i class="material-icons">wifi_tethering</i> Payments
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'freelancer_profile_settings' %}" class="nav-link">
+                        <i class="material-icons">settings</i> Settings
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'index' %}" class="nav-link">
+                        <i class="material-icons">power_settings_new</i> Logout
+                        </a>
+                        </li>
+                        </ul>
+                        </div>
+                        </div>
+                        </div>
+
+                    <div class="col-xl-9 col-md-8">
+                        <nav class="user-tabs mb-4">
+                            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'freelancer_withdraw_money' %}">Withdraw
+                                        Funds</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'freelancer_invoices' %}"> Invoices</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'freelancer_transaction_history' %}"> Transaction
+                                        History</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="payment-list wallet card-body">
+                                        <h3>Add Wallet</h3>
+                                        <form method="POST" action="https://api.chapa.co/v1/hosted/pay">
+                                            <input type="hidden" name="public_key"
+                                                value="CHAPUBK_TEST-HJ7z9xGJpf4MFH6PjfpI7G45BFLCFrxf" />
+                                            <input type="hidden" name="tx_ref" value="negade-tx-12345678sss9" />
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="amount">Amount:</label>
+                                                    <input class="form-control" input type="number" name="amount"
+                                                        id="amount" required />
+                                                </div>
+                                            </div>
+                                            <label class="custom_radio me-4">
+                                                <input type="radio" name="budget" value="Yes" checked>
+                                                <span class="checkmark"></span> Chapa
+                                            </label>
+                                            <label class="custom_radio">
+                                                <input type="radio" name="budget" value="Yes">
+                                                <span class="checkmark"></span> Yene Pay
+                                            </label>
+                                            <div class="bootstrap-tags text-start ps-0">
+                                                <span class="badge badge-pill badge-skills">$50</span>
+                                                <span class="badge badge-pill badge-skills">$100</span>
+                                                <span class="badge badge-pill badge-skills">$150</span>
+                                            </div>
+                                            <div class="col-md-8 btn-pad">
+                                                <input type="hidden" name="currency" value="ETB" />
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="email">Email:</label>
+                                                        <input class="form-control" input type="email" name="email"
+                                                            id="email" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="first_name">First Name</label>
+                                                        <input class="form-control" id="first_name" type="text">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="last_name">Last Name:</label>
+                                                        <input class="form-control" input type="text" name="last_name"
+                                                            id="last_name" required /><br>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" name="title" value="Let us do this" />
+                                                <input type="hidden" name="description"
+                                                    value="Paying with Confidence with cha" />
+                                                <input type="hidden" name="logo"
+                                                    value="https://chapa.link/asset/images/chapa_swirl.svg" />
+                                                <input type="hidden" name="callback_url"
+                                                    value="https://example.com/callbackurl" />
+                                                <input type="hidden" name="return_url"
+                                                    value="https://example.com/returnurl" />
+                                                <input type="hidden" name="meta[title]" value="test" />
+
+                                                <button type="submit" class="btn-primary click-btn">Continue</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card">
+                                <div class="wallet-detail card-body">
+                                    <div class="wallet-title pt-0 ps-0">
+                                        <h3 class="mb-0">Wallet</h3>
+                                    </div>
+                                    <div class="wallet-bal">
+                                        <span class="dol-circle"><i class="fa fa-dollar-sign"
+                                                aria-hidden="true"></i></span>
+                                        <div class="wallet-amt">
+                                            <p>Available Balance</p>
+                                            <h3 class="mb-0">$250.60 </h3>
+                                        </div>
+                                    </div>
+                                    <div class="wallet-content">
+                                        <div class="wallet-pay">
+                                            <p>Total Credit</p>
+                                            <h3 class="mb-0">$500.00</h3>
+                                        </div>
+                                        <div class="wallet-pay">
+                                            <p>Total Credit</p>
+                                            <h3 class="mb-0">$500.00</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>
+
+{% include 'scripts.html' %}
+
+</html>

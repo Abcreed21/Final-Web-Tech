@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body class="dashboard-page">
+
+    <div class="main-wrapper">
+      {% include 'employer_header.html' %}
+
+<div class="bread-crumb-bar">
+<div class="container">
+<div class="row align-items-center inner-banner">
+<div class="col-md-12 col-12 text-center">
+<div class="breadcrumb-list">
+<nav aria-label="breadcrumb" class="page-breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="{% url 'index' %}"><img src="{% static 'assets/img/home-icon.svg' %}" alt> Home</a></li>
+<li class="breadcrumb-item" aria-current="page">Post a Project</li>
+</ol>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="content">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div class="select-project mb-4">
+    <form action="{% url 'project' %}" method="POST">
+        {% csrf_token %}
+        <div class="title-box widget-box">
+          <div class="title-content">
+            <div class="title-detail">
+              <h3>Project Name</h3>
+              <div class="form-group mb-0">
+                <input type="text" class="form-control" name="project_title" placeholder="Enter Project title">
+                {{ job.title }}
+              </div>
+            </div>
+          </div>
+      
+          <div class="title-content">
+            <div class="title-detail">
+                <h3>Category Type</h3>
+                <div class="form-group mb-0">
+                  <select class="form-control" name="category_type">
+                    <option value="0">Choose Category Type</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                  </div>
+              </div>
+           </div>
+           <div class="title-content">
+            <div class="title-detail">
+                <h3>Pricing Type</h3>
+                <div class="form-group price-cont mb-0" id="price_type">
+                    <select name="price" class="form-control">
+                        <option value="0">Choose Pricing Type</option>
+                        <option value="1" {% if price == '1' %}selected{% endif %}>Fixed Budget Price</option>
+                        <option value="2" {% if price == '2' %}selected{% endif %}>Hourly Pricing</option>
+                        <option value="3" {% if price == '3' %}selected{% endif %}>Biding Price</option>
+                    </select>
+                </div>
+              
+                <div class="form-group mt-3" id="hour_id" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="input-group form-inline">
+                                <input type="text" class="form-control mr-2" placeholder="20.00" value="{{ job.hourly_rate }}"> 
+                                <label> / hr</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group form-inline">
+                                <label>For </label> 
+                                <input type="text" class="form-control ml-2" placeholder="(eg: 2 Weeks)" value="{{ job.duration }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <div class="title-content">
+          <div class="title-content">
+            <div class="title-detail">
+              <h3>Desired areas of expertise</h3>
+              <div class="form-group mb-0">
+                <input type="text" data-role="tagsinput" class="input-tags form-control" name="services" id="services" placeholder="UX, UI, App Design, Wireframing, Branding" value="{{ job.tags }}">
+              </div>
+            </div>
+          </div>
+       
+      
+          <div class="title-content">
+            <div class="title-detail">
+                <h3>Period of Project</h3>
+                <div class="form-group mb-0" id="pro_period">
+                    <div class="radio">
+                        <label class="custom_radio">
+                            <input type="radio" value="period" name="period" {% if period == 'period' %}checked{% endif %}>
+                            <span class="checkmark"></span> Start immediately after the candidate is selected
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="custom_radio">
+                            <input type="radio" value="job" name="period" {% if period == 'job' %}checked{% endif %}>
+                            <span class="checkmark"></span> Job will Start On
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="filter-widget mb-0" id="period_date">
+                            <div class="cal">
+                                <input type="date" class="form-control datetimepicker" placeholder="Select Date" value="{{ job.start_date }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+          <div class="title-content">
+            <div class="title-detail">
+                <h3>Add Documents</h3>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="documents" id="documents-input" value="{{ job.documents }}">
+                    <label class="custom-file-label" for="documents-input"></label>
+                </div>
+                <p class="mb-0">Size of the Document should be Below 2MB</p>
+            </div>
+        </div>
+      
+          <div class="title-content">
+            <div class="title-detail">
+              <h3>Add Links</h3>
+              <div class="links-info">
+                <div class="row form-row links-cont">
+                  <div class="col-12 col-md-11">
+                    <div class="form-group mb-0">
+                      <input type="text" class="form-control" name="reference_links" value="{{ job.reference_links }}">
+                      <p class="mb-0">Add Reference links if any</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-1">
+                    <a href="javascript:void(0);" class="btn add-links"><i class="fas fa-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div class="title-content pb-0">
+            <div class="title-detail">
+              <h3>Write Description of Projects</h3>
+              <div class="form-group mb-0">
+                <textarea class="form-control summernote" rows="5" name="project_description">{{ job.description }}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-end">
+              <div class="btn-item">
+                <button type="submit" class="btn next-btn">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+   </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% include 'footer.html' %}
+
+</div>
+
+{% include 'scripts.html' %}
+</body>
+<script>
+  document.getElementById('documents-input').addEventListener('change', function() {
+      var fileName = this.value.split("\\").pop();
+      this.nextElementSibling.innerText = fileName;
+  });
+</script>
+<!-- Mirrored from kofejob.dreamguystech.com/template/post-project.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 23 Aug 2023 20:30:34 GMT -->
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body class="dashboard-page">
+
+    <div class="main-wrapper">
+        {% include 'employer_header.html' %}
+
+<div class="bread-crumb-bar">
+<div class="container">
+<div class="row align-items-center inner-banner">
+<div class="col-md-12 col-12 text-center">
+<div class="breadcrumb-list">
+<nav aria-label="breadcrumb" class="page-breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><img src="assets/img/home-icon.svg" alt="Post Author"> Home</a></li>
+<li class="breadcrumb-item" aria-current="page">Employee</li>
+</ol>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="content content-page">
+<div class="container-fluid">
+<div class="row">
+
+{% include 'dashboard_navbar_link.html' %}
+
+<div class="settings-menu">
+    <ul>
+    <li class="nav-item">
+    <a href="{% url 'dashboard' %}" class="nav-link">
+    <i class="material-icons">verified_user</i> Dashboard
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'manage_projects' %}" class="nav-link active">
+    <i class="material-icons">business_center</i> Projects
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'favourites_list' %}" class="nav-link">
+    <i class="material-icons">local_play</i> Favourites
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'review' %}" class="nav-link">
+    <i class="material-icons">record_voice_over</i> Reviews
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'chats' %}" class="nav-link">
+    <i class="material-icons">chat</i> Messages
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'membership_plans' %}" class="nav-link">
+    <i class="material-icons">person_add</i> Membership
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'verify_identity' %}" class="nav-link">
+    <i class="material-icons">person_pin</i> Verify Identity
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'deposit_funds' %}" class="nav-link">
+    <i class="material-icons">wifi_tethering</i> Payments
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'profile_settings' %}" class="nav-link">
+    <i class="material-icons">settings</i> Settings
+    </a>
+    </li>
+    <li class="nav-item">
+    <a href="{% url 'index' %}" class="nav-link">
+    <i class="material-icons">power_settings_new</i> Logout
+    </a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+
+<div class="col-xl-9 col-md-8">
+<nav class="user-tabs mb-4">
+<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+<li class="nav-item">
+<a class="nav-link" href="{% url 'view_project_detail' %}">Overview & Discussions</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url 'tasks' %}">Tasks</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="{% url 'files' %}">Files</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url 'project_payment' %}">Payments</a>
+</li>
+</ul>
+</nav>
+
+<div class="my-projects-view">
+<div class="row">
+<div class="col-lg-12">
+<div class>
+<div class="card">
+<div class="card-header">
+<div class="row justify-content-between align-items-center">
+<div class="col">
+<h5 class="card-title">Files</h5>
+</div>
+<div class="col-auto">
+<a data-bs-toggle="modal" href="#file" class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i> Add files</a>
+</div>
+</div>
+</div>
+<div class="card-body">
+<div class="table-responsive table-box">
+<table class="table table-center table-hover datatable">
+<thead class="thead-pink">
+<tr>
+<th>File Preview</th>
+<th>Title</th>
+<th>Description</th>
+<th>Type</th>
+<th>Size</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="assets/img/file-logo.png" class="img-fluid" alt="Logo"></td>
+<td> Image for Section background </td>
+<td><p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+<a href="#" class="read-text">Readmore</a>
+</td>
+<td>Png</td>
+<td>20KB</td>
+<td>
+<div class="action">
+<a href="javascript:void(0);" class="file-circle me-2"><i class="fas fa-cloud-download-alt"></i></a>
+<a data-bs-toggle="modal" href="#edit-file" class="file-circle me-2"><i class="fas fa-pen"></i></a>
+<a href="javascript:void(0);" class="file-circle"><i class="fas fa-trash-alt"></i></a>
+</div>
+</td>
+</tr>
+<tr>
+<td><img src="assets/img/file-logo.png" class="img-fluid" alt="Logo"></td>
+<td> Image for Footer </td>
+<td><p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+<a href="#" class="read-text">Readmore</a>
+</td>
+<td>Png</td>
+<td>22KB</td>
+<td>
+<div class="action">
+<a href="javascript:void(0);" class="file-circle me-2"><i class="fas fa-cloud-download-alt"></i></a>
+<a data-bs-toggle="modal" href="#edit-file" class="file-circle me-2"><i class="fas fa-pen"></i></a>
+<a href="javascript:void(0);" class="file-circle"><i class="fas fa-trash-alt"></i></a>
+</div>
+</td>
+</tr>
+<tr>
+<td><img src="assets/img/file-logo.png" class="img-fluid" alt="Logo"></td>
+<td> Image for Login</td>
+<td><p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+<a href="#" class="read-text">Readmore</a>
+</td>
+<td>Png</td>
+<td>12KB</td>
+<td>
+<div class="action">
+<a href="javascript:void(0);" class="file-circle me-2"><i class="fas fa-cloud-download-alt"></i></a>
+<a data-bs-toggle="modal" href="#edit-file" class="file-circle me-2"><i class="fas fa-pen"></i></a>
+<a href="javascript:void(0);" class="file-circle"><i class="fas fa-trash-alt"></i></a>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<footer class="footer">
+<div class="footer-top">
+<div class="container">
+<div class="row">
+<div class="col-xl-3 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Useful Links</h2>
+<ul>
+<li><a href="about.html"><i class="fas fa-angle-right me-1"></i>About Us</a></li>
+<li><a href="blog-list.html"><i class="fas fa-angle-right me-1"></i>Blog</a></li>
+<li><a href="login.html"><i class="fas fa-angle-right me-1"></i>Login</a></li>
+<li><a href="register.html"><i class="fas fa-angle-right me-1"></i>Register</a></li>
+<li><a href="forgot-password.html"><i class="fas fa-angle-right me-1"></i>Forgot Password</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Help & Support</h2>
+<ul>
+<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Browse Candidates</a></li>
+<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Employers Dashboard</a></li>
+<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Job Packages</a></li>
+<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Jobs Featured</a></li>
+<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Post A Job</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-2 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Other Links</h2>
+<ul>
+<li><a href="freelancer-dashboard.html"><i class="fas fa-angle-right me-1"></i>Freelancers</a></li>
+<li><a href="freelancer-portfolio.html"><i class="fas fa-angle-right me-1"></i>Freelancer Details</a></li>
+<li><a href="project.html"><i class="fas fa-angle-right me-1"></i>Project</a></li>
+<li><a href="project-details.html"><i class="fas fa-angle-right me-1"></i>Project Details</a></li>
+<li><a href="post-project.html"><i class="fas fa-angle-right me-1"></i>Post Project</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-4 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Join our Newsletter</h2>
+<p>We help our customers harness the power of AI to make smarter decisions</p>
+<div class="banner-content">
+<form class="form" name="store" method="post" action="https://kofejob.dreamguystech.com/template/project.html">
+<div class="form-inner">
+<div class="input-group">
+<input type="email" class="form-control" placeholder="Your Email address.....">
+<button class="btn btn-primary sub-btn" type="submit"><i class="fas fa-long-arrow-alt-right long-arrow"></i></button>
+</div>
+</div>
+</form>
+</div>
+<div class="social-icon d-flex">
+<span>Follow us on : </span>
+<ul>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-facebook-f"></i> </a></li>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-instagram"></i> </a></li>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-twitter"></i> </a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="footer-bottom">
+<div class="container">
+
+<div class="copyright">
+<div class="row">
+<div class="col-md-6 col-lg-6 ">
+<div class="footer-bottom-logo">
+<a href="{% url 'dashboard' %}" class="menu-logo">
+<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
+</a>
+</div>
+</div>
+<div class="col-md-6 col-lg-6 right-text">
+<ul class="nav footer-bottom-nav">
+<li><a href="chats.html">Chat</a></li>
+<li><a href="faq.html">Faq</a></li>
+<li><a href="review.html">Reviews</a></li>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="term-condition.html">Terms of use</a></li>
+</ul>
+<div class="copyright-text">
+<p class="mb-0">Copyright 2023 © KofeJob. All right reserved. Powered by Dreamguys Technologies</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</footer>
+
+</div>
+
+
+<div class="modal fade" id="file">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="mb-0">Add Files</h4>
+<span class="modal-close"><a href="#" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle orange-text"></i></a></span>
+</div>
+<div class="modal-body">
+<form action="https://kofejob.dreamguystech.com/template/files.html">
+<div class="modal-info">
+<div class="row">
+<div class="col-md-12">
+<div class="form-group">
+<label>Title</label>
+<input type="text" class="form-control">
+</div>
+<div class="form-group">
+<label>Link</label>
+<input type="text" class="form-control">
+</div>
+<label class="br-0 file-upload image-upbtn">
+upload Files <input type="file">
+</label>
+</div>
+</div>
+</div>
+<div class="submit-section text-end">
+<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="edit-file">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="mb-0">Edit Files</h4>
+<span class="modal-close"><a href="#" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle orange-text"></i></a></span>
+</div>
+<div class="modal-body">
+<form action="https://kofejob.dreamguystech.com/template/files.html">
+<div class="modal-info">
+<div class="row">
+<div class="col-md-12">
+<div class="form-group">
+<label>Title</label>
+<input type="text" class="form-control" value="Image for Section background">
+</div>
+<div class="form-group">
+<label>Link</label>
+<input type="text" class="form-control" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+</div>
+<div class="d-flex align-items-center">
+<img src="assets/img/file-logo.png" class="img-fluid me-2" alt="Logo">
+<label class="br-0 file-upload image-upbtn">
+upload Files <input type="file">
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="submit-section text-end">
+<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+{% include 'scripts.html' %}
+</body>
+
+<!-- Mirrored from kofejob.dreamguystech.com/template/files.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 23 Aug 2023 20:31:07 GMT -->
+</html>

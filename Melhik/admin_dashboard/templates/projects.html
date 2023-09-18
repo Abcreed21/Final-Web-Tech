@@ -1,0 +1,261 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'admin_head.html' %}
+<body>
+    {% include 'admin_header.html' %}
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+        <ul>
+        <li class="menu-title"><span>Main</span></li>
+        <li>
+        <a href="{% url 'admin_dashboard' %}"><i data-feather="home"></i> <span>Dashboard</span></a>
+        </li>
+        <li>
+        <a href="{% url 'categories' %}"><i data-feather="copy"></i> <span>Categories</span></a>
+        </li>
+        <li class="active">
+        <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Projects</span></a>
+        </li>
+        <li>
+        <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
+        </li>
+        <li>
+        <a href="{% url 'deposit' %}"><i data-feather="user-check"></i> <span>Deposit</span></a>
+        </li>
+        <li>
+        <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
+        </li>
+        <li>
+        <a href="{% url 'transaction' %}"><i data-feather="clipboard"></i> <span>Transaction</span></a>
+        </li>
+        <li>
+        <a href="{% url 'providers' %}"><i data-feather="user-check"></i> <span>Providers</span></a>
+        </li>
+        <li>
+        <a href="{% url 'subscription' %}"><i data-feather="user-check"></i> <span>Subscription</span></a>
+        </li>
+        <li>
+        <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
+        </li>
+        <li>
+        <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+        </li>
+        </div>
+        </div>
+        </div>
+
+
+<div class="page-wrapper">
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">Projects</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+<li class="breadcrumb-item active">Projects</li>
+</ul>
+</div>
+<div class="col-auto">
+<a class="btn filter-btn" href="javascript:void(0);" id="filter_search">
+<i class="fas fa-filter"></i>
+</a>
+</div>
+</div>
+</div>
+
+
+<div class="card filter-card" id="filter_inputs">
+<div class="card-body pb-0">
+<form action="#" method="post">
+<div class="row filter-row">
+<div class="col-sm-6 col-md-3">
+<div class="form-group">
+<label>Company Name</label>
+<input class="form-control" type="text">
+</div>
+</div>
+<div class="col-sm-6 col-md-3">
+<div class="form-group">
+<label>From Date</label>
+<div class="cal-icon">
+<input class="form-control datetimepicker" type="text">
+</div>
+</div>
+</div>
+<div class="col-sm-6 col-md-3">
+<div class="form-group">
+<label>To Date</label>
+<div class="cal-icon">
+<input class="form-control datetimepicker" type="text">
+</div>
+</div>
+</div>
+<div class="col-sm-6 col-md-3">
+<div class="form-group">
+<button class="btn btn-primary btn-block" type="submit">Submit</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+<div class="card bg-white projects-card">
+<div class="card-body pt-0">
+<div class="card-header">
+<h5 class="card-title">Projects views</h5>
+</div>
+<div class="reviews-menu-links">
+<ul role="tablist" class="nav nav-pills card-header-pills nav-justified">
+<li class="nav-item">
+<a href="#tab-4" data-bs-toggle="tab" class="nav-link active">All (1)</a>
+</li>
+<li class="nav-item">
+<a href="#tab-5" data-bs-toggle="tab" class="nav-link">Active (1)</a>
+</li>
+<li class="nav-item">
+<a href="#tab-7" data-bs-toggle="tab" class="nav-link">Trash (0)</a>
+</li>
+</ul>
+</div>
+<div class="tab-content pt-0">
+<div role="tabpanel" id="tab-4" class="tab-pane fade active show">
+<div class="table-responsive">
+<table class="table table-center table-hover mb-0 datatable">
+<thead>
+<tr>
+<th></th>
+<th>Logo</th>
+<th>Title</th>
+<th>Budget</th>
+<th>Categories</th>
+<th>Company</th>
+<th>Start date</th>
+<th>Due date</th>
+<th class="text-end">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<div class="form-check form-checkbox">
+<input type="checkbox" class="form-check-input" id="customCheck1">
+<label class="form-check-label" for="customCheck1"></label>
+</div>
+</td>
+<td>
+<h2 class="table-avatar">
+<a href="{% url 'profile' %}"><img class="me-2" src="{% static 'asset/img/company/img-1.png' %}" alt="User Image"></a>
+</h2>
+</td>
+<td>{{ job.title }}Website Designer Required For Directory Theme</td>
+<td>
+2222{{ job.hourly_rate }}
+</td>
+<td>
+Angular{{ category.name }}
+</td>
+<td>{{ job.company_title }}AMAZE TECH</td>
+<td>22-05-2022</td>
+<td>22-05-2022</td>
+<td class="text-end">
+<a href="javascript:void(0);" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#add-category"><i class="far fa-edit"></i></a>
+<a href="javascript:void(0);" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_category"><i class="far fa-trash-alt"></i></a>
+</td>
+</tr>
+<tr>
+<td>
+</thead>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="modal fade custom-modal" id="add-category">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Projects</h4>
+<button type="button" class="close" data-bs-dismiss="modal"><span>&times;</span></button>
+</div>
+<div class="modal-body">
+<form>
+<div class="form-group">
+<label>Title</label>
+<input type="text" class="form-control" value="{{ job.title }} Website Designer Required For Directory Theme">
+</div>
+<div class="form-group">
+<label>Budget</label>
+<input type="text" class="form-control" value="$2222 {{ job.price }}">
+</div>
+<div class="form-group">
+<label>Technology</label>
+<input type="text" class="form-control" value="Angler {{ job.category }}">
+</div>
+<div class="form-group">
+<label>Technology</label>
+<input type="text" class="form-control" value="AMAZE TECH {{ job.price }}">
+</div>
+<div class="form-group">
+<label>From Date</label>
+<div class="cal-icon">
+<input class="form-control datetimepicker" type="text" value=" {{ job.start_date }} 20-01-2022">
+</div>
+</div>
+<div class="form-group">
+<label>To Date</label>
+<div class="cal-icon">
+<input class="form-control datetimepicker" type="text" value=" {{ job.to_date }} 20-02-2022">
+</div>
+</div>
+<div class="mt-4">
+<button type="submit" class="btn btn-primary btn-block">Submit</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal custom-modal fade" id="delete_category" role="dialog">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-body">
+<div class="form-header">
+<h3>Delete</h3>
+<p>Are you sure want to delete?</p>
+</div>
+<div class="modal-btn delete-action">
+<div class="row">
+<div class="col-6">
+<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+</div>
+<div class="col-6">
+<a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% include 'admin_scripts.html' %}
+
+</body>
+
+</html>

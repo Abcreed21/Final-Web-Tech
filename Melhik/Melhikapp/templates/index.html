@@ -1,0 +1,1085 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body class="home-page bg-one">
+
+<div id="global-loader">
+<div class="whirly-loader"> </div>
+<div class="loader-img">
+<img src="{% static 'assets/img/load-icon.svg' %}" class="img-fluid" alt>
+</div>
+</div>
+
+
+<div class="main-wrapper">
+
+
+<header class="header">
+<nav class="navbar navbar-expand-lg header-nav">
+<div class="navbar-header">
+<a id="mobile_btn" href="javascript:void(0);">
+<span class="bar-icon">
+<span></span>
+<span></span>
+<span></span>
+</span>
+</a>
+<a href="{% url 'index' %}" class="navbar-brand logo">
+<img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Logo">
+</a>
+</div>
+<div class="main-menu-wrapper">
+<div class="menu-header">
+<a href="{% url 'index' %}" class="menu-logo">
+<img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Logo">
+</a>
+<a id="menu_close" class="menu-close" href="javascript:void(0);">
+<i class="fas fa-times"></i>
+</a>
+</div>
+<ul class="main-nav">
+<li class="has-submenu">
+<a href="{% url 'login' %}">For Employers</a>
+<li class="active has-submenu">
+<a href="{% url 'login' %}">For Freelancer</a>
+</div>
+<ul class="nav header-navbar-rht reg-head">
+<li><a href="{% url 'onboard_screen' %}" class="reg-btn"><img src="{% static 'assets/img/icon/reg-icon.svg' %}" class="me-1" alt="icon"> Register</a></li>
+<li><a href="{% url 'login' %}" class="log-btn"><img src="{% static 'assets/img/icon/lock-icon.svg' %}" class="me-1" alt="icon"> Login</a></li>
+</ul>
+</nav>
+</header>
+
+
+<section class="section home-banner row-middle">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-8 col-lg-7">
+<div class="banner-content aos" data-aos="fade-up">
+<div class="rating d-flex">
+<i class="fas fa-star checked"></i>
+<i class="fas fa-star checked"></i>
+<i class="fas fa-star checked"></i>
+<i class="fas fa-star checked"></i>
+<i class="fas fa-star checked"></i>
+<h5>Trused by over 2M+ users</h5>
+</div>
+<h1>Get the perfect <span class="orange-text"><br>Developers & Projects</span></h1>
+<p>With the world's #1 Developers marketplace</p>
+</div>
+</div>
+<div class="col-md-4 col-lg-5">
+<div class="banner-img aos" data-aos="fade-up">
+<img src="{% static 'assets/img/banner-img.svg' %}" class="img-fluid" alt="banner">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="section feature">
+<div class="container">
+<div class="row">
+
+<div class="col-xl-3 col-md-6">
+<div class="feature-item freelance-count aos" data-aos="fade-up">
+<div class="feature-icon">
+<img src="{% static 'assets/img/icon/icon-01.png' %}" class="img-fluid" alt>
+</div>
+<div class="feature-content course-count">
+<h3 class="counter-up">9,207</h3>
+<p>Freelance developers</p>
+</div>
+</div>
+</div>
+
+
+<div class="col-xl-3 col-md-6">
+<div class="feature-item aos" data-aos="fade-up">
+<div class="feature-icon">
+<img src="{% static 'assets/img/icon/icon-02.png' %}" class="img-fluid" alt>
+</div>
+<div class="feature-content course-count">
+<h3><span class="counter-up">6000 </span><span>+</span></h3>
+<p>Projects Added</p>
+</div>
+</div>
+</div>
+
+
+<div class="col-xl-3 col-md-6">
+<div class="feature-item comp-project aos" data-aos="fade-up">
+<div class="feature-icon">
+<img src="{% static 'assets/img/icon/icon-03.png' %}" class="img-fluid" alt>
+</div>
+<div class="feature-content course-count">
+<h3 class="counter-up">919,207</h3>
+<p>Completed projects</p>
+</div>
+</div>
+</div>
+
+
+<div class="col-xl-3 col-md-6">
+<div class="feature-item comp-project aos" data-aos="fade-up">
+<div class="feature-icon">
+<img src="{% static 'assets/img/icon/icon-03.png' %}" class="img-fluid" alt>
+</div>
+<div class="feature-content course-count">
+<h3 class="counter-up">998</h3>
+<p>Companies Registered</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="section work">
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-md-6 work-box bg1">
+<div class="work-content aos" data-aos="fade-up">
+<h2>I need a Skilled <span>Freelancer</span></h2>
+<p>Get the perfect Developer for with budget from our community.</p>
+<a href="{% url 'developer_list' %}"><i class="fas fa-long-arrow-alt-right long-arrow"></i></a>
+</div>
+</div>
+
+<div class="col-md-6 work-box want-works bg2">
+<div class="work-content aos" data-aos="fade-up">
+<h2>Find Your Next Great <span>Job Opportunity!</span></h2>
+<p>Do you want to earn money, find unlimited clients and build your freelance career?</p>
+<a href="{% url 'project' %}"><i class="fas fa-long-arrow-alt-right long-arrow"></i></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="section projects">
+<div class="container">
+<div class="row">
+<div class="col-12 col-md-12 mx-auto">
+<div class="section-header text-center aos" data-aos="fade-up">
+<p>High performing solutions to your requests</p>
+<h2 class="header-title">Get Inspired By Development Projects</h2>
+</div>
+</div>
+</div>
+<div class="row">
+
+<div class="col-lg-3 col-md-6 col-sm-6">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-01.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">Android apps</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-02.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">Laravel Projects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-03.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">React Projects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-04.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">Angular Projects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-05.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">.Net Projects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-06.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">Java Pojects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-07.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">Python Projects</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+<div class="project-item aos" data-aos="fade-up">
+<div class="project-img">
+<a href="{% url 'project' %}"><img src="{% static 'assets/img/project/project-08.jpg' %}" alt class="img-fluid"></a>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<div class="project-content">
+<h4>45</h4>
+<h5><a href="{% url 'project' %}">PHP Development</a></h5>
+</div>
+<div class="pro-icon">
+<div class="project-icon"></div>
+</div>
+<div class="project-content">
+<h4>20</h4>
+<h5><a href="{% url 'project' %}">Developers</a></h5>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="row">
+<div class="col-md-12 text-center">
+<div class="see-all aos" data-aos="fade-up">
+<a href="{% url 'project' %}" class="btn all-btn">View More Projects</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="section developer">
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-sm-12 col-12 mx-auto">
+<div class="section-header aos" data-aos="fade-up">
+<p>Work with talented people at the most affordable price</p>
+<h2 class="header-title">Most Hired Developers</h2>
+</div>
+</div>
+</div>
+<div id="developers-slider" class="owl-carousel owl-theme developers-slider aos" data-aos="fade-up">
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-1.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Dran Gonzalez</a></h3>
+<div class="freelance-specific">React Developer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">5.0 (30)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Illinois, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-2.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Timothy Smith</a></h3>
+<div class="freelance-specific">PHP Developer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">3.5 (25)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Illinois, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-3.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Janet Paden</a></h3>
+<div class="freelance-specific">Graphic Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.1 (30)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Illinois, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-4.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">James Douglas</a></h3>
+<div class="freelance-specific">iOS Developer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.3 (31)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Florida, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-2.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.7 (32)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Illinois, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-3.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.7 (32)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-4.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.7 (32)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Illinois, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-5.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.7 (32)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite favourited"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-3.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.8 (55)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+<div class="freelance-widget">
+<div class="freelance-content">
+<a data-toggle="modal" href="#rating" class="favourite"><i class="fas fa-star"></i></a>
+<div class="freelance-img">
+<a href="{% url 'developer_details' %}">
+<img src="{% static 'assets/img/user/avatar-5.jpg' %}" alt="User Image">
+<span class="verified"><i class="fas fa-check-circle"></i></span>
+</a>
+</div>
+<div class="freelance-info">
+<h3><a href="{% url 'developer_details' %}">Richard Wilson</a></h3>
+<div class="freelance-specific">UI/UX Designer</div>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">5.0 (4)</span>
+</div>
+<div class="freelance-tags">
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Web Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">UI Design</span></a>
+<a href="javascript:void(0);"><span class="badge badge-pill badge-design">Node Js</span></a>
+</div>
+<div class="freelance-blk-location">
+<div class="freelancers-price">$25 Hourly</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
+</div>
+</div>
+</div>
+<div class="cart-hover">
+<a href="{% url 'developer_details' %}" class="btn-cart" tabindex="-1">View Profile</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="section testimonial-section review">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="section-header aos" data-aos="fade-up">
+<p>High Performing Developers To Your</p>
+<h2 class="header-title">Review of the Users</h2>
+</div>
+</div>
+</div>
+<div id="testimonial-slider" class="owl-carousel owl-theme testimonial-slider aos" data-aos="fade-up">
+
+<div class="review-blog">
+<div class="review-top d-flex align-items-center">
+<div class="review-img">
+<a href="{% url 'review' %}"><img class="img-fluid" src="{% static 'assets/img/review/review-01.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="review-info">
+<h3><a href="{% url 'review' %}">Durso Raeen</a></h3>
+<h5>Project Lead</h5>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.7</span>
+</div>
+</div>
+<div class="test-quote-img">
+<img class="img-fluid" src="{% static 'assets/img/test-quote.svg' %}" alt="quote">
+</div>
+</div>
+<div class="review-content">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat orci enim, mattis nibh aliquam dui, nibh faucibus aenean.</p>
+</div>
+</div>
+
+
+<div class="review-blog">
+<div class="review-top d-flex align-items-center">
+<div class="review-img">
+<a href="{% url 'review' %}"><img class="img-fluid" src="{% static 'assets/img/review/review-02.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="review-info">
+<h3><a href="{% url 'review' %}">Camelia Rennesa</a></h3>
+<h5>Project Lead</h5>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">4.8</span>
+</div>
+</div>
+<div class="test-quote-img">
+<img class="img-fluid" src="{% static 'assets/img/test-quote.svg' %}" alt="quote">
+</div>
+</div>
+<div class="review-content">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat orci enim, mattis nibh aliquam dui, nibh faucibus aenean.</p>
+</div>
+</div>
+
+
+<div class="review-blog">
+<div class="review-top d-flex align-items-center">
+<div class="review-img">
+<a href="{% url 'review' %}"><img class="img-fluid" src="{% static 'assets/img/review/review-03.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="review-info">
+<h3><a href="{% url 'review' %}">Brayan</a></h3>
+<h5>Team Lead</h5>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">5.0</span>
+</div>
+</div>
+<div class="test-quote-img">
+<img class="img-fluid" src="{% static 'assets/img/test-quote.svg' %}" alt="quote">
+</div>
+</div>
+<div class="review-content">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat orci enim, mattis nibh aliquam dui, nibh faucibus aenean.</p>
+</div>
+</div>
+
+
+<div class="review-blog">
+<div class="review-top d-flex align-items-center">
+<div class="review-img">
+<a href="{% url 'review' %}"><img class="img-fluid" src="{% static 'assets/img/review/review-02.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="review-info">
+<h3><a href="{% url 'review' %}">Davis Payerf</a></h3>
+<h5>Project Lead</h5>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="average-rating">3.2</span>
+</div>
+</div>
+<div class="test-quote-img">
+<img class="img-fluid" src="{% static 'assets/img/test-quote.svg' %}" alt="quote">
+</div>
+</div>
+<div class="review-content">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat orci enim, mattis nibh aliquam dui, nibh faucibus aenean.</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="section news">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="section-header text-center aos" data-aos="fade-up">
+<p>High Performing Developers To Your</p>
+<h2 class="header-title">Feature Blog</h2>
+</div>
+</div>
+</div>
+<div class="row blog-grid-row">
+<div class="col-xl-4 col-md-6 d-flex">
+
+<div class="blog grid-blog aos" data-aos="fade-up">
+<div class="blog-image">
+<a href="{% url 'blog_grid' %}"><img class="img-fluid" src="{% static 'assets/img/blog/blog-01.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="blog-content">
+<ul class="entry-meta meta-item">
+<li>
+<div class="post-author">
+<a href="{% url 'developer_details' %}"><img src="{% static 'assets/img/img-02.jpg' %}" alt="Post Author"> <span> David Lee</span></a>
+</div>
+</li>
+<li><i class="fas fa-calendar-alt"></i> 4 Oct 2021</li>
+</ul>
+<h3 class="blog-title"><a href="{% url 'blog_grid' %}">Your next job starts right here</a></h3>
+<p class="mb-0">Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer integer at. Nunc nunc eu arcu amet faucibus.</p>
+<div class="blog-read">
+<a href="{% url 'blog_grid' %}">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+<div class="col-xl-4 col-md-6 d-flex">
+
+<div class="blog grid-blog aos" data-aos="fade-up">
+<div class="blog-image">
+<a href="{% url 'blog_grid' %}"><img class="img-fluid" src="{% static 'assets/img/blog/blog-02.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="blog-content">
+<ul class="entry-meta meta-item">
+<li>
+<div class="post-author">
+<a href="{% url 'developer_details' %}"><img src="{% static 'assets/img/img-03.jpg' %}" alt="Post Author"> <span> Deborah Angel</span></a>
+</div>
+</li>
+<li><i class="fas fa-calendar-alt"></i> 10 Oct 2021</li>
+</ul>
+<h3 class="blog-title"><a href="{% url 'blog_grid' %}">People who completed NAND?</a></h3>
+<p class="mb-0">Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer integer at. Nunc nunc eu arcu amet faucibus.</p>
+<div class="blog-read">
+<a href="{% url 'blog_grid' %}">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+<div class="col-xl-4 col-md-6 d-flex">
+
+<div class="blog grid-blog aos" data-aos="fade-up">
+<div class="blog-image">
+<a href="{% url 'blog_grid' %}"><img class="img-fluid" src="{% static 'assets/img/blog/blog-03.jpg' %}" alt="Post Image"></a>
+</div>
+<div class="blog-content">
+<ul class="entry-meta meta-item">
+<li>
+<div class="post-author">
+<a href="{% url 'developer_details' %}"><img src="{% static 'assets/img/img-04.jpg' %}" alt="Post Author"> <span>Darren Elder</span></a>
+</div>
+</li>
+<li><i class="fas fa-calendar-alt"></i> 3 Nov 2021</li>
+</ul>
+<h3 class="blog-title"><a href="{% url 'blog_grid' %}">Kofejob - How to get job through online?</a></h3>
+<p class="mb-0">Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer integer at. Nunc nunc eu arcu amet faucibus.</p>
+<div class="blog-read">
+<a href="{% url 'blog_grid' %}">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-12 text-center">
+<div class="see-all aos" data-aos="fade-up">
+<a href="{% url 'blog_grid' %}" class="btn all-btn">More Articles</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="section job-register">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="register-job-blk">
+<div class="job-content-blk aos" data-aos="fade-up">
+<h1>Find Your Next Great Job Opportunity!</h1>
+<p>Quisque pretium dolor turpis, quis blandit turpis semper ut. Nam malesuada eros nec luctus laoreet.</p>
+</div>
+<div class="see-all mt-0 aos" data-aos="fade-up">
+<a href="{% url 'onboard_screen' %}" class="btn all-btn">Register Now</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="footer-top aos" data-aos="fade-up">
+<div class="container">
+<div class="row">
+<div class="col-xl-3 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Useful Links</h2>
+<ul>
+<li><a href="{% url 'about' %}"><i class="fas fa-angle-right me-1"></i>About Us</a></li>
+<li><a href="{% url 'blog_grid' %}"><i class="fas fa-angle-right me-1"></i>Blog</a></li>
+{% if request.user.is_authenticated %}
+    <li><a href="{% url 'login' %}"><i class="fas fa-angle-right me-1"></i>Login</a></li>
+{% else %}
+    <li><a href="{% url 'onboard_screen' %}"><i class="fas fa-angle-right me-1"></i>Register</a></li>
+{% endif %}
+<li><a href="{% url 'forgot_password' %}"><i class="fas fa-angle-right me-1"></i>Forgot Password</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Help & Support</h2>
+<ul>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Browse Candidates</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Employers Dashboard</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Job Packages</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Jobs Featured</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Post A Job</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-2 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Other Links</h2>
+<ul>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Freelancers</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Freelancer Details</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Project</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Project Details</a></li>
+<li><a href="{% url 'error_404' %}"><i class="fas fa-angle-right me-1"></i>Post Project</a></li>
+</ul>
+</div>
+</div>
+<div class="col-xl-4 col-md-6">
+<div class="footer-widget footer-menu">
+<h2 class="footer-title">Join our Newsletter</h2>
+<p>We help our customers harness the power of AI to make smarter decisions</p>
+<div class="banner-content aos aos-init aos-animate" data-aos="fade-up">
+<form class="form" name="store" method="post" action="{% url 'project' %}">
+<div class="form-inner">
+<div class="input-group">
+<input type="email" class="form-control" placeholder="Your Email address.....">
+<button class="btn btn-primary sub-btn" type="submit"><i class="fas fa-long-arrow-alt-right long-arrow"></i></button>
+</div>
+</div>
+</form>
+</div>
+<div class="social-icon d-flex">
+<span>Follow us on : </span>
+<ul>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-facebook-f"></i> </a></li>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-instagram"></i> </a></li>
+<li><a href="#" class="icon" target="_blank"><i class="fab fa-twitter"></i> </a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="footer-bottom">
+<div class="container">
+
+<div class="copyright">
+<div class="row">
+<div class="col-md-6 col-lg-6 ">
+<div class="footer-bottom-logo">
+<a href="index.html" class="menu-logo">
+<img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Logo">
+</a>
+</div>
+</div>
+<div class="col-md-6 col-lg-6 right-text">
+<ul class="nav footer-bottom-nav">
+<li><a href="{% url 'chats' %}">Chat</a></li>
+<li><a href="{% url 'faq' %}">Faq</a></li>
+<li><a href="{% url 'review' %}">Reviews</a></li>
+<li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+<li><a href="{% url 'term_condition' %}">Terms of use</a></li>
+</ul>
+<div class="copyright-text">
+<p class="mb-0">Copyright 2023 © KofeJob. All right reserved. Powered by Dreamguys Technologies</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</footer>
+
+</div>
+
+<button class="scroll-top scroll-to-target" data-target="html">
+<span class="ti-angle-up"><img src="{% static 'assets/img/icon/top-icon.svg' %}" class="img-fluid" alt></span>
+</button>
+
+{% include 'scripts.html' %}
+</body>
+
+<!-- Mirrored from kofejob.dreamguystech.com/template/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 26 Aug 2023 03:43:37 GMT -->
+</html>
