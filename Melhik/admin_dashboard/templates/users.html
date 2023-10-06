@@ -18,34 +18,22 @@
     <a href="{% url 'admin_dashboard' %}"><i data-feather="home"></i> <span>Dashboard</span></a>
     </li>
     <li>
-    <a href="{% url 'categories' %}"><i data-feather="copy"></i> <span>Categories</span></a>
-    </li>
-    <li>
-    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Projects</span></a>
+    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Jobs</span></a>
     </li>
     <li class="active">
     <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
     </li>
     <li>
-    <a href="{% url 'deposit' %}"><i data-feather="user-check"></i> <span>Deposit</span></a>
-    </li>
-    <li>
     <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
-    </li>
-    <li>
-    <a href="{% url 'transaction' %}"><i data-feather="clipboard"></i> <span>Transaction</span></a>
-    </li>
-    <li>
-    <a href="{% url 'providers' %}"><i data-feather="user-check"></i> <span>Providers</span></a>
-    </li>
-    <li>
-    <a href="{% url 'subscription' %}"><i data-feather="user-check"></i> <span>Subscription</span></a>
     </li>
     <li>
     <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
     </li>
     <li>
     <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+    </li>
+    <li>
+    <a href="{% url 'admin_logout' %}"><i data-feather="box"></i> <span>Logout</span></a>
     </li>
     </div>
     </div>
@@ -81,14 +69,6 @@
 <div class="col">
 <h3 class="page-title">All Freelancer</h3>
 <p>Total <span>57</span> Freelancer account</p>
-</div>
-<div class="col-auto">
-<a href="#" class="btn export-btn me-1">
-<img src="assets/img/export.svg" alt> Export
-</a>
-<a class="btn filter-btn" href="javascript:void(0);" id="filter_search">
-<i class="fas fa-filter"></i>
-</a>
 </div>
 </div>
 </div>
@@ -132,16 +112,8 @@
 <table class="table table-center table-hover mb-0 datatable">
 <thead>
 <tr>
-<th>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input" id="select-all">
-<label class="form-check-label"></label>
-</div>
-</th>
 <th>Freelancer</th>
-<th>Expertise</th>
-<th>Verified</th>
-<th>Account Balance </th>
+<th>Skill</th>
 <th>Joined Date</th>
 <th>Last Login</th>
 <th>Status</th>
@@ -151,23 +123,15 @@
 <tbody>
 <tr>
 <td>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input">
-<label class="form-check-label"></label>
-</div>
-</td>
-<td>
 <div class="table-avatar user-profile">
 <a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-14.jpg' %}" alt="User Image"></a>
 <div>
 <h5><a href="#">Janet Paden</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f592909a8792908290999986b5908d9498859990db969a98">[email&#160;protected]</a></p>
+<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f592909a8792908290999986b5908d9498859990db969a98">[verified]</a></p>
 </div>
 </div>
 </td>
 <td>Frontend Developer</td>
-<td class="verify-mail"><i data-feather="check-circle" class="me-1 text-success"></i>Email</td>
-<td>$7,763.05</td>
 <td>21 April 2022</td>
 <td>10 May 2022</td>
 <td>
@@ -176,15 +140,11 @@
 <td class="text-end three-dots">
 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
 <div class="dropdown-menu user-menu-list">
-<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#transaction-category"><img class="me-2 " src="asset/img/icon/icon-01.svg" alt> View Details</a>
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-02.svg' %}" alt> Transaction</a>
 <a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
 <a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
 </div>
 </td>
 </tr>
-<tr>
-<td>
 </tbody>
 </table>
 </div>

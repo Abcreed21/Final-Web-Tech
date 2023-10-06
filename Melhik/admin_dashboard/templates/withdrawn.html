@@ -153,34 +153,22 @@
     <a href="{% url 'admin_dashboard' %}"><i data-feather="home"></i> <span>Dashboard</span></a>
     </li>
     <li>
-    <a href="{% url 'categories' %}"><i data-feather="copy"></i> <span>Categories</span></a>
-    </li>
-    <li>
-    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Projects</span></a>
+    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Jobs</span></a>
     </li>
     <li>
     <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
     </li>
-    <li>
-    <a href="{% url 'deposit' %}"><i data-feather="user-check"></i> <span>Deposit</span></a>
-    </li>
     <li class="active">
     <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
-    </li>
-    <li>
-    <a href="{% url 'transaction' %}"><i data-feather="clipboard"></i> <span>Transaction</span></a>
-    </li>
-    <li>
-    <a href="{% url 'providers' %}"><i data-feather="user-check"></i> <span>Providers</span></a>
-    </li>
-    <li>
-    <a href="{% url 'subscription' %}"><i data-feather="user-check"></i> <span>Subscription</span></a>
     </li>
     <li>
     <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
     </li>
     <li>
     <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+    </li>
+    <li>
+    <a href="{% url 'admin_logout' %}"><i data-feather="box"></i> <span>Logout</span></a>
     </li>
     </div>
     </div>
@@ -206,14 +194,6 @@
 <div class="col">
 <h3 class="page-title">History</h3>
 <p>Total <span>57</span> Transaction</p>
-</div>
-<div class="col-auto">
-<a href="#" class="btn export-btn me-1">
-<img src="{% static 'asset/img/export.svg' %}" alt> Export
-</a>
-<a class="btn filter-btn" href="javascript:void(0);" id="filter_search">
-<i class="fas fa-filter"></i>
-</a>
 </div>
 </div>
 </div>
@@ -257,28 +237,18 @@
 <table class="table table-center table-hover mb-0 datatable">
 <thead>
 <tr>
-<th>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input" id="select-all">
-<label class="form-check-label"></label>
-</div>
-</th>
+<th></th>
 <th>Order</th>
 <th>User</th>
 <th>Details</th>
 <th>Tnx By</th>
 <th>Amount</th>
 <th>Status</th>
-<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input">
-<label class="form-check-label"></label>
-</div>
+<td>&nbsp; 1
 </td>
 <td>#24586414</td>
 <td>
@@ -309,50 +279,6 @@
 </td>
 <td>
 <a href="#" class="user-active-btn">Completed</a>
-</td>
-<td class="text-end three-dots">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
-</td>
-</tr>
-<tr>
-<td>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input">
-<label class="form-check-label"></label>
-</div>
-</td>
-<td>#54586414</td>
-<td>
-<div class="table-avatar user-profile">
-<a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-15.jpg' %}" alt="User Image"></a>
-<div>
-<h5><a href="profile.html">Floyd Lewis</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f7919b988e939b92809e84b7928f969a879b92d994989a">[email&#160;protected]</a></p>
-</div>
-</div>
-</td>
-<td>
-<div class="table-avatar content-user">
-<div>
-<h5>Withdraw Funds</h5>
-<p> Jan 15, 2022</p>
-</div>
-</div>
-</td>
-<td class="content-user"><p>Bank Transfer</p></td>
-<td>
-<div class="table-avatar content-user">
-<div>
-<h5 class="text-danger">- 2,165,000 USD</h5>
-<p> Balance : 1,335.006 USD</p>
-</div>
-</div>
-</td>
-<td>
-<a href="#" class="pending">Pending</a>
-</td>
-<td class="text-end three-dots">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"></a>
 </td>
 </tr>
 </tbody>

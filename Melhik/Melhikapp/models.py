@@ -1,66 +1,115 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from admin_dashboard.models import *
+from django.db import models
+from django_countries.fields import CountryField
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
-class User(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=255)
-    date_joined = models.DateTimeField(auto_now_add=True)
+class CustomUser(AbstractUser):
+  is_freelancer = models.BooleanField(default=False)
+  is_employer = models.BooleanField(default=False)
+  email = models.EmailField(unique=True)
 
+  EMAIL_FIELD = 'email'
+  USERNAME_FIELD = 'email'
+  REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
-class Freelancer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    skills = models.TextField()
-    experience = models.TextField()
-    portfolio = models.URLField()
-
-
-class Employer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    company_name = models.CharField(max_length=255)
-    contact_information = models.TextField()
-    job_postings = models.ManyToManyField('Job', related_name='employers')
-
-
-class Job(models.Model):
-    PRICE_TYPE_CHOICES = [
-        (1, 'Fixed Budget Price'),
-        (2, 'Hourly Pricing'),
-        (3, 'Biding Price'),
-    ]
-    PERIOD_TYPE_CHOICES = [
-        ('period', 'Start immediately after the candidate is selected'),
-        ('job', 'Job will Start On'),
-    ]
-
-    title = models.CharField(max_length=200)
-    price_type = models.IntegerField(choices=PRICE_TYPE_CHOICES)
-    hourly_rate = models.DecimalField(max_digits=5, decimal_places=2)
-    duration = models.CharField(max_length=200)
-    tags = models.CharField(max_length=200)
-    period_type = models.CharField(max_length=10, choices=PERIOD_TYPE_CHOICES)
-    start_date = models.DateField()
-    to_date = models.DateField()
-    reference_links = models.TextField()
-    description = models.TextField()
-
-    def __str__(self):
-        return self.title
-
+class ChatRoom(models.Model):
+  user = models.ManyToManyField(CustomUser, related_name='chats')
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
-    content = models.TextField()
+  chat = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+  sender = models.ForeignKey(CustomUser, related_name='sent_messages', on_delete=models.CASCADE) 
+  receiver = models.ForeignKey(CustomUser, related_name='received_messages', on_delete=models.CASCADE)
+  content = models.TextField()
+  timestamp = models.DateTimeField(auto_now_add=True)
+
+gender_list = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+]
+
+language_choices = [
+  ('English', 'English'),
+  ('Spanish', 'Spanish'), 
+  ('French', 'French'),
+  ('Russian', 'Russian'),
+  ('German', 'German'),
+]
+
+class Freelancer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
+    email = models.EmailField(max_length=100)
+    hourly_rate = models.CharField(max_length=10, help_text='ETB', validators=[RegexValidator(r'^\d+$', 'Hourly rate must be a number')])
+    contact_number = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+    gender = models.CharField(max_length=10, choices=gender_list)
+    language = models.CharField(max_length=100, choices=language_choices)
+    profile_picture = models.ImageField(upload_to='freelancer_profiles')
+    banner_image = models.ImageField(upload_to='freelancer_banners')
+    address = models.TextField()
+    country = CountryField()
+    zipcode = models.CharField(max_length=100)
+    overview = models.TextField()
+    experience_name = models.CharField(max_length=100)
+    experience_company = models.CharField(max_length=100)  
+    experience_start_date = models.DateField()
+    experience_end_date = models.DateField()
+    experience_summary = models.TextField()
+    degree = models.CharField(max_length=100)
+    institution = models.CharField(max_length=100)
+    start_year = models.DateField()  
+    end_year = models.DateField()
+    education_summary = models.TextField()
+    linked_in = models.URLField(blank=True, null=True)
+    git_hub = models.URLField(blank=True, null=True)
+
+
+    def __str__(self):
+        return self.email
+    
+class Employer(models.Model):
+  company_name = models.CharField(max_length=100) 
+  team_size = models.CharField(max_length=100)
+  company_logo = models.FileField()
+  established_date = models.DateField()
+  phone_number = models.CharField(max_length=20)
+  website = models.CharField(max_length=100)
+  country = models.CharField(max_length=100)
+  address_line_2 = models.CharField(max_length=100) 
+  city = models.CharField(max_length=100)
+
+  def __str__(self):
+     return self.user.username
+    
+class Job(models.Model):
+    author = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
+    project_title = models.CharField(max_length=100)
+    category_type = models.CharField(max_length=100)
+    price = models.IntegerField()
+    duration = models.CharField(max_length=100, null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    documents = models.FileField(upload_to='documents/', null=True, blank=True)
+    reference_links = models.CharField(max_length=255, null=True, blank=True)
+    project_description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.project_title
+    
+    def save(self, *args, **kwargs):
+      if not self.id:
+         self.author = self.request.user
+      super().save(*args, **kwargs)
 
-class Rating(models.Model):
-    freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
-    employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
-    score = models.IntegerField()
-    comment = models.TextField()
+class Review(models.Model):
+  message = models.TextField()
+  rating = models.IntegerField()
+  timestamp = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return self.message
 
 
 class Blog(models.Model):
@@ -68,14 +117,10 @@ class Blog(models.Model):
     content = models.TextField()
     publication_date = models.DateField()
 
-
-class Forum(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    publication_date = models.DateField()
-
-
-class Resource(models.Model):
-    title = models.CharField(max_length=255)
-    file = models.FileField(upload_to='resources/')
+class Transaction(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=200)
+    email = models.EmailField()
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    tx_ref = models.CharField(max_length=200)

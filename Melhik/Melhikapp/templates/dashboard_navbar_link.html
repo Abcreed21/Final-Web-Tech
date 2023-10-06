@@ -6,7 +6,12 @@
     <a href="{% url 'user_account_details' %}"><img alt="profile image" src="{% static 'assets/img/img-04.jpg' %}" class="avatar-lg rounded-circle"></a>
     <div class="ms-sm-3 ms-md-0 ms-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
     <p class="mb-2">Welcome,</p>
-    <a href="{% url 'user_account_details' %}"><h3 class="mb-0">John Danie S.</h3></a>
-    <p class="mb-0">@johndaniee</p>
-    </div>
-    </div>
+    <h3 class="mb-0">
+        <a href="{% url 'freelancer_profile' %}">
+          {{ user.first_name }} {{ user.last_name }}
+        </a>
+      </h3>
+      
+      <p class="mb-0">@{{ user.username }}</p>
+      </div>
+      </div>

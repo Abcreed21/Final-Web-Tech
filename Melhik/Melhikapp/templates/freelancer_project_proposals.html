@@ -10,7 +10,6 @@
     <div class="main-wrapper">
         {% include 'freelance_header.html' %}
 
-
 <div class="bread-crumb-bar">
 <div class="container">
 <div class="row align-items-center inner-banner">
@@ -48,33 +47,13 @@
         </a>
         </li>
         <li class="nav-item">
-        <a href="{% url 'freelancer_favourites' %}" class="nav-link">
-        <i class="material-icons">local_play</i> Favourites
-        </a>
-        </li>
-        <li class="nav-item">
         <a href="{% url 'freelancer_review' %}" class="nav-link">
         <i class="material-icons">record_voice_over</i> Reviews
         </a>
         </li>
         <li class="nav-item">
-        <a href="{% url 'freelancer_portfoilo' %}" class="nav-link">
-        <i class="material-icons">pie_chart</i> Portfolio
-        </a>
-        </li>
-        <li class="nav-item">
-        <a href="{% url 'freelancer_chats' %}" class="nav-link">
+        <a href="{% url 'chats' %}" class="nav-link">
         <i class="material-icons">chat</i> Messages
-        </a>
-        </li>
-        <li class="nav-item">
-        <a href="{% url 'freelancer_membership' %}" class="nav-link">
-        <i class="material-icons">person_add</i> Membership
-        </a>
-        </li>
-        <li class="nav-item">
-        <a href="{% url 'freelancer_verify_identity' %}" class="nav-link">
-        <i class="material-icons">person_pin</i> Verify Identity
         </a>
         </li>
         <li class="nav-item">
@@ -155,7 +134,7 @@
 <div class="content-divider-1"></div>
 <div class="projects-action text-center">
 <a data-bs-toggle="modal" href="#file" class="projects-btn">Edit Proposals </a>
-<a href="freelancer-view-project-detail' %}" class="projects-btn">View Project</a>
+<a href="{% url 'freelancer_view_project_detail' %}" class="projects-btn">View Project</a>
 <a href="#" class="proposal-delete">Delete Proposal</a>
 </div>
 </div>
@@ -166,7 +145,6 @@
 </div>
 </div>
 </div>
-
 </div>
 
 
@@ -186,7 +164,6 @@
 </div>
 
 {% include 'footer.html' %}
-
 
 <div class="modal fade" id="file">
 <div class="modal-dialog modal-dialog-centered modal-md">

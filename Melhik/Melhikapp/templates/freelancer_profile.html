@@ -28,7 +28,7 @@
 </div>
 </div>
 
-
+{% if freelancer_profile %}
 <div class="content">
 <div class="container">
 <div class="row">
@@ -36,14 +36,16 @@
 <div class="profile profile-freelance">
 <div class="profile-box">
 <div class="provider-widget">
-<div class="pro-info-left">
+
 <div class="provider-img "><img src="{% static 'assets/img/user/avatar-1.jpg' %}" class="img-fluid" alt="User"></div>
 <div class="profile-info">
-<h2 class="profile-title">George Well</h2>
-<p class="profile-position">iOS Expert</p>
-<div><a href="#" class="btn full-btn">Full time</a></div>
+<h2 class="profile-title">{{ request.user.freelancer.first_name }} {{ request.user.last_name }}</h2>
+
+
+<p class="profile-position">{{ freelancer_profile.email }}</p>
+<div><a href="#" class="btn full-btn">{{ freelancer_profile.hourly_rate }} Birr / Hourly Rate </a></div>
 <ul class="profile-preword">
-<li><img src="{% static 'assets/img/flags/pl.png' %}" alt height="16"> Poland</li>
+<li><img src="{% static 'assets/img/flags/pl.png' %}" alt height="16">{{ freelancer_profile.country}}</li>
 <li>
 <div class="rating">
 <span class="average-rating">4.6</span>
@@ -56,39 +58,8 @@
 </li>
 </ul>
 </div>
+
 </div>
-<div class="pro-info-right profile-inf">
-<a class="btn profile-edit-btn" href="freelancer-profile-settings.html">Edit Profile</a>
-</div>
-</div>
-</div>
-<div class="profile-list">
-<ul>
-<li>
-<span class="cont bg-blue">22</span>
-<strong class="proj-title"> Completed Projects</strong>
-</li>
-<li>
-<span class="cont bg-red">5</span>
-<strong class="proj-title"> Ongoing Projects</strong>
-</li>
-<li>
-<span class="cont bg-violet">89%</span>
-<strong class="proj-title"> Recommended</strong>
-</li>
-<li>
-<span class="cont bg-yellow">12</span>
-<strong class="proj-title"> Rehired</strong>
-</li>
-<li>
-<span class="cont bg-pink">48</span>
-<strong class="proj-title"> Clients</strong>
-</li>
-<li>
-<span class="cont bg-navy">5</span>
-<strong class="proj-title"> Feedbacks</strong>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -130,7 +101,7 @@
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#feedback">
+<a class="nav-link" href="{% url 'freelancer_review' %}">
 <img src="{% static 'assets/img/icon/tab-icon-06.png' %}" height="25" alt="User Image">
 <p class="bg-green">Feedbacks</p>
 </a>
@@ -142,21 +113,11 @@
 <div class="pro-post widget-box" id="overview">
 <h3 class="pro-title">Overview</h3>
 <div class="pro-content">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus.</p>
 <div class="mt-4">
-<h4 class="widget-title">My services include:</h4>
 <ul class="pro-list">
-<li>Cross-platform games</li>
-<li>Game concept and level designing</li>
-<li>Multiplayer integration</li>
-<li>Re-skin</li>
-<li>Ads and in-app purchase (Maximize your Revenue)</li>
-<li>Game Optimisations</li>
-<li>2D/3D Animation</li>
+  {{ freelancer_profile.overview }}
 </ul>
 </div>
-<p>Graphic DesigningSocial Network IntegrationVirtual Reality (VR)Augmented Reality (AR)Game con promotional graphics and video app store and Playstore publishing </p>
 </div>
 </div>
 
@@ -166,21 +127,12 @@
 <div class="pro-content">
 <div class="widget-list mb-0">
 <ul class="clearfix">
-<li>
-<h4>Logo Designer</h4>
-<h5>Techline July 9, 2018 - March 18, 2021</h5>
-<p>I am a professional graphic designer. I have more than 10-years of experience in graphics design. If you are looking for any graphic related work, contact me, I'll glad to help you.</p>
-</li>
-<li>
-<h4>Logo Designer</h4>
-<h5>Techline July 9, 2018 - March 18, 2021</h5>
-<p>I am a professional graphic designer. I have more than 10-years of experience in graphics design. If you are looking for any graphic related work, contact me, I'll glad to help you.</p>
-</li>
-<li>
-<h4>Logo Designer</h4>
-<h5>Techline July 9, 2018 - March 18, 2021</h5>
-<p>I am a professional graphic designer. I have more than 10-years of experience in graphics design. If you are looking for any graphic related work, contact me, I'll glad to help you.</p>
-</li>
+      <li>
+        <h4>{{ freelancer_profile.experience_name }}</h4>
+        <h5>{{ freelancer_profile.experience_experience_company }} {{ freelancer_profile.experience_start_date }} - {{ freelancer_profile.experience_end_date }}</h5>
+        <p>{{ freelancer_profile.experience_summary }}</p>
+      </li>
+
 </ul>
 </div>
 </div>
@@ -193,14 +145,9 @@
 <div class="widget-list mb-0">
 <ul class="clearfix">
 <li>
-<h4>Bachelor of Science in Game Programming & Development</h4>
-<h5>Hampshire University January 12, 2015 - January 19, 2019</h5>
-<p>Graphic Designing artworks through making plans and utilizing the helpful analysis of companions, educators, and bosses to improve those plans. Careful discipline brings about promising results, and the capacity to acknowledge and gain from analysis from peers and even the purchaser everywhere is pivotal for accomplishment in this field.</p>
-</li>
-<li>
-<h4>Master in Gaming STudi Design</h4>
-<h5>Techline July 9, 2018 - March 18, 2021</h5>
-<p>I am a professional graphic designer. I have more than 10-years of experience in graphics design. If you are looking for any graphic related work, contact me, I'll glad to help you.</p>
+<h4>{{ freelancer_profile.degree }}</h4>
+<h5>{{ freelancer_profile.Institution }}  {{ freelancer_profile.start_year }} - {{ freelancer_profile.end_year }}</h5>
+<p>{{ freelancer_profile.education_summary }}</p>
 </li>
 </ul>
 </div>
@@ -212,10 +159,10 @@
 <h3 class="pro-title">Technical Skills</h3>
 <div class="pro-content">
 <div class="tags">
-<span class="badge badge-pill badge-skills">+ Web Design</span>
-<span class="badge badge-pill badge-skills">+ UI Design</span>
-<span class="badge badge-pill badge-skills">+ Node Js</span>
-<span class="badge badge-pill badge-skills">+ Javascript</span>
+<span class="badge badge-pill badge-skills">Web Design</span>
+<span class="badge badge-pill badge-skills">UI Design</span>
+<span class="badge badge-pill badge-skills">Node Js</span>
+<span class="badge badge-pill badge-skills">Javascript</span>
 </div>
 </div>
 </div>
@@ -224,60 +171,43 @@
 </div>
 
 <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
-<div class="pro-post widget-box language-widget">
-<h4 class="pro-title">LANGUAGE SKILLS</h4>
-<ul class="latest-posts pro-content pt-0">
-<li><p>English</p>
-<div class="progress progress-md mb-0">
-<div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-</li>
-<li><p>Russian</p>
-<div class="progress progress-md mb-0">
-<div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-</div></li>
-<li><p>German</p>
-<div class="progress progress-md mb-0">
-<div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-</li>
-</ul>
-</div>
-<div class="pro-post widget-box about-widget">
-<h4 class="pro-title mb-0">ABOUT ME</h4>
-<ul class="latest-posts pro-content">
-<li><p>Gender</p><h6>Male</h6></li>
-<li><p>Experience</p><h6>5 Years</h6></li>
-<li><p>Location</p><h6>Istanbul/Turkey</h6></li>
-</ul>
-</div>
+  <div class="pro-post widget-box language-widget">
+  <h4 class="pro-title">LANGUAGE</h4>
+  <ul class="latest-posts pro-content pt-0">
+        {% for language in freelancer_profile.languages.all %}
+          <li>{{ language }}</li>  
+        {% endfor %}
+  </ul>
+  </div>
+  <div class="pro-post widget-box about-widget">
+  <h4 class="pro-title mb-0">ABOUT ME</h4>
+  <ul class="latest-posts pro-content">
+  <li><p>Gender</p>
+      <p>
+        {% if freelancer_profile.gender == 'M' %}
+          Male
+        {% elif freelancer_profile.gender == 'F' %}
+          Female
+        {% else %}
+          Prefer not to say
+        {% endif %}
+      </p></li>
+  <li><p>Location</p><h6>Istanbul/Turkey</h6></li>
+  </ul>
+  </div>
 
 <div class="pro-post category-widget">
 <div class="widget-title-box">
 <h4 class="pro-title">SOCIAL LINKS</h4>
-</div>
-<ul class="latest-posts pro-content">
-<li><a href="#">http://www.facebook.com/john...</a></li>
-<li><a href="#">http://www.Twitter.com/john...</a></li>
-<li><a href="#">Http://www.googleplus.com/john... </a></li>
-<li><a href="#"> Http://www.behance.com/john...</a></li>
-<li><a href="#"> Http://www.pinterest.com/john...</a></li>
+<ul>
+  <a href="{{ freelancer_profile.git_hub }}">Github:</a><br>
+  <a href="{{ freelancer_profile.linked_in }}">Linkedin:</a>
 </ul>
 </div>
+{% else %}
 
-
-<div class="pro-post widget-box post-widget">
-<h3 class="pro-title">Profile Link</h3>
-<div class="pro-content">
-<div class="form-group profile-group mb-0">
-<div class="input-group">
-<input type="text" class="form-control" value="https://www.kofejob.com/developer/daren/12454687">
-<div class="input-group-append">
-<button class="btn btn-success sub-btn" type="submit"><i class="fa fa-clone"></i></button>
-</div>
-</div>
-</div>
-</div>
+<p>No profile found.</p>
+{% endif %}
 </div>
 
 </div>

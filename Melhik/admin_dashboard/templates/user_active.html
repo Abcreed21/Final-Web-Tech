@@ -18,43 +18,22 @@
         <a href="{% url 'admin_dashboard' %}"><i data-feather="home"></i> <span>Dashboard</span></a>
         </li>
         <li>
-        <a href="{% url 'categories' %}"><i data-feather="copy"></i> <span>Categories</span></a>
-        </li>
-        <li>
         <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Projects</span></a>
         </li>
         <li class="active">
         <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
         </li>
         <li>
-        <a href="{% url 'deposit' %}"><i data-feather="user-check"></i> <span>Deposit</span></a>
-        </li>
-        <li>
         <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
-        </li>
-        <li>
-        <a href="{% url 'transaction' %}"><i data-feather="clipboard"></i> <span>Transaction</span></a>
-        </li>
-        <li>
-        <a href="{% url 'providers' %}"><i data-feather="user-check"></i> <span>Providers</span></a>
-        </li>
-        <li>
-        <a href="{% url 'subscription' %}"><i data-feather="user-check"></i> <span>Subscription</span></a>
         </li>
         <li>
         <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
         </li>
         <li>
-        <a href="{% url 'roles' %}"><i data-feather="clipboard"></i> <span>Roles</span></a>
-        </li>
-        <li>
-        <a href="{% url 'skills' %}"><i data-feather="award"></i> <span>Skills</span></a>
-        </li>
-        <li>
-        <a href="{% url 'verify_identity' %}"><i data-feather="user-check"></i> <span>Verify Identity</span></a>
-        </li>
-        <li>
         <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+        </li>
+        <li>
+        <a href="{% url 'admin_logout' %}"><i data-feather="box"></i> <span>Logout</span></a>
         </li>
         </div>
         </div>
@@ -91,14 +70,6 @@
 <div class="col">
 <h3 class="page-title">Active Freelancer</h3>
 <p>Total <span>25</span> Freelancer </p>
-</div>
-<div class="col-auto">
-<a href="#" class="btn export-btn me-1">
-<img src="assets/img/export.svg" alt> Export
-</a>
-<a class="btn filter-btn" href="javascript:void(0);" id="filter_search">
-<i class="fas fa-filter"></i>
-</a>
 </div>
 </div>
 </div>
@@ -142,16 +113,8 @@
 <table class="table table-center table-hover mb-0 datatable">
 <thead>
 <tr>
-<th>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input" id="select-all">
-<label class="form-check-label"></label>
-</div>
-</th>
 <th>Freelancer</th>
-<th>Expertise</th>
-<th>Verified</th>
-<th>Account Balance </th>
+<th>Skill</th>
 <th>Joined Date</th>
 <th>Last Login</th>
 <th>Status</th>
@@ -161,61 +124,30 @@
 <tbody>
 <tr>
 <td>
-<div class="form-check custom-checkbox">
-<input type="checkbox" class="form-check-input">
-<label class="form-check-label"></label>
-</div>
-</td>
-<td>
 <div class="table-avatar user-profile">
 <a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-12.jpg' %}" alt="User Image"></a>
 <div>
 <h5><a href="profile.html">Janet Paden</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dabdbfb5a8bdbfadbfb6b6a99abfa2bbb7aab6bff4b9b5b7">[email&#160;protected]</a></p>
+<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dabdbfb5a8bdbfadbfb6b6a99abfa2bbb7aab6bff4b9b5b7">[verified]</a></p>
 </div>
 </div>
 </td>
 <td>Frontend Developer</td>
-<td class="verify-mail"><i data-feather="check-circle" class="me-1 text-success"></i>Email</td>
-<td>$7,763.05</td>
 <td>18 April 2022</td>
 <td>12 Feb 2021</td>
 <td class="three-dots">
 <a href="#" class="dropdown-toggle nav-link user-active-btn" data-bs-toggle="dropdown">Active</a>
 <div class="dropdown-menu user-menu-list">
-<h4>Change Status</h4>
-<form action="#">
-<div class="form-check">
-<input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
-<label class="form-check-label" for="radio1">Active</label>
-</div>
-<div class="form-check">
-<input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
-<label class="form-check-label" for="radio2">Inactive</label>
-</div>
-<div class="form-check border-bottom-0">
-<input type="radio" class="form-check-input" id="radio3" name="optradio" value="option2">
-<label class="form-check-label" for="radio2">Suspend User</label>
-</div>
-<button type="submit" class="btn btn-primary apply-user mt-3">Apply</button>
-<button type="submit" class="btn btn-primary reset-user mt-3">Reset</button>
-</form>
 </div>
 </td>
 <td class="text-end three-dots">
 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
 <div class="dropdown-menu user-menu-list">
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-01.svg' %}" alt> View Details</a>
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-02.svg' %}" alt> Transaction</a>
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-03.svg' %}" alt> Reset Password</a>
 <a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
-<a class="dropdown-item" href="#"><i data-feather="edit" class="me-2"></i> Edit</a>
 <a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
 </div>
 </td>
 </tr>
-<tr>
-<td>
 </tbody>
 </table>
 </div>

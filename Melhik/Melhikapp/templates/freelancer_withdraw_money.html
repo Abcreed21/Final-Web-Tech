@@ -49,28 +49,18 @@
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href="{% url 'freelancer_favourites' %}" class="nav-link">
-                        <i class="material-icons">local_play</i> Favourites
-                        </a>
-                        </li>
-                        <li class="nav-item">
                         <a href="{% url 'freelancer_review' %}" class="nav-link">
                         <i class="material-icons">record_voice_over</i> Reviews
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href="{% url 'freelancer_chats' %}" class="nav-link">
+                        <a href="{% url 'chats' %}" class="nav-link">
                         <i class="material-icons">chat</i> Messages
                         </a>
                         </li>
                         <li class="nav-item">
                         <a href="{% url 'freelancer_membership' %}" class="nav-link">
                         <i class="material-icons">person_add</i> Membership
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_verify_identity' %}" class="nav-link">
-                        <i class="material-icons">person_pin</i> Verify Identity
                         </a>
                         </li>
                         <li class="nav-item">
@@ -101,9 +91,6 @@
                                         Funds</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'freelancer_invoices' %}"> Invoices</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="{% url 'freelancer_transaction_history' %}"> Transaction
                                         History</a>
                                 </li>
@@ -114,10 +101,8 @@
                                 <div class="card">
                                     <div class="payment-list wallet card-body">
                                         <h3>Add Wallet</h3>
-                                        <form method="POST" action="https://api.chapa.co/v1/hosted/pay">
-                                            <input type="hidden" name="public_key"
-                                                value="CHAPUBK_TEST-HJ7z9xGJpf4MFH6PjfpI7G45BFLCFrxf" />
-                                            <input type="hidden" name="tx_ref" value="negade-tx-12345678sss9" />
+                                        <form method="POST">
+                                            {% csrf_token %}
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="amount">Amount:</label>
@@ -126,18 +111,13 @@
                                                 </div>
                                             </div>
                                             <label class="custom_radio me-4">
-                                                <input type="radio" name="budget" value="Yes" checked>
+                                                <input type="radio" name="payment_method" value="Chapa" checked>
                                                 <span class="checkmark"></span> Chapa
-                                            </label>
+                                            </label>&nbsp;&nbsp;&nbsp;
                                             <label class="custom_radio">
-                                                <input type="radio" name="budget" value="Yes">
+                                                <input type="radio" name="payment_method" value="Yene Pay">
                                                 <span class="checkmark"></span> Yene Pay
                                             </label>
-                                            <div class="bootstrap-tags text-start ps-0">
-                                                <span class="badge badge-pill badge-skills">$50</span>
-                                                <span class="badge badge-pill badge-skills">$100</span>
-                                                <span class="badge badge-pill badge-skills">$150</span>
-                                            </div>
                                             <div class="col-md-8 btn-pad">
                                                 <input type="hidden" name="currency" value="ETB" />
 
@@ -147,35 +127,26 @@
                                                         <input class="form-control" input type="email" name="email"
                                                             id="email" required />
                                                     </div>
-                                                </div>
-
+                                                </div>   
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="first_name">First Name</label>
-                                                        <input class="form-control" id="first_name" type="text">
+                                                        <label for="first_name">First Name:</label>
+                                                        <input class="form-control" type="text" name="first_name" id="first_name" required />
                                                     </div>
                                                 </div>
-
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="last_name">Last Name:</label>
-                                                        <input class="form-control" input type="text" name="last_name"
-                                                            id="last_name" required /><br>
+                                                        <input class="form-control" type="text" name="last_name" id="last_name" required />
                                                     </div>
-                                                </div>
-
-                                                <input type="hidden" name="title" value="Let us do this" />
-                                                <input type="hidden" name="description"
-                                                    value="Paying with Confidence with cha" />
-                                                <input type="hidden" name="logo"
-                                                    value="https://chapa.link/asset/images/chapa_swirl.svg" />
-                                                <input type="hidden" name="callback_url"
-                                                    value="https://example.com/callbackurl" />
-                                                <input type="hidden" name="return_url"
-                                                    value="https://example.com/returnurl" />
-                                                <input type="hidden" name="meta[title]" value="test" />
-
-                                                <button type="submit" class="btn-primary click-btn">Continue</button>
+                                                </div>    
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                      <label for="phone_number">Phone Number:</label>
+                                                      <input class="form-control" type="tel" name="phone_number" id="phone_number" required />
+                                                    </div>
+                                                  </div>                          
+                                            <button type="submit" class="btn-primary click-btn">Continue</button>
                                         </form>
                                     </div>
                                 </div>
@@ -188,21 +159,11 @@
                                         <h3 class="mb-0">Wallet</h3>
                                     </div>
                                     <div class="wallet-bal">
-                                        <span class="dol-circle"><i class="fa fa-dollar-sign"
+                                        <span class="dol-circle"><i class="fa fa-sign"
                                                 aria-hidden="true"></i></span>
                                         <div class="wallet-amt">
                                             <p>Available Balance</p>
-                                            <h3 class="mb-0">$250.60 </h3>
-                                        </div>
-                                    </div>
-                                    <div class="wallet-content">
-                                        <div class="wallet-pay">
-                                            <p>Total Credit</p>
-                                            <h3 class="mb-0">$500.00</h3>
-                                        </div>
-                                        <div class="wallet-pay">
-                                            <p>Total Credit</p>
-                                            <h3 class="mb-0">$500.00</h3>
+                                            <h3 class="mb-0">250.00 Birr </h3>
                                         </div>
                                     </div>
                                 </div>

@@ -40,7 +40,6 @@
             </div>
             <ul class="nav header-navbar-rht reg-head">
             <li><a href="{% url 'onboard_screen' %}" class="reg-btn"><img src="{% static 'assets/img/icon/reg-icon.svg' %}" class="me-1" alt="icon"> Register</a></li>
-            <li><a href="{% url 'login' %}" class="log-btn"><img src="{% static 'assets/img/icon/lock-icon.svg' %}" class="me-1" alt="icon"> Login</a></li>
             </ul>
             </nav>
             </header>
@@ -53,43 +52,37 @@
         <div class="align-items-center justify-content-center">
         <div class="login-right">
         <div class="login-header text-center">
-        <a href="{% url 'index_2' %}"><img src="{% static 'assets/img/logo-01.png' %}" alt="logo" class="img-fluid"></a>
+        <a href="{% url 'index' %}"><img src="{% static 'assets/img/logo-01.png' %}" alt="logo" class="img-fluid"></a>
            <h3>Welcome Back</h3>
-                                <p>Don't miss your next opportunity. Sign in to stay updated on your
-                                    professional world.</p>
-                            </div>
-                            <form action="{% url 'dashboard' %}">
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="email" placeholder="Enter Email">
-                                    <label class="focus-label">Email</label>
-                                </div>
-                                <div class="form-group form-focus">
-                                    <input type="password" class="form-control floating" name="password" placeholder="Enter Password">
-                                    <label class="focus-label">Password</label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="custom_check">
-                                        <input type="checkbox" name="rem_password">
-                                        <span class="checkmark"></span> Remember password
-                                    </label>
-                                </div>
+            <p>Don't miss your next opportunity. Sign in to stay updated on your
+                professional world.</p>
+        </div>
+     {% if messages %}
+     <ul class="messages">
+     {% for message in messages %}
+     <ul{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</ul>
+     {% endfor %}
+     </ul>
+     {% endif %}
+     <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
+    </form>
+    
+            <div class="row">
+                <div class="col-6 text-start">
+                    <a class="forgot-link" href="{% url 'forgot_password' %}">Forgot Password ?</a>
+                </div>
+            </div>
 
-                                <button class="btn btn-primary btn-block btn-lg login-btn" type="submit" id="btn">Login</button>
-                                
-                                <div class="row">
-                                    <div class="col-6 text-start">
-                                        <a class="forgot-link" href="{% url 'forgot_password' %}">Forgot Password ?</a>
-                                    </div>
-                                    <div class="col-6 text-end dont-have">New to Kofejob? <a
-                                            href="{% url 'register' %}">Click here</a></div>
-                                </div>
-                            </form>
-                        </div>
+                            
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% include 'footer.html' %}

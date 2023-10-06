@@ -1,29 +1,47 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, logout, login as admin_login
 from Melhikapp.forms import *
 from Melhikapp.models import *
-from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse
+from Melhikapp.decorators import *
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
-def admin(request):
+def admin_index(request):
+    
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            context = {"error": "Invalid username or password"}
-            return redirect('admin_dashboard') 
+            if user.is_superuser:
+                # Fix: login() takes the request and user 
+                admin_login(request, user) 
+                # messages.success(request, 'You are now logged in')
+                return redirect('admin_dashboard')
+            else:
+                messages.error(request, 'Only superadmin can log in')
+                return render(request, 'admin.html', {'error': 'Only superadmin can log in'})
         else:
-            error_message = 'Invalid username or password'
-            return render(request, 'admin.html', {'error_message': error_message})
-    else:
-        return render(request, 'admin.html')
-    
-    
+                messages.error(request, 'Invalid login')
+                return render(request, 'admin.html', {'error': 'Invalid login'})
+
+    return render (request , 'admin.html')
+
+def admin_logout(request):
+    logout(request)
+    return redirect('index')
+
+@login_required
+@admin_user_required
 def admin_dashboard(request):
-    categories = Category.objects.all()
-    return render(request, 'admin_dashboard.html')
+    reviews = Review.objects.all() 
+
+    for review in reviews:
+     print(review.timestamp.isoformat())
+     
+    return render(request, 'admin_dashboard.html', {'reviews': reviews})
 
 def activities(request):
     return render(request, 'activities.html')

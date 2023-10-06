@@ -152,34 +152,19 @@
     <a href="{% url 'admin_dashboard' %}"><i data-feather="home"></i> <span>Dashboard</span></a>
     </li>
     <li>
-    <a href="{% url 'categories' %}"><i data-feather="copy"></i> <span>Categories</span></a>
-    </li>
-    <li>
-    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Projects</span></a>
+    <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Jobs</span></a>
     </li>
     <li>
     <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
     </li>
     <li>
-    <a href="{% url 'deposit' %}"><i data-feather="user-check"></i> <span>Deposit</span></a>
-    </li>
-    <li>
     <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
-    </li>
-    <li>
-    <a href="{% url 'transaction' %}"><i data-feather="clipboard"></i> <span>Transaction</span></a>
-    </li>
-    <li>
-    <a href="{% url 'providers' %}"><i data-feather="user-check"></i> <span>Providers</span></a>
-    </li>
-    <li>
-    <a href="{% url 'subscription' %}"><i data-feather="user-check"></i> <span>Subscription</span></a>
     </li>
     <li>
     <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
     </li>
     <li class="active">
-    <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+    <a href="{% url 'seo_settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
     </li>
     </div>
     </div>
@@ -207,28 +192,13 @@
 <div class="settings-menu-links">
 <ul class="nav nav-tabs menu-tabs">
 <li class="nav-item active">
-<a class="nav-link" href="{% url 'settings' %}">General Settings</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'localization_details' %}">Localization</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'payment_settings' %}">Payment Settings</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'email_settings' %}">Email Settings</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'social_settings' %}">Social Media Login</a>
+<a class="nav-link" href="{% url 'seo_settings' %}">General Settings</a>
 </li>
 <li class="nav-item">
 <a class="nav-link" href="{% url 'social_links' %}">Social Links</a>
 </li>
 <li class="nav-item">
 <a class="nav-link" href="{% url 'seo_settings' %}">SEO Settings</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'others_settings' %}">Others</a>
 </li>
 </ul>
 </div>
@@ -275,17 +245,6 @@ Recommended image size is <span>16px x 16px or 32px x 32px</span>
 <a href="javascript:void(0);" class="btn-icon logo-hide-btn">
 <i class="feather-x-circle"></i>
 </a>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-5 col-md-6">
-<div class="form-group">
-<div class="status-toggle d-flex justify-content-between align-items-center">
-<p class="mb-0">RTL</p>
-<input type="checkbox" id="status_1" class="check">
-<label for="status_1" class="checktoggle">checkbox</label>
-</div>
-</div>
 </div>
 </div>
 <div class="form-group mb-0">

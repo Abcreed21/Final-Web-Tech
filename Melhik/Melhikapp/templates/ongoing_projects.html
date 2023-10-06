@@ -93,18 +93,12 @@
 
 <div class="col-xl-9 col-md-8">
 <div class="page-title">
-<h3>Manage Projects</h3>
+<h3>Projects</h3>
 </div>
 <nav class="user-tabs project-tabs">
     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'manage_projects' %}">All Projects</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'pending_projects' %}">Pending Projects</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'ongoing_projects' %}">Ongoing Projects</a>
+            <a class="nav-link active" href="{% url 'manage_projects' %}">Ongoing Projects</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'completed_projects' %}">Completed Projects</a>
@@ -134,8 +128,8 @@
 </li>
 <li>
 <div class="slot">
-<p>Location</p>
-<h5><img src="{% static 'assets/img/en.png' %}" height="13" alt="Lang"> UK</h5>
+<p>Date</p>
+<h5><a href="#" class="hired-detail">Hired on 19 JUN 2021</a></h5>
 </div>
 </li>
 <li>
@@ -156,7 +150,6 @@
 <div class="content-divider"></div>
 <div class="projects-action text-center">
 <a href="{% url 'view_project_detail' %}" class="projects-btn">View Details </a>
-<a href="#" class="hired-detail">Hired on 19 JUN 2021</a>
 </div>
 </div>
 </div>
@@ -170,6 +163,7 @@
 <h3>Hired</h3>
 <img src="{% static 'assets/img/developer/developer-01.jpg' %}" alt class="img-fluid">
 <p class="mb-0">Hannah Finn</p>
+<a href="{% url 'chats' %}" class="info-btn hired-detail">Chat</a>
 </div>
 </div>
 </div>

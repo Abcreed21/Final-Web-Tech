@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +18,7 @@
 <div class="breadcrumb-list">
 <nav aria-label="breadcrumb" class="page-breadcrumb">
 <ol class="breadcrumb">
-<li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><img src="assets/img/home-icon.svg" alt="Post Author"> Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><img src="{% static 'assets/img/home-icon.svg' %}" alt="Post Author"> Home</a></li>
 <li class="breadcrumb-item" aria-current="page">Freelancer</li>
 <li class="breadcrumb-item" aria-current="page">Payments</li>
 </ol>
@@ -32,17 +34,65 @@
 <div class="container-fluid">
 <div class="row">
     {% include 'dashboard_free_navbar_link.html' %}
+
+    
+    <div class="settings-menu">
+        <ul>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_dashboard' %}" class="nav-link">
+        <i class="material-icons">verified_user</i> Dashboard
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_project_proposals' %}" class="nav-link">
+        <i class="material-icons">business_center</i> Projects
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_review' %}" class="nav-link">
+        <i class="material-icons">record_voice_over</i> Reviews
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'chats' %}" class="nav-link">
+        <i class="material-icons">chat</i> Messages
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_membership' %}" class="nav-link">
+        <i class="material-icons">person_add</i> Membership
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_withdraw_money' %}" class="nav-link active">
+        <i class="material-icons">wifi_tethering</i> Payments
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'freelancer_profile_settings' %}" class="nav-link">
+        <i class="material-icons">settings</i> Settings
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="{% url 'index' %}" class="nav-link">
+        <i class="material-icons">power_settings_new</i> Logout
+        </a>
+        </li>
+        </ul>
+        </div>
+        </div>
+        </div>
+
 <div class="col-xl-9 col-md-8">
-<nav class="user-tabs mb-4">
-<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+     <nav class="user-tabs mb-4">
+ <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
 <li class="nav-item">
-<a class="nav-link" href="freelancer-withdraw-money.html">Withdraw Funds</a>
+    <a class="nav-link" href="{% url 'freelancer_withdraw_money' %}">Withdraw
+        Funds</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="freelancer-invoices.html"> Invoices</a>
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="freelancer-transaction-history.html"> Transaction History</a>
+    <a class="nav-link active" href="{% url 'freelancer_transaction_history' %}"> Transaction
+        History</a>
 </li>
 </ul>
 </nav>
@@ -74,106 +124,31 @@
 <table class="table">
 <thead>
 <tr class="thead-pink">
-<th>Invoice Number</th>
 <th>Client Name</th>
-<th>Created Date</th>
 <th>Amount</th>
-<th>Due Date</th>
 <th>Status</th>
 <th>Paid On</th>
 </tr>
 </thead>
 <tbody class="table table-hover table-center">
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-5622</a></td>
-<td>Amaze Tech</td>
-<td>16 Sep 2021</td>
-<td>$150</td>
-<td>22 Oct 2021</td>
-<td><span class="badge bg-success-light">Paid</span></td>
-<td>22 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-4545</a></td>
-<td>Park Inc</td>
-<td>12 Sep 2021</td>
-<td>$150</td>
-<td>25 Oct 2021</td>
-<td><span class="badge bg-warning-light">Partially Paid</span></td>
-<td>25 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-2254</a></td>
-<td>Tech Zone </td>
-<td>10 Sep 2021</td>
-<td>$150</td>
-<td>15 Oct 2021</td>
-<td><span class="badge bg-success-light">Paid</span></td>
-<td>10 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1582</a></td>
-<td>Abc Software</td>
-<td>13 Sep 2021</td>
-<td>$150</td>
-<td>28 Oct 2021</td>
-<td><span class="badge bg-danger-light">Overdue</span></td>
-<td>13 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1526</a></td>
-<td>Host Technologies</td>
-<td>12 Sep 2021</td>
-<td>$150</td>
-<td>29 Oct 2021</td>
-<td><span class="badge bg-warning-light">Partially Paid</span></td>
-<td>29 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1200</a></td>
-<td>Alfred Tech </td>
-<td>05 Sep 2021</td>
-<td>$150</td>
-<td>15 Oct 2021</td>
-<td><span class="badge bg-warning-light">Partially Paid</span></td>
-<td>15 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1212</a></td>
-<td>Kind Softwares </td>
-<td>02 Sep 2021</td>
-<td>$150</td>
-<td>22 Oct 2021</td>
-<td><span class="badge bg-success-light">Paid</span></td>
-<td>22 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1456</a></td>
-<td>Tech Zone </td>
-<td>10 Sep 2021</td>
-<td>$150</td>
-<td>15 Oct 2021</td>
-<td><span class="badge bg-danger-light">Overdue</span></td>
-<td>10 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1236</a></td>
-<td>Abc Software</td>
-<td>13 Sep 2021</td>
-<td>$150</td>
-<td>28 Oct 2021</td>
-<td><span class="badge bg-danger-light">Overdue</span></td>
-<td>13 Oct 2021, 10:45pm</td>
-</tr>
-<tr>
-<td><a href="view-invoice.html" class="invoice-id">INV-1566</a></td>
-<td>Park Inc</td>
-<td>12 Sep 2021</td>
-<td>$150</td>
-<td>25 Oct 2021</td>
-<td><span class="badge bg-success-light">Paid</span></td>
-<td>25 Oct 2021, 10:45pm</td>
-</tr>
+    {% for transaction in transactions %}
+    <tr>
+      <td>{{ transaction.employer_name }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>
+        {% if transaction.status == 'Paid' %}
+          <span class="badge bg-success-light">p{{ transaction.status }}</span>
+        {% elif transaction.status == 'Pending' %}
+          <span class="badge bg-warning-light">p{{ transaction.status }}</span>
+        {% elif transaction.status == 'UnPaid' %}
+          <span class="badge bg-danger-light">p{{ transaction.status }}</span>
+        {% else %}
+          <span class="badge">{{ transaction.status }}</span>
+        {% endif %}
+      </td>
+      <td>{{ transaction.paid_on }}</td>
+    </tr>
+  {% endfor %}
 </tbody>
 </table>
 </div>
