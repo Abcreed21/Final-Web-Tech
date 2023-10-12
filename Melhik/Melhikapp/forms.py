@@ -23,8 +23,6 @@ class AccountTypeForm(forms.Form):
         ('employer', 'Employer')
     ))
 
-
-
 # RegistrationForm
 class RegistrationForm(UserCreationForm):
     username = forms.CharField(max_length=25, required=True)
@@ -44,6 +42,13 @@ class RegistrationForm(UserCreationForm):
         'value': '*******'
     }))
 
+    photo = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={
+        'class' : 'form-control',
+        'placeholder' : 'Add Photo(Optional)',
+   
+    }))
+    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update(
@@ -57,7 +62,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = 'username', 'first_name', 'last_name', 'email', 'password1', 'password2'
+        fields = 'username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'photo'
 
     def clean(self):
         cleaned_data = super().clean()
@@ -93,17 +98,17 @@ class FreelancerForm(forms.ModelForm):
     language = forms.ChoiceField(choices=language_choices, widget=forms.Select(attrs={'class': 'form-control select'}))
     address = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     zipcode = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    overview = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}))
+    overview = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control summernote', 'rows': '5'}))
     experience_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     experience_company = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     experience_start_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'type': 'date'}))
     experience_end_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'type': 'date'}))
-    experience_summary = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}))
+    experience_summary = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control summernote', 'rows': '5'}))
     degree = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     institution = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     start_year = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'type': 'date'}))
     end_year = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'type': 'date'}))
-    education_summary = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}))
+    education_summary = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control summernote', 'rows': '5'}))
     linked_in = forms.URLField(max_length=200, required=False, label="LinkedIn:", widget=forms.URLInput(attrs={'class': 'form-control'}))
     git_hub = forms.URLField(max_length=200, required=False, label="Github:", widget=forms.URLInput(attrs={'class': 'form-control'}))
     profile_picture = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
@@ -112,6 +117,7 @@ class FreelancerForm(forms.ModelForm):
     class Meta: 
         model = Freelancer
         exclude = ['user']
+        fields = '__all__'
         
 
     def clean_profile_picture(self):
@@ -142,11 +148,33 @@ class FreelancerForm(forms.ModelForm):
         return ""
     
 
-       
+class EmployerForm(forms.ModelForm):
+    team_size_min = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Minimum Team Size'})
+    )
+    team_size_max = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Maximum Team Size'})
+    )
+
+    class Meta:
+        model = Employer
+        fields = ['company_name', 'owner_name', 'team_size_min', 'team_size_max', 'company_logo', 'overview', 'established_date', 'phone_number', 'website', 'country', 'address_line_2', 'city']
+        widgets = {
+            'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Name'}),
+            'owner_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Owner Name'}),
+            'company_logo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'overview': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Overview'}),
+            'established_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Established Date', 'type': 'date'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Website'}),
+            'country': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Country'}),
+            'address_line_2': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Address Line 2"}),
+            "city": forms.TextInput(attrs={"class": "form-control", "placeholder": "City"})
+        }
 
 class Login_Form(forms.Form):
     email = forms.EmailField(
-        max_length=25,
+        max_length=50,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -180,11 +208,11 @@ class JobForm(forms.ModelForm):
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'documents': forms.FileInput(attrs={'class': 'form-control'}),
             'reference_links': forms.TextInput(attrs={'class': 'form-control'}),
-            'project_description': forms.Textarea(attrs={'class': 'form-control'}),
+            'project_description': forms.Textarea(attrs={'class': 'form-control summernote', 'rows': '5'}),
         }
 
 class ForgotPasswordForm(forms.Form):
-    user_name = forms.CharField(
+    username = forms.CharField(
         max_length=25,
         required=True,
         widget=forms.TextInput(
@@ -279,7 +307,14 @@ class StarRatingWidget(forms.Widget):
 
 class ReviewForm(forms.ModelForm):
 
-    message = forms.CharField(widget=forms.Textarea())
+    message = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Write Your Review'
+                }
+        )
+    )
 
     rating = forms.IntegerField(
         widget=StarRatingWidget,

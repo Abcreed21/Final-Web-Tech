@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -33,11 +33,10 @@
 <div class="row">
 <div class="col-lg-8 col-md-12">
 <div class="developer-box project-box-view">
-<h2>3D Renders and Amazon Product Store images/Video</h2>
-<h3><a href="company-profile.html">Amaze Tech</a> <i class="fas fa-check-circle"></i></h3>
+<h2>{{ project.project_title }}</h2>
+<h3><a href="company-profile.html">{{ project.author.first_name }}</a> <i class="fas fa-check-circle"></i></h3>
 <ul class="develope-list-rate project-rate align-items-center">
-<li><i class="fas fa-clock"></i>Poster 1 hour ago</li>
-<li class="full-time">Full time</li>
+<li><i class="fas fa-clock"></i>Posted On {{ project.timestamp|date:"M d, Y" }}</li>
 </ul>
 <div class="proposal-box">
 <div class="proposal-value">
@@ -89,8 +88,8 @@
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex">
 <div class="pro-post job-type d-flex align-items-center">
 <div class="pro-post-head">
-<p>Price type</p>
-<h6>Fixed</h6>
+<p>Price:</p>
+<h6>{{ project.price }} Birr</h6>
 </div>
 <div class="post-job-icon green-color">
 <img class="img-fluid" alt src="{% static 'assets/img/icon/icon-12.svg' %}">
@@ -118,7 +117,7 @@
 <div class="pro-post job-type d-flex align-items-center">
 <div class="pro-post-head">
 <p>Project Duration</p>
-<h6>Less than a month</h6>
+<h6>{{ project.duration }}</h6>
 </div>
 <div class="post-job-icon">
 <img class="img-fluid" alt src="{% static 'assets/img/icon/exp-icon-02.png' %}">
@@ -177,8 +176,7 @@
 <div class="pro-post widget-box">
 <h3 class="pro-title">Senior Animator</h3>
 <div class="pro-content">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. Aliquam accumsan ac magna convallis bibendum. Quisque laoreet augue eget augue fermentum scelerisque. Vivamus dignissim mollis est dictum blandit. Nam porta auctor neque sed congue. Nullam rutrum eget ex at maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum lorem.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. </p>
+<p>{{ project.description }}</p>
 </div>
 </div>
 
@@ -477,31 +475,6 @@ Add Attachment <input type="file" />
 <textarea rows="5" class="form-control" placeholder="Cover Letter"></textarea>
 </div>
 </div>
-</div>
-<div class="proposal-features">
-<div class="proposal-widget proposal-success">
-<label class="custom_check">
-<input type="checkbox" name="select_time"><span class="checkmark"></span>
-<span class="proposal-text">Stick this Proposal to the Top</span>
-<span class="proposal-text float-end">$12.00</span>
-</label>
-<p>The sticky proposal will always be displayed on top of all the proposals.</p>
-</div>
-<div class="proposal-widget proposal-light">
-<label class="custom_check">
-<input type="checkbox" name="select_time"><span class="checkmark"></span>
-<span class="proposal-text">$ Make Sealed Proposal</span>
-<span class="proposal-text float-end">$7.00</span>
-</label>
-<p>The sealed proposal will be sent to the project author only it will not be visible publically.</p>
-</div>
-<div class="proposal-widget proposal-danger">
-<label class="custom_check">
-<input type="checkbox" name="select_time"><span class="checkmark"></span>
-<span class="proposal-text">$ Make Sealed Proposal</span>
-<span class="proposal-text float-end">$15.00</span>
-</label>
-<p>The featured proposal will have a distinctive color and popped up between other proposals to get the author's attention.</p>
 </div>
 </div>
 <div class="row">

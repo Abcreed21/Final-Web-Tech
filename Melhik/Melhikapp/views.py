@@ -2,22 +2,34 @@ from admin_dashboard.views import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, SendMessageForm
 from django.contrib import messages
+from django.db.models import Count
+from django.db.models.functions import TruncDay, TruncMonth, TruncYear
 from django.contrib.auth import authenticate, login as user_login, logout
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import *
-from telegram import Bot
+import telegram
 from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import random
 import string
+from django.core.mail import send_mail
 
 def index(request):
-    reviews = Review.objects.all()
-    return render(request, 'index.html', {'reviews': reviews})
+    reviews = Review.objects.filter()
+    jobs = Job.objects.all()
+    freelancers = Freelancer.objects.all()
+    employers = Employer.objects.all()
+    context = {
+      'jobs': jobs,
+      'reviews': reviews,
+      'freelancers': freelancers,
+      'employers': employers 
+    }
+    return render(request, 'index.html', context)
 
 def index_2(request):
     return render(request, 'index_2.html')
@@ -99,11 +111,13 @@ def onboard(request):
       freelancer = form.save(commit=False)
       freelancer.is_freelancer = True
       freelancer.save()
+      messages.success(request, 'New freelancer registered successfully!')
       return redirect('login')
+    
   else:
     form = RegistrationForm()
 
-  return render(request, 'onboard_screen.html', {'form': form})
+  return render(request, 'onboard_screen.html', {'form': form, 'messages': messages.get_messages(request)})
 
 
 def onboard_screen_employer(request):
@@ -113,11 +127,13 @@ def onboard_screen_employer(request):
       employer = form.save(commit=False)
       employer.is_employer = True
       employer.save()
+      messages.success(request, 'New employer registered successfully!')
       return redirect('login')
   else: 
     form = RegistrationForm()
 
-  return render(request, 'onboard_screen_employer.html', {'emp': form})
+  return render(request, 'onboard_screen_employer.html', {'emp': form, 'messages': messages.get_messages(request)})
+
 
 def login_view(request):
     form = Login_Form(request.POST or None)
@@ -138,6 +154,7 @@ def login_view(request):
             else:
                 messages.error(request, 'Invalid Password or Email')
     return render(request, 'login.html', {'form': form})
+
 
 def User_logout(request):
     logout(request)
@@ -161,37 +178,49 @@ def change_password(request):
 def company_details(request):
     return render(request, 'company_details.html')
 
-def company_gallery(request):
-    return render(request, 'company_gallery.html')
+def company_gallery(request, employer_id):
+    employer = get_object_or_404(Employer, id=employer_id)
+    context = {
+        'employer': employer
+    }
+    return render(request, 'company_gallery.html', context)
 
-def company_profile(request):
-    return render(request, 'company_profile.html')
+def company_profile(request, employer_id):
+    employer = get_object_or_404(Employer, id=employer_id)
 
-def company_project(request):
-    return render(request, 'company_project.html')
+    context = {
+        'employer': employer
+    }
 
-def company_review(request):
-    return render(request, 'company_review.html')
+    return render(request, 'company_profile.html', context)
 
-from .forms import ReviewForm
+def company_project(request, employer_id):
+    employer = get_object_or_404(Employer, id=employer_id)
+    context = {
+        'employer': employer
+    }
+    return render(request, 'company_project.html', context)
 
-def completed_projects(request):
-  if request.method == 'POST':
-    form = ReviewForm(request.POST)
-    if form.is_valid():
-      form.save()
-      return redirect('review')
-  else:  
-    form = ReviewForm()
-  return render(request, 'completed_projects.html', {'form': form})
+def company_review(request, employer_id):
+    employer = get_object_or_404(Employer, id=employer_id)
+    reviews = Review.objects.all() 
+    context = {
+        'employer': employer,
+        'reviews': reviews
+    }
+
+    return render(request, 'company_review.html', context)
 
 def review(request):
-  reviews = Review.objects.all() 
+  return render(request, 'review.html')
 
-  for review in reviews:
-     print(review.timestamp.isoformat())
 
-  return render(request, 'review.html', {'reviews': reviews})
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.method == 'POST':
+        review.delete()
+        return redirect('review')
+
 
 @login_required
 @employer_required
@@ -204,11 +233,11 @@ def delete_account(request):
 def deposit_funds(request):
     return render(request, 'deposit_funds.html')
 
-def developer_details(request):
-    return render(request, 'developer_details.html')
-
 def developer_list(request):
-    return render(request, 'developer_list.html')
+    freelancers = Freelancer.objects.all()
+    total_freelancers = freelancers.count()
+    context = {'freelancers': freelancers, 'total_freelancers': total_freelancers}
+    return render(request, 'developer_list.html', context)
 
 def developer_profile(request):
     return render(request, 'developer_profile.html')
@@ -294,18 +323,53 @@ def messages_view(request, user_id, room_id):
 
 
 def freelancer_completed_projects(request):
-    return render(request, 'freelancer_completed_projects.html')
+  if request.method == 'POST':
+     freelancer_review = ReviewForm(request.POST)
+     if freelancer_review.is_valid():
+        freelancer_review.save()
+        return redirect('freelancer_completed_projects')
+  else:  
+        freelancer_review = ReviewForm()
+  return render(request, 'freelancer_completed_projects.html', {'freelancer_review': freelancer_review})
 
+def completed_projects(request):
+  if request.method == 'POST':
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('review')
+  else:  
+    form = ReviewForm()
+  return render(request, 'completed_projects.html', {'form': form})
 
 @login_required
 @freelancer_required
 def freelancer_dashboard(request):
-    return render(request, 'freelancer_dashboard.html')
+    jobs = Job.objects.all()
+    freelancer = request.user
+    freelancer = Freelancer.objects.all()
+    context= {
+        'jobs': jobs ,
+        'freelancer': freelancer
+    }
+    return render(request, 'freelancer_dashboard.html', context)
 
-def freelancer_delete_account(request):
-    from django.contrib.auth import logout
-from django.contrib import messages
-from django.shortcuts import redirect
+def freelancer_chart(request, freelancer_id):
+    freelancer = Freelancer.objects.get(id=freelancer_id)
+
+    # Get visits data grouped by day, month, and year
+    visits_by_day = ProfileVisit.objects.filter(freelancer=freelancer).annotate(day=TruncDay('timestamp')).values('day').annotate(visits=Count('id'))
+    visits_by_month = ProfileVisit.objects.filter(freelancer=freelancer).annotate(month=TruncMonth('timestamp')).values('month').annotate(visits=Count('id'))
+    visits_by_year = ProfileVisit.objects.filter(freelancer=freelancer).annotate(year=TruncYear('timestamp')).values('year').annotate(visits=Count('id'))
+
+    context = {
+        'freelancer': freelancer,
+        'visits_by_day': visits_by_day,
+        'visits_by_month': visits_by_month,
+        'visits_by_year': visits_by_year,
+    }
+
+    return render(request, 'freelancer_dashboard.html', context)
 
 @login_required
 def freelancer_delete_account(request):
@@ -355,44 +419,41 @@ def javascript(request):
     return render(request, 'javascript;.html')
 
 @login_required
+@freelancer_required
 def freelancer_profile_settings(request):
-  if request.method == 'POST':
-    form = FreelancerForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-      freelancer_profile = form.save(commit=False)
-      freelancer_profile.user.is_freelancer = request.user.is_freelancer
-      freelancer_profile.save()
-      messages.success(request, 'You have completed your profile')
-      return redirect ('freelancer_profile')
-  else:
-    form = FreelancerForm()
-  context = {
-    'form': form
+    if request.method == 'POST':
+        form = FreelancerForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            freelancer = form.save(commit=False)
+            freelancer.user = request.user.freelancer
+            freelancer.save()
+            messages.success(request, 'You have completed your profile')
+            return redirect('freelancer_profile', freelancer_id=freelancer.id)
+    else:
+        form = FreelancerForm(instance=request.user)
+
+    context = {
+        'form': form
     }
-  return render(request, 'freelancer_profile_settings.html', context)
-
-
-# freelancer_profile view
+    return render(request, 'freelancer_profile_settings.html', context)
 
 @login_required
-def freelancer_profile(request):
-    user = CustomUser.objects.all()
-    freelancer_profile = Freelancer.objects.get(user=request.user)
-    print(freelancer_profile)
+def freelancer_profile(request, freelancer_id):
+    freelancer = get_object_or_404(Freelancer, id=freelancer_id)
+
     context = {
-        'freelancer_profile': freelancer_profile,
-        'users': user
+        'freelancer': freelancer
     }
 
     return render(request, 'freelancer_profile.html', context)
-
 
 
 def freelancer_project_proposals(request):
     return render(request, 'freelancer_project_proposals.html')
 
 def freelancer_review(request):
-    return render(request, 'freelancer_review.html')
+    reviews = Review.objects.all() 
+    return render(request, 'freelancer_review.html',{'reviews': reviews})
 
 def freelancer_task(request):
     return render(request, 'freelancer_task.html')
@@ -419,6 +480,13 @@ def freelancer_verify_identity(request):
 def freelancer_view_project_detail(request):
     return render(request, 'freelancer_view_project_detail.html')
 
+import random
+import string
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import Transaction
+from django.views.decorators.csrf import csrf_exempt
+
 @csrf_exempt
 def freelancer_withdraw_money(request):
     if request.method == 'POST':
@@ -428,7 +496,7 @@ def freelancer_withdraw_money(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         phone_number = request.POST.get('phone_number')
-        tx_ref = first_name + '-tx-' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+        tx_ref = f"{first_name}-tx-{''.join(random.choices(string.ascii_lowercase + string.digits, k=10))}"
 
         if payment_method == 'Chapa':
             # Prepare the data for the Chapa API
@@ -443,7 +511,9 @@ def freelancer_withdraw_money(request):
                 'phone_number': phone_number,
                 'title': 'Thank you for choosing Chapa. Your withdrawal has been processed.',
                 'description': 'Paying with Confidence with Chapa.',
-                'meta[title]': 'test'
+                'meta': {
+                    'title': 'test',
+                }
             }
 
             # Make a POST request to the Chapa API
@@ -464,35 +534,59 @@ def freelancer_withdraw_money(request):
                 return redirect('https://checkout.chapa.co/checkout/payment/V38JyhpTygC9QimkJrdful9oEjih0heIv53eJ1MsJS6xG')
 
         elif payment_method == 'Yene Pay':
-            # Call Yene Pay API here
-            return HttpResponse('Thank you for choosing Yene Pay. Your withdrawal has been processed.')
+            # Prepare the data for the Yene Pay API
+            data = {
+                "Process": "Express",
+                "SuccessUrl": "https://sandbox.yenepay.com/Home/Details/73110e4c-5aec-401f-a79f-1128a023f8ed?custId=d655d940-58b4-4b81-a3dc-e80cfbf4fa75",
+                "IPNUrl": "https://sandbox.yenepay.com/Home/Details/73110e4c-5aec-401f-a79f-1128a023f8ed?custId=d655d940-58b4-4b81-a3dc-e80cfbf4fa75",
+                "MerchantId": "SB2564",
+                "MerchantOrderId": tx_ref,  # Use the transaction reference as the order ID
+                "ItemId": "1",  # Example item ID
+                "ItemName": "Freelancer name",  # Example item name
+                "UnitPrice": amount,  # Example unit price
+                "Quantity": "1",  # Example quantity
+            }
+            # You need to adjust the data above based on the actual requirements of the Yene Pay API
+
+            return redirect('https://test.yenepay.com/', data)  # Redirect to the Yene Pay payment page
 
         else:
-            return HttpResponse('Invalid payment method selected.')
+            return redirect('https://sandbox.yenepay.com/Home/Details/73110e4c-5aec-401f-a79f-1128a023f8ed?custId=d655d940-58b4-4b81-a3dc-e80cfbf4fa75')
 
     else:
         return render(request, 'freelancer_withdraw_money.html')
 
-
 def logoutUser(request):
     logout(request)
     return redirect ('index')
+
 
 def forgot_password(request):
   form = ForgotPasswordForm()
   if request.method == 'POST':
     form = ForgotPasswordForm(request.POST)
     if form.is_valid():
-      user_name = form.cleaned_data['user_name']
+      username = form.cleaned_data['username']
       try:
-          user = CustomUser.objects.get(username=user_name) 
+          user = CustomUser.objects.get(username=username) 
       except CustomUser.DoesNotExist:
           messages.error(request, 'User not found')
       else:
           password = user.password
-          messages.success( request, f'Your password is: {password}')
+          email = user.email
+          # sent email
+          send_mail(
+          'Recover Your Password',
+          f'Your password is: {password}',
+          'from@example.com',
+          [username],
+          fail_silently=False
+          )
+
+          messages.success(request, 'Password sent to your email')
           return redirect('login')
   return render(request, 'forgot_password.html', {'form': form})
+
 
 def manage_projects(request):
     return render(request, 'manage_projects.html')
@@ -517,11 +611,13 @@ def project_form(request):
         print(form.is_valid())
 
         if form.is_valid():
-            job = form.save()
+            job = form.save(commit=False)
+            job.author = request.user 
+            job.save()
             bot_token = '6575514030:AAFO2CwLOdy7dkZKyMosGNmZuVMPXHL0ZlQ'
             chat_id = '-1001913256564'
             text = (
-                f"New project added: {job.project_title}\n"
+                f"New Job Alert: {job.project_title}\n"
                 f"Category: {job.category_type}\n" 
                 f"Price: {job.price}\n Birr"
                 f"Duration: {job.duration}\n"
@@ -544,8 +640,8 @@ def project_form(request):
             else:
                 print('Error sending message:')
                 print(response.text)
-
-            return redirect('project', job.pk)
+            messages.success(request, 'New Job Posted successfully!')
+            return redirect('project')
         
     context = {
         'form': form,
@@ -557,20 +653,19 @@ def privacy_policy(request):
     return render(request, 'privacy_policy.html')
 
 def profile_settings(request):
-
-  if request.method == 'POST':
-    form = FreelancerForm(request.POST, request.FILES)
-    if form.is_valid():
-      freelancer_profile = form.save(commit=False)
-      freelancer_profile.user = request.user
-      freelancer_profile.save()
-      return redirect('user-account-details')
-  else:
-    form = FreelancerForm()
-  context = {
-    'form': form
+    if request.method == 'POST':
+        form = EmployerForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            employer = form.save(commit=False)
+            employer.user = request.user
+            employer.save()
+            return redirect('company_profile', employer_id=employer.id)
+    else:
+        form = EmployerForm(instance=request.user)
+    context = {
+        'form': form
     }
-  return render(request, 'profile_settings.html', context)
+    return render(request, 'profile_settings.html', context)
 
 
 def user_account_details(request):
@@ -580,8 +675,6 @@ def user_account_details(request):
   }
   return render(request, 'user-account-details.html', context)
 
-def project_details(request):
-    return render(request, 'project_details.html')
 
 def project_payment(request):
     return render(request, 'project_payment.html')
@@ -592,6 +685,10 @@ def project_proposals(request):
 def project(request):
   jobs = Job.objects.all()
   return render(request, 'project.html', {'jobs': jobs})
+
+def project_details(request, project_id):
+    project = Job.objects.get(id=project_id)
+    return render(request, 'project_details.html', {'project': project})
 
 def tasks(request):
     return render(request, 'tasks.html')

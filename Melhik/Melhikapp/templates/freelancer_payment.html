@@ -6,13 +6,13 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 
 <div class="content">
 <div class="container-fluid">
 <div class="row">
-    {% include 'dashboard_free_navbar_link.html' %}
+    {% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
 <div class="col-xl-9 col-md-8">
 <div class="page-title">
 <h3>Manage Projects</h3>

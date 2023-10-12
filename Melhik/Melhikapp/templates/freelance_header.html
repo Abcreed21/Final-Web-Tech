@@ -10,7 +10,7 @@
                     <span></span>
                 </span>
             </a>
-            <a href="{% url 'index_2' %}" class="navbar-brand logo">
+            <a href="{% url 'freelancer_dashboard' %}" class="navbar-brand logo">
                 <img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Logo">
             </a>
         </div>
@@ -28,14 +28,15 @@
             <li class="nav-item dropdown account-item">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                     <span class="user-img">
-                        <img src="{% static 'assets/img/user/avatar-1.jpg' %}" alt>
+                        <img src="{{ user.photo.url }}" alt>
                     </span>
                     <span>{{ user.first_name }}</span>
                 </a>
                 <div class="dropdown-menu emp">
                     <div class="drop-head">Account Details</div>
-                    <a class="dropdown-item" href="{% url 'freelancer_profile' %}"><i class="material-icons">verified_user</i> View profile</a>
-
+                    <a class="dropdown-item" href="{% url 'freelancer_profile' freelancer_id=freelancer.id %}">
+                        <i class="material-icons">verified_user</i> View profile
+                      </a>
                     <div class="drop-head">Projects Settings</div>
                     <a class="dropdown-item" href="{% url 'project' %}"><i class="material-icons">pie_chart</i> Projects</a>
 

@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-      {% include 'employer_header.html' %}
+      {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -33,7 +33,7 @@
 <div class="container-fluid">
 <div class="row">
 
-    {% include 'dashboard_navbar_link.html' %}
+    {% include 'dashboard_navbar_link.html' with employer=request.user %}
 
     <div class="settings-menu">
       <ul>
@@ -85,8 +85,7 @@
 <div class="col-xl-9 col-md-8">
 <div class="card ">
 <div class="card-header review-heading">
-<h3 class="pro-title without-border">Reviews</h3>
-</div>
+<h3 class="pro-title without-border">Reviews</h3></div>
 <div class="card-body">
 
   {% for review in reviews %}

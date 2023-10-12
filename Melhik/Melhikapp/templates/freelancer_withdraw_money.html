@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
         <div class="bread-crumb-bar">
             <div class="container">
@@ -34,7 +34,7 @@
         <div class="content content-page">
             <div class="container-fluid">
                 <div class="row">
-                    {% include 'dashboard_free_navbar_link.html' %}
+                    {% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
 
                     <div class="settings-menu">
                         <ul>
@@ -56,11 +56,6 @@
                         <li class="nav-item">
                         <a href="{% url 'chats' %}" class="nav-link">
                         <i class="material-icons">chat</i> Messages
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_membership' %}" class="nav-link">
-                        <i class="material-icons">person_add</i> Membership
                         </a>
                         </li>
                         <li class="nav-item">
@@ -100,7 +95,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="payment-list wallet card-body">
-                                        <h3>Add Wallet</h3>
+                                        <h3>Chapa</h3>
                                         <form method="POST">
                                             {% csrf_token %}
                                             <div class="col-md-6">
@@ -121,37 +116,77 @@
                                             <div class="col-md-8 btn-pad">
                                                 <input type="hidden" name="currency" value="ETB" />
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="email">Email:</label>
                                                         <input class="form-control" input type="email" name="email"
                                                             id="email" required />
                                                     </div>
                                                 </div>   
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="first_name">First Name:</label>
                                                         <input class="form-control" type="text" name="first_name" id="first_name" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="last_name">Last Name:</label>
                                                         <input class="form-control" type="text" name="last_name" id="last_name" required />
                                                     </div>
                                                 </div>    
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                       <label for="phone_number">Phone Number:</label>
                                                       <input class="form-control" type="tel" name="phone_number" id="phone_number" required />
                                                     </div>
                                                   </div>                          
-                                            <button type="submit" class="btn-primary click-btn">Continue</button>
+                                            <button type="submit" class="btn-primary click-btn">Withdraw with Chapa</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="payment-list wallet card-body">
+                                        <h3>Yenepay</h3>
+                                        <form method="post" action="https://test.yenepay.com/">
+                                    
+                                         <div class="form-group">
+                                            <input type="hidden" name="Process" value="Express">
+                                            <input type="hidden" name="MerchantOrderId" value="{{ tx_ref }}">
+                                            <input type="hidden" name="MerchantId" value="SB2551">
+                                            <input type="hidden" name="IPNUrl" value="">
+                                            <input type="hidden" name="SuccessUrl" value="http://127.0.0.1:8000/freelancer_dashboard/">
+                                            <input type="hidden" name="CancelUrl" value="http://127.0.0.1:8000/freelancer_dashboard/">
+                                            <input type="hidden" name="ItemId" value="{{ Freelancer.id }}">
+                                        
+                                        
+                                            <div class="form-group">
+                                                <label for="last_name">Freelancer Name:</label>
+                                                <input class="form-control" name="ItemName" value="{{ Freelancer.name }}">
+                                             </div>
+                                        
+                                        
+                                            <div class="form-group">
+                                                <label for="last_name">Amount:</label>
+                                                <input class="form-control" name="UnitPrice" value="{{ amount }}">
+                                            </div>
+                                          
+                                            <input type="hidden" name="Quantity" value="1">
+                                            <input type="submit" class="btn-primary click-btn" value="Withdraw With YenePay">
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="col-md-6 mb-2">
                             <div class="card">
                                 <div class="wallet-detail card-body">

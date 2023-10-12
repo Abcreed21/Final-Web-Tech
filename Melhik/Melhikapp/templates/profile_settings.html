@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+        {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -33,7 +33,7 @@
 <div class="container-fluid">
 <div class="row">
 
-    {% include 'dashboard_navbar_link.html' %}
+    {% include 'dashboard_navbar_link.html' with employer=request.user %}
 
     <div class="settings-menu">
         <ul>
@@ -102,134 +102,61 @@
 <div class="pro-head">
 <h3 class="pro-title without-border mb-0">Profile Basics </h3>
 </div>
-<form action="https://kofejob.dreamguystech.com/template/user-account-details.html">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
 <div class="pro-body p-0">
 <div class="form-row pro-pad">
 <div class="form-group col-md-6">
-<label>Username</label>
-<input type="text" class="form-control">
+<label>Company Name</label>
+{{ form.company_name }}
 </div>
 <div class="form-group col-md-6">
-<label>Email Address</label>
-<input type="email" class="form-control">
+<label>Owner Name</label>
+{{ form.owner_name }}
 </div>
 <div class="form-group col-md-6">
-<label>Contact Number</label>
-<input type="email" class="form-control">
+  <label for="{{ form.team_size_min.id_for_label }}">Minimum Team Size:</label>
+  {{ form.team_size_min }}
 </div>
 <div class="form-group col-md-6">
-<label>Category</label>
-<select class="form-control select">
-<option value="0">Male</option>
-<option value="1">Female</option>
-</select>
+  <label for="{{ form.team_size_max.id_for_label }}">Maximum Team Size:</label>
+  {{ form.team_size_max }}
 </div>
 <div class="form-group col-md-6">
-<label>Gender</label>
-<select class="form-control select">
-<option value="0">Male</option>
-<option value="1">Female</option>
-</select>
+    <label for="{{ form.company_logo.id_for_label }}">Company Logo:</label>
+    {{ form.company_logo }}
+  </div>
+  <div class="form-group col-md-6">
+  <label for="{{ form.overview.id_for_label }}">Overview:</label>
+  {{ form.overview }}
 </div>
 <div class="form-group col-md-6">
-<label>Language </label>
-<input type="text" class="form-control">
+  <label for="{{ form.established_date.id_for_label }}">Established Date:</label>
+  {{ form.established_date }}
+</div>
+<div class="form-group col-md-6">
+  <label for="{{ form.phone_number.id_for_label }}">Phone Number:</label>
+  {{ form.phone_number }}
+</div><div class="form-group col-md-6">
+  <label for="{{ form.website.id_for_label }}">Website:</label>
+  {{ form.website }}
+</div><div class="form-group col-md-6">
+  <label for="{{ form.country.id_for_label }}">Country:</label>
+  {{ form.country }}
+</div><div class="form-group col-md-6">
+  <label for="{{ form.address_line_2.id_for_label }}">Address Line 2:</label>
+  {{ form.address_line_2 }}
+</div><div class="form-group col-md-6">
+  <label for="{{ form.city.id_for_label }}">City:</label>
+  {{ form.city }}
 </div>
 </div>
-<div class="form-row pro-pad pt-0">
-<div class="form-group col-md-6 pro-pic">
-<label>Profile Picture</label>
-<div class="d-flex align-items-center">
-<div class="upload-images">
-<img src="{% static 'assets/img/img-02.jpg' %}" alt="Image">
-<a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-</div>
-<label class="file-upload image-upbtn ms-3">
-Change Image <input type="file">
-</label>
-</div>
-<p>Image size 300*300</p>
-</div>
-</div>
-</div>
+<div class="form-group">
+    <button class="btn btn-primary" type="submit" value="submit">
+      Save Changes
+    </button>
+  </div>
 </form>
-</div>
-<div class="card">
-<div class="pro-head">
-<h3 class="pro-title without-border mb-0">Location</h3>
-</div>
-<div class="pro-body">
-<div class="row">
-<div class="form-group col-md-12">
-<label>Address</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>State</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>Zipcode</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>Country</label>
-<select class="form-control select">
-<option value="0">Ethiopia</option>
-<option value="1">China</option>
-<option value="2">Japan</option>
-<option value="3">Ghana</option>
-<option value="4">USA</option>
-</select>
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="pro-head">
-<h3 class="pro-title without-border mb-0">Overview</h3>
-</div>
-<div class="pro-body">
-<div class="row">
-<div class="form-group col-md-12">
-<textarea class="form-control" rows="5"></textarea>
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="pro-head">
-<h3 class="pro-title without-border mb-0">Social Links</h3>
-</div>
-<div class="pro-body">
-<div class="row">
-<div class="form-group col-md-6">
-<label>Facebook</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>Instagram</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>Twitter</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group col-md-6">
-<label>LinkedIn</label>
-<input type="text" class="form-control">
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="text-end">
-<div class="pro-body">
-<button class="btn btn-secondary click-btn btn-plan" type="submit">Cancel</button>
-<button class="btn btn-primary click-btn btn-plan" type="submit">Update</button>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>

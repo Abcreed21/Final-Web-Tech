@@ -27,7 +27,7 @@
         <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
         </li>
         <li>
-        <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+        <a href="{% url 'seo_settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
         </li>
         <li>
         <a href="{% url 'admin_logout' %}"><i data-feather="box"></i> <span>Logout</span></a>
@@ -101,7 +101,7 @@
 <div class="reviews-menu-links">
 <ul role="tablist" class="nav nav-pills card-header-pills nav-justified">
 <li class="nav-item">
-<a href="#tab-4" data-bs-toggle="tab" class="nav-link active">All (1)</a>
+<a href="#tab-4" data-bs-toggle="tab" class="nav-link active">All ({{ total_jobs }})</a>
 </li>
 <li class="nav-item">
 <a href="#tab-5" data-bs-toggle="tab" class="nav-link">Active (1)</a>
@@ -129,29 +129,26 @@
 <th class="text-end">Actions</th>
 </tr>
 </thead>
+{% for job in jobs %}
 <tbody>
-<tr>
-<td>
+<tr>   
+<td>   
 <h2 class="table-avatar">
-<a href="{% url 'profile' %}"><img class="me-2" src="{% static 'asset/img/company/img-1.png' %}" alt="User Image"></a>
+<a href=""><img class="me-2" src="{{ job.author.photo.url }}" alt="User Image"></a>
 </h2>
 </td>
-<td>{{ job.title }}Website Designer Required For Directory Theme</td>
-<td>
-2222{{ job.hourly_rate }}
-</td>
-<td>
-Angular{{ category.name }}
-</td>
-<td>22-05-2022</td>
-<td>22-05-2022</td>
+<td>{{ job.project_title }}</td>
+
+<td>{{ job.price }}</td>
+<td>{{ job.category_type }}</td>
+<td>{{ job.start_date }}</td>
+<td>{{ job.duration }}</td>
 <td class="text-end">
 <a href="javascript:void(0);" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_category"><i class="far fa-trash-alt"></i></a>
 </td>
 </tr>
-<tr>
-<td>
-</thead>
+</tbody>
+{% endfor %}
 </table>
 </div>
 </div>

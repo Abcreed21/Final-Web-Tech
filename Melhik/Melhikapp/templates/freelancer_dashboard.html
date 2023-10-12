@@ -9,7 +9,7 @@
 
     <div class="main-wrapper">
 
-      {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -33,7 +33,7 @@
 <div class="content content-page">
 <div class="container-fluid">
 <div class="row">
-{% include 'dashboard_free_navbar_link.html' %}
+{% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
 
 <div class="settings-menu">
   <ul>
@@ -117,250 +117,46 @@
 </div>
 
 <div class="row">
+  
 <div class="col-xl-12 d-flex">
-<div class="card flex-fill">
-<div class="pro-head">
-  <h5 class="card-title mb-0">Your Profile View</h5>
-  <div class="month-detail">
-    <select class="form-control" id="chart-option">
-      <option value="0">Last 2 months</option>
-      <option value="1">Last 6 months</option>
-    </select>
-  </div>
-</div>
-
-<div id="chart-container"></div>
-<div class="pro-body">
-<div id="chartprofile"></div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row">
-
-<div class="col-xl-6 d-flex">
-<div class="card flex-fill">
-<div class="pro-head">
-<h2>Membership Plan Details</h2>
-<div><i class="fas fa-check-circle verified orange-text fa-2x"></i></div>
-</div>
-<div class="pro-body">
-<div class="row">
-<div class="col-md-6 col-sm-6">
-<div class="plan-details">
-<h4>The Ultima</h4>
-<div class="yr-amt">Anually Price</div>
-<h3>$1200</h3>
-<div class="yr-duration">Duration: One Year</div>
-<div class="expiry">Expiry: 24 JAN 2022</div>
-<a href="{% url 'freelancer_membership' %}" class="btn btn-primary btn-plan">Change Plan</a>
-</div>
-</div>
-<div class="col-md-6 col-sm-6">
-<div class="plan-feature">
-<ul>
-<li>12 Project Credits</li>
-<li>10 Allowed Services</li>
-<li>20 Days visibility</li>
-<li>5 Featured Services</li>
-<li>20 Days visibility</li>
-<li>30 Days Package Expiry</li>
-<li>Profile Featured</li>
-</ul>
-<a href="{% url 'freelancer_membership' %}">View Details</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<div class="col-xl-6 d-flex">
 <div class="card flex-fill">
 <div class="pro-head">
 <h2>Ongoing Projects</h2>
 <a href="{% url 'freelancer_ongoing_projects' %}" class="btn fund-btn">View All</a>
 </div>
+{% for job in jobs %}
 <div class="pro-body p-0">
 <div class="on-project">
-<h5>Web Scraping</h5>
-<p>I need some data to be scraped from various social media....</p>
+<h5>{{ job.project_title }}</h5>
+<p>{{ job.overview }}</p>
 <div class="pro-info">
 <ul class="list-details">
 <li>
 <div class="slot">
-<p>Job Type</p>
-<h5>Hourly</h5>
+<p>Job Duration</p>
+<h5>{{ job.duration }}</h5>
 </div>
 </li>
 <li>
 <div class="slot">
 <p>Project Price</p>
-<h5>$120</h5>
+<h5>{{ job.price }}</h5>
 </div>
 </li>
 <li>
 <div class="slot">
-<p>Location</p>
-<h5>3 Received</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Expiry</p>
-<h5>4 Days Left</h5>
+<p>Started Date</p>
+<h5>{{ job.start_date }}</h5>
 </div>
 </li>
 </ul>
 </div>
 </div>
-<div class="on-project">
-<h5>New Service</h5>
-<p>I need some data to be scraped from various social media....</p>
-<div class="pro-info">
-<ul class="list-details">
-<li>
-<div class="slot">
-<p>Job Type</p>
-<h5>Hourly</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Project Price</p>
-<h5>$90</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Location</p>
-<h5>3 Received</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Expiry</p>
-<h5>5 Days Left</h5>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="on-project">
-<h5>Website Layout changes</h5>
-<p>I need some data to be scraped from various social media....</p>
-<div class="pro-info">
-<ul class="list-details">
-<li>
-<div class="slot">
-<p>Job Type</p>
-<h5>Hourly</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Project Price</p>
-<h5>$70</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Location</p>
-<h5>3 Received</h5>
-</div>
-</li>
-<li>
-<div class="slot">
-<p>Expiry</p>
-<h5>7 Days Left</h5>
-</div>
-</li>
-</ul>
-</div>
-</div>
+{% endfor%}
 </div>
 </div>
 </div>
 
-</div>
-
-<div class="row">
-<div class="col-md-12">
-<div class="card mb-4">
-<div class="pro-head">
-<h2>Past Earnings</h2>
-<a href="{% url 'freelancer_payment' %}" class="btn fund-btn">View All</a>
-</div>
-<div class="pro-body p-0">
-<div class="earn-feature">
-<div class="row align-items-center">
-<div class="col-lg-7 col-md-6">
-<div class="earn-info">
-<p>I want some customization and installation on wordpress</p>
-<div class="date">October 5, 2021</div>
-</div>
-</div>
-<div class="col-lg-5 col-md-6">
-<div class="earn-img">
-<span><img src="{% static 'assets/img/user/avatar-1.jpg' %}" alt="logo" class="img-fluid avatar-md rounded-circle"> George Wells</span>
-<div class="price">$90</div>
-</div>
-</div>
-</div>
-</div>
-<div class="earn-feature">
-<div class="row align-items-center">
-<div class="col-lg-7 col-md-6">
-<div class="earn-info">
-<p>I want simple Joomla 4 component development </p>
-<div class="date">October 12, 2021</div>
-</div>
-</div>
-<div class="col-lg-5 col-md-6">
-<div class="earn-img">
-<span><img src="{% static 'assets/img/user/avatar-2.jpg' %}" alt="logo" class="img-fluid avatar-md rounded-circle"> Timothy Smith</span>
-<div class="price">$150</div>
-</div>
-</div>
-</div>
-</div>
-<div class="earn-feature">
-<div class="row align-items-center">
-<div class="col-lg-7 col-md-6">
-<div class="earn-info">
-<p>I want migrate Wordpress website </p>
-<div class="date">October 15, 2021</div>
-</div>
-</div>
-<div class="col-lg-5 col-md-6">
-<div class="earn-img">
-<span><img src="{% static 'assets/img/user/avatar-3.jpg' %}" alt="logo" class="img-fluid avatar-md rounded-circle"> Janet Paden</span>
-<div class="price">$70</div>
-</div>
-</div>
-</div>
-</div>
-<div class="earn-feature">
-<div class="row align-items-center">
-<div class="col-lg-7 col-md-6">
-<div class="earn-info">
-<p>I want Landing Page Redesign / Sales Page Redesign</p>
-<div class="date">October 20, 2021</div>
-</div>
-</div>
-<div class="col-lg-5 col-md-6">
-<div class="earn-img">
-<span><img src="{% static 'assets/img/user/avatar-4.jpg' %}" alt="logo" class="img-fluid avatar-md rounded-circle"> James Douglas</span>
-<div class="price">$120</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 
 </div>
@@ -376,96 +172,69 @@
 
 {% include 'scripts.html' %}
 </body>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script>
 
-  // Get the chart option select element
-const chartOptionSelect = document.getElementById('chart-option');
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script>
+   document.addEventListener("DOMContentLoaded", function () {
+       var ctx = document.getElementById('chartprofile').getContext('2d');
 
-// Define the chart container element
-const chartContainer = document.getElementById('chart-container');
+       // Assuming you have the visit count data passed from the view
+       var visitCountByDay = JSON.parse('{{ visit_count_day|safe }}');
+       var visitCountByMonth = JSON.parse('{{ visit_count_month|safe }}');
+       var visitCountByYear = JSON.parse('{{ visit_count_year|safe }}');
+       var chartData = {
+           labels: Object.keys(visitCountByDay),
+           datasets: [
+               {
+                   label: 'Visits per Day',
+                   data: Object.values(visitCountByDay),
+                   fill: false,
+                   borderColor: 'rgb(75, 192, 192)',
+                   tension: 0.1
+               },
+               {
+                   label: 'Visits per Month',
+                   data: Object.values(visitCountByMonth),
+                   fill: false,
+                   borderColor: 'rgb(255, 99, 132)',
+                   tension: 0.1
+               },
+               {
+                   label: 'Visits per Year',
+                   data: Object.values(visitCountByYear),
+                   fill: false,
+                   borderColor: 'rgb(54, 162, 235)',
+                   tension: 0.1
+               }
+           ]
+       };
 
-// Define the initial data for the chart
-const initialData = [
-  { month: 'Jun', views: 150 },
-  { month: 'Jul', views: 200 },
-  { month: 'Aug', views: 180 }
-];
+       var chartOptions = {
+           responsive: true,
+           scales: {
+               x: {
+                   display: true,
+                   title: {
+                       display: true,
+                       text: 'Date'
+                   }
+               },
+               y: {
+                   display: true,
+                   title: {
+                       display: true,
+                       text: 'Visits'
+                   }
+               }
+           }
+       };
 
-// Initialize the chart with the initial data
-const chart = Highcharts.chart(chartContainer, {
-  title: {
-    text: ''
-  },
-  xAxis: {
-    categories: initialData.map(item => item.month)
-  },
-  series: [{
-    type: 'line',
-    name: 'Views',
-    data: initialData.map(item => item.views)
-  }]
-});
-
-// Event listener for the chart option change
-chartOptionSelect.addEventListener('change', () => {
-  const selectedOptionValue = chartOptionSelect.value;
-  
-  // Fetch the data based on the selected option value
-  let data;
-  if (selectedOptionValue === '0') {
-    // Fetch data for the last 2 months
-    data = [
-      { month: 'Jul', views: 200 },
-      { month: 'Aug', views: 180 }
-    ];
-  } else if (selectedOptionValue === '1') {
-    // Fetch data for the last 6 months
-    data = [
-      { month: 'Mar', views: 120 },
-      { month: 'Apr', views: 150 },
-      { month: 'May', views: 180 },
-      { month: 'Jun', views: 150 },
-      { month: 'Jul', views: 200 },
-      { month: 'Aug', views: 180 }
-    ];
-  }
-  
-  // Update the chart with the fetched data
-  chart.xAxis[0].setCategories(data.map(item => item.month));
-  chart.series[0].setData(data.map(item => item.views));
-});
-// Data for the chart
-var chartData = [
-  { name: "Applied Jobs", count: 30 },
-  { name: "Active Proposals", count: 30 },
-  { name: "Applied Proposals", count: 30 },
-  { name: "Bookmarked Projects", count: 30 }
-];
-
-// Create the chart
-Highcharts.chart('container', {
-  chart: {
-    type: 'pie', // Change the type to 'pie'
-    options3d: {
-      enabled: true,
-      alpha: 45,
-    }
-  },
-  title: {
-    text: ''
-  },
-  plotOptions: {
-    pie: {
-      innerSize: 100, // Create a 3D donut by setting the innerSize property
-      depth: 45
-    }
-  },
-  series: [{
-    name: 'Count',
-    data: chartData.map(item => ({ name: item.name, y: item.count }))
-  }]
-});
-</script>
-
+       new Chart(ctx, {
+           type: 'line',
+           data: chartData,
+           options: chartOptions
+       });
+   });
+   </script>
+   
 </html>

@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+        {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -161,7 +161,7 @@
 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
 <div class="d-flex align-items-center">
 <div class="freelance-view">
-<h4>Showing 1 - 12 of 455</h4>
+  <h4>Showing {{ freelancers|length }} - 12 of {{ total_freelancers }} freelancers</h4>
 </div>
 </div>
 </div>
@@ -175,21 +175,22 @@
 <div class="row">
 <div class="col-lg-12">
 <div class="card list-develop-group">
+    {% for freelancer in freelancers %}
 <div class="about-author d-flex align-items-center">
 <div class="about-list-author d-flex align-items-center">
 <div class="about-author-img">
 <div class="author-img-wrap">
-<a href="company-profile.html">
-<img class="img-fluid" alt src="{% static 'assets/img/img-02.jpg' %}">
+<a href="{% url 'freelancer_profile' freelancer.id %}">
+<img class="img-fluid" alt src="{{ freelancer.profile_picture.url }}">
 <span class="verified"><i class="fas fa-check-circle"></i></span>
 </a>
 </div>
 </div>
 <div class="author-details">
 <div class="freelance-info">
-<h3><a href="company-profile.html">Akshay Handge</a></h3>
-<div class="freelance-specific">UI/UX Designer</div>
-<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
+<h3><a href="{% url 'freelancer_profile' freelancer.id %}">{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}</a></h3>
+<div class="freelance-specific">{{ freelancer.degree }}</div>
+<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>{{ freelancer.country }}</div>
 <div class="rating">
 <i class="fas fa-star filled"></i>
 <i class="fas fa-star filled"></i>
@@ -207,12 +208,13 @@
 </div>
 </div>
 <div class="develop-list-pro">
-<div class="freelancers-price">$25 Hourly</div>
+<div class="freelancers-price">${{ freelancer.hourly_rate }} Hourly</div>
 <div class="cart-hover">
-<a href="{% url 'company_profile.html' %}" class="btn-cart" tabindex="-1">View Profile</a>
+<a href="{% url 'freelancer_profile' freelancer.id %}" class="btn-cart" tabindex="-1">View Profile</a>
 </div>
 </div>
 </div>
+{% endfor %}
 </div>
 </div>
 </div>

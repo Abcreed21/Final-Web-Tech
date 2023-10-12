@@ -2,13 +2,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+.languages span {
+  display: inline-block;
+  margin-right: 10px;
+}
+</style>
 
 {% include 'head.html' %}
 
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 
 <div class="bread-crumb-bar">
@@ -28,7 +34,7 @@
 </div>
 </div>
 
-{% if freelancer_profile %}
+{% if freelancer %}
 <div class="content">
 <div class="container">
 <div class="row">
@@ -37,15 +43,15 @@
 <div class="profile-box">
 <div class="provider-widget">
 
-<div class="provider-img "><img src="{% static 'assets/img/user/avatar-1.jpg' %}" class="img-fluid" alt="User"></div>
+<div class="provider-img "><img src="{{ freelancer.profile_picture.url }}" class="img-fluid" alt="User"></div>
 <div class="profile-info">
-<h2 class="profile-title">{{ request.user.freelancer.first_name }} {{ request.user.last_name }}</h2>
+<h2 class="profile-title">{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}</h2>
 
 
-<p class="profile-position">{{ freelancer_profile.email }}</p>
-<div><a href="#" class="btn full-btn">{{ freelancer_profile.hourly_rate }} Birr / Hourly Rate </a></div>
+<p class="profile-position">{{ freelancer.email }}</p>
+<div><a href="#" class="btn full-btn">{{ freelancer.hourly_rate }} Birr / Hourly Rate </a></div>
 <ul class="profile-preword">
-<li><img src="{% static 'assets/img/flags/pl.png' %}" alt height="16">{{ freelancer_profile.country}}</li>
+<li><img src="{% static 'assets/img/flags/pl.png' %}" alt height="16">{{ freelancer.country}}</li>
 <li>
 <div class="rating">
 <span class="average-rating">4.6</span>
@@ -115,7 +121,7 @@
 <div class="pro-content">
 <div class="mt-4">
 <ul class="pro-list">
-  {{ freelancer_profile.overview }}
+  {{ freelancer.overview }}
 </ul>
 </div>
 </div>
@@ -128,9 +134,9 @@
 <div class="widget-list mb-0">
 <ul class="clearfix">
       <li>
-        <h4>{{ freelancer_profile.experience_name }}</h4>
-        <h5>{{ freelancer_profile.experience_experience_company }} {{ freelancer_profile.experience_start_date }} - {{ freelancer_profile.experience_end_date }}</h5>
-        <p>{{ freelancer_profile.experience_summary }}</p>
+        <h4>{{ freelancer.experience_name }}</h4>
+        <h5>{{ freelancer.experience_experience_company }} {{ freelancer.experience_start_date }} - {{ freelancer.experience_end_date }}</h5>
+        <p>{{ freelancer.experience_summary }}</p>
       </li>
 
 </ul>
@@ -145,9 +151,9 @@
 <div class="widget-list mb-0">
 <ul class="clearfix">
 <li>
-<h4>{{ freelancer_profile.degree }}</h4>
-<h5>{{ freelancer_profile.Institution }}  {{ freelancer_profile.start_year }} - {{ freelancer_profile.end_year }}</h5>
-<p>{{ freelancer_profile.education_summary }}</p>
+<h4>{{ freelancer.degree }}</h4>
+<h5>{{ freelancer.Institution }}  {{ freelancer.start_year }} - {{ freelancer.end_year }}</h5>
+<p>{{ freelancer.education_summary }}</p>
 </li>
 </ul>
 </div>
@@ -174,9 +180,9 @@
   <div class="pro-post widget-box language-widget">
   <h4 class="pro-title">LANGUAGE</h4>
   <ul class="latest-posts pro-content pt-0">
-        {% for language in freelancer_profile.languages.all %}
-          <li>{{ language }}</li>  
-        {% endfor %}
+    {% for language in freelancer.language %}
+      <span>{{ language }}</span>
+    {% endfor %}
   </ul>
   </div>
   <div class="pro-post widget-box about-widget">
@@ -184,26 +190,32 @@
   <ul class="latest-posts pro-content">
   <li><p>Gender</p>
       <p>
-        {% if freelancer_profile.gender == 'M' %}
+        {% if freelancer.gender == 'M' %}
           Male
-        {% elif freelancer_profile.gender == 'F' %}
+        {% elif freelancer.gender == 'F' %}
           Female
         {% else %}
           Prefer not to say
         {% endif %}
       </p></li>
-  <li><p>Location</p><h6>Istanbul/Turkey</h6></li>
+  <li><p>Location</p><h6>{{ freelancer.address }}/{{ freelancer.country|default:"Unknown" }}</h6></li>
   </ul>
   </div>
 
-<div class="pro-post category-widget">
-<div class="widget-title-box">
-<h4 class="pro-title">SOCIAL LINKS</h4>
-<ul>
-  <a href="{{ freelancer_profile.git_hub }}">Github:</a><br>
-  <a href="{{ freelancer_profile.linked_in }}">Linkedin:</a>
-</ul>
-</div>
+<div class="pro-post widget-box social-widget develop-social-link">
+  <div class="profile-head">
+  <h4 class="pro-title">SOCIAL LINKS</h4>
+  </div>
+  <ul class="social-link-profile">
+  <li><a href="{{ freelancer.git_hub }}"><i class="fas fa-share-alt"></i></a></li>
+  <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+  <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+  <li><a href="{{ freelancer.linked_in }}"><i class="fab fa-linkedin"></i></a></li>
+  <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+  </ul>
+  </div>
+  
 {% else %}
 
 <p>No profile found.</p>

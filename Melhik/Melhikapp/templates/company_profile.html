@@ -7,7 +7,7 @@
 
 <body>
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+        {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -33,16 +33,16 @@
 <div class="row align-items-center">
 <div class="col-auto">
 <div class="profile-img">
-<img src="{% static 'assets/img/profile.jpg' %}" alt>
+<img src="{{ employer.company_logo.url }}" alt>
 </div>
 </div>
 <div class="col">
 <div class="profile-main">
-<h2>Amaze Tech PVT LTD.{{ company_name }} <i class="fas fa-check-circle"></i></h2>
-<p>Since July 2017 {{ established_date }}</p>
+<h2>{{ employer.company_name }}. <i class="fas fa-check-circle"></i></h2>
+<p>Since {{ employer.established_date }}</p>
 <div class="about-list">
 <ul>
-<li><i class="fas fa-map-marker-alt"></i> Alabama, USA</li>
+<li><i class="fas fa-map-marker-alt"></i> {{ employer.city }}, {{ employer.country }}</li>
 </ul>
 </div>
 </div>
@@ -61,25 +61,25 @@
 <nav class="provider-tabs abouts-view">
 <ul class="nav nav-tabs nav-tabs-solid nav-justified">
 <li class="nav-item">
-<a class="nav-link active-about" href="{% url 'company_profile' %}">
+<a class="nav-link active-about" href="{% url 'company_profile' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-01.png' %}" alt="User Image">
 <p class="bg-red">About Us</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_project' %}">
+    <a class="nav-link" href="{% url 'company_project' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-09.png' %}" alt="User Image">
 <p>Projects</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_gallery' %}">
+<a class="nav-link" href="{% url 'company_gallery' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-10.png' %}" alt="User Image">
 <p>Gallery</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_review' %}">
+<a class="nav-link" href="{% url 'company_review' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-11.png' %}" alt="User Image">
 <p>Reviews</p>
 </a>
@@ -91,14 +91,9 @@
 <div class="pro-post widget-box company-post abouts-detail">
 <h3 class="pro-title">About US</h3>
 <div class="pro-content">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. Aliquam accumsan ac magna convallis bibendum. Quisque laoreet augue eget augue fermentum scelerisque. Vivamus dignissim mollis est dictum blandit. Nam porta auctor neque sed congue. Nullam rutrum eget ex at maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum lorem.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. </p>
-<p>Objectively pursue diverse catalysts for change for interoperable meta-services. Distinctively re-engineer revolutionary meta-services and premium architectures. Intrinsically incubate intuitive opportunities and real-time potentialities. Appropriately communicate one-to-one technology.</p>
-<p>Intrinsically incubate intuitive opportunities and real-time potentialities Appropriately communicate one-to-one technology.</p>
-<p>Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag.</p>
+<p>{{ employer.overview }}</p>
 </div>
 </div>
-
 </div>
 </div>
 
@@ -109,14 +104,14 @@
 <h4 class="pro-title mb-0">Profile Overview</h4>
 </div>
 <ul class="latest-posts pro-content">
-<li><p>Company Name</p><h6>Amaze Tech PVT LTD.</h6></li>
-<li><p>Company Established</p><h6>02-12-2005</h6></li>
-<li><p>No of Employees</p><h6>1500 - 1850</h6></li>
-<li><p>Owner Name</p><h6>Charles Dickens</h6></li>
-<li><p>Website</p><h6>www.amazetechpvt.ltd.com</h6></li>
+<li><p>Company Name</p><h6>{{ employer.company_name }}</h6></li>
+<li><p>Company Established</p><h6>{{ employer.established_date }}</h6></li>
+<li><p>No of Employees</p><h6>{{ employer.team_size_min }} - {{ employer.team_size_max }}</h6></li>
+<li><p>Owner Name</p><h6>{{ employer.owner_name }}</h6></li>
+<li><p>Website</p><h6>{{ employer.website }}</h6></li>
 </ul>
 <div class="contact-btn">
-<a href="#" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contact</a>
+  <a href="tel:{{ employer.phone_number }}" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contact</a>
 </div>
 </div>
 
@@ -124,11 +119,9 @@
 </div>
 </div>
 </div>
-
 
 {% include 'footer.html' %}
 </div>
-
 
 <div class="modal fade custom-modal" id="hire">
 <div class="modal-dialog modal-dialog-centered">

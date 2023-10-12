@@ -19,21 +19,34 @@
 
 <body class="dashboard-page">
     
-
+{% if user.freelancer %}
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+
+        {% include 'employer_header.html' with employer=request.user %}
+        {% else %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
+        {% endif %}
     
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 back-text">
-                        <a href="{% url 'dashboard' %}" class="btn btn-primary back-btn"><i class="fa fa-chevron-left"></i>
-                            Back </a>
-                    </div>
-                       <div class="col-md-12">
+                          <a href="{% url 'chats' %}" class="btn btn-primary back-btn"><i class="fa fa-chevron-left"></i> Back</a>
+                      </div>
+                    <div class="col-md-12">
                         <div class="chat-window">
                                 <div class="chat-cont-left">
+                                    <div class="chat-header">
+                                        <form class="chat-search">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <i class="fas fa-search icon-circle"></i>
+                                                </div>
+                                                <input type="text" class="form-control rounded-pill" placeholder="Search">
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="chat-users-list">
                                         <div class="chat-scroll">
     
@@ -44,15 +57,15 @@
                                             
                                             <a href="{% url 'messages_view' user_id=j.pk room_id=i.pk %}" class="media-chat d-flex">
                                                 <div class="media-img-wrap flex-shrink-0">
-                                                    <div class="avatar avatar-away">
-                                                        <img src="{% static 'assets/img/img-02.jpg' %}" alt="User Image"
+                                                    <div class="avatar">
+                                                        <img src="{{ j.photo.url }}" alt="User Image"
                                                             class="avatar-img rounded-circle">
                                                     </div>
                                                 </div>
                                                 <div class="media-body flex-grow-1">
                                                     <div>
-                                                        <div class="user-name">{{ j.first_name }} {{ j.last_name }}</div>
-                                                    
+                                                        <div class="user-name">&nbsp; &nbsp;{{ j.first_name }} {{ j.last_name }}</div>
+                                                        <div class="user-last-chat">{{ j.context }} </div>
                                                     </div>
                                 
                                                 </div>
@@ -80,8 +93,8 @@
                                     </a>
                                     <div class="media d-flex">
                                         <div class="media-img-wrap flex-shrink-0">
-                                            <div class="avatar avatar-online">
-                                                <img src="{% static 'assets/img/img-05.jpg' %}" alt="User Image"
+                                            <div class="avatar">
+                                                <img src="{{ user.photo.url }}" alt="User Image"
                                                     class="avatar-img rounded-circle">
                                             </div>
                                         </div>
@@ -120,8 +133,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </li>
 
                                             {% else %}
@@ -148,9 +159,7 @@
                                             </li> 
 
                                             {% endif %}
-                                            
-                                            
-                                           
+  
                                         {% endfor %}
                                         </ul>
                                     </div>
@@ -160,7 +169,7 @@
 
                                         <form method="post" >
                                             {% csrf_token %}
-                                        <input type="text" name="content" class="input-msg-send form-control" placeholder="Reply..."> 
+                                        <input type="text" name="content" class="input-msg-send form-control" placeholder="Reply....."> 
                     
                                         <button type="submit" class="btn btn-primary msg-send-btn rounded-pill"><i
                                                 class="fab fa-telegram-plane"></i></button>
@@ -182,11 +191,6 @@
         {% include 'footer.html' %}
 
     </div>
-
-
-
-
-
                 </div>
             </div>
         </div>
@@ -194,7 +198,5 @@
 
     {% include 'scripts.html' %}
 </body>
-
-<!-- Mirrored from kofejob.dreamguystech.com/template/freelancer-chats.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 23 Aug 2023 20:29:30 GMT -->
 
 </html>

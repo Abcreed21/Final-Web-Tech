@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+        {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -72,203 +72,64 @@
 <nav class="provider-tabs mb-4 abouts-view">
 <ul class="nav nav-tabs nav-tabs-solid nav-justified">
 <li class="nav-item">
-<a class="nav-link " href="{% url 'company_profile' %}">
+<a class="nav-link " href="{% url 'company_profile' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-13.png' %}" alt="User Image">
 <p class="bg-red">About Us</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_project' %}">
+<a class="nav-link" href="{% url 'company_project' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-09.png' %}" alt="User Image">
 <p>Projects</p>
 </a>
 </li>
 <li class="nav-item ">
-<a class="nav-link" href="{% url 'company_gallery' %}">
+<a class="nav-link" href="{% url 'company_gallery' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-14.png' %}" alt="User Image">
 <p>Gallery</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link  active-about" href="{% url 'company_review' %}">
+<a class="nav-link  active-about" href="{% url 'company_review' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-11.png' %}" alt="User Image">
 <p>Reviews</p>
 </a>
 </li></ul>
 </nav>
 
-
 <div class="pro-post widget-box company-post">
 <h3 class="pro-title">Reviews</h3>
 <div class="reviews company-review">
+  {% for review in reviews %}
 <div class="review-content no-padding">
-<h4>This seller was great overall. </h4>
-<p class="mb-0">Fast and clear. European visual concepts. Easy to communicate TOP</p>
+  <h4>HEllo</h4>
+<p class="mb-0">{{ review.message }}</p>
 <div class="review-top tab-reviews d-flex align-items-center">
 <div class="review-img">
 <a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-01.jpg' %}" alt="Post Image"></a>
 </div>
 <div class="review-info">
-<h3><a href="company-profile.html">javiervalino</a></h3>
-<h5>Today • 09:35 PM</h5>
+<h3><a href="{% url 'company_profile' %}">javiervalino</a></h3>
+<h5>{{ review.timestamp|date:"F d, Y" }}</h5>
 </div>
+{% for i in review.rating|stringformat:"s" %}
+  {% if forloop.counter <= review.rating %}
 <div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
+  Rating:&nbsp;<i class="fa fa-star checked"></i> {{ review.rating }} / 5
+  {% else %}
+    <i class="fa fa-star"></i>
+  {% endif %}
+{% endfor %}
 </div>
 </div>
 </div>
-<div class="review-content no-padding">
-<h4>This seller was great overall. </h4>
-<p class="mb-0">This seller was great overall. One thing I noticed was that there was one logo out of the 4 I got that stood out amongst the others. Now I loved that one logo but the other ones did not look like much thought were put into them and they were a little disappointing. It is understandable for the price for them to only put effort into one logo, which like I said I loved. I think it would be better to tell this seller to make one good logo and to provide 3 other logos that work off the one good logo. Maybe make that one good logo and then change colors and fonts for the other 3. But overall this seller was great!</p>
-<div class="review-top tab-reviews d-flex align-items-center">
-<div class="review-img">
-<a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-02.jpg' %}" alt="Post Image"></a>
 </div>
-<div class="review-info">
-<h3><a href="company-profile.html">trentburns</a></h3>
-<h5>Yesterday • 09:35 PM</h5>
+{% endfor %}
 </div>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
-</div>
-</div>
-</div>
-<div class="review-content no-padding">
-<h4>Great help given and work</h4>
-<p class="mb-0">Great help given and work was done as asked on time! :)</p>
-<div class="review-top tab-reviews d-flex align-items-center">
-<div class="review-img">
-<a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-03.jpg' %}" alt="Post Image"></a>
-</div>
-<div class="review-info">
-<h3><a href="company-profile.html">mabdz</a></h3>
-<h5>Sep 3 • 6:57 AM</h5>
-</div>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
-</div>
-</div>
-</div>
-<div class="review-content no-padding">
-<h4>very quick & smart.</h4>
-<p class="mb-0">very quick & smart. Recommend him for any web related work</p>
-<div class="review-top tab-reviews d-flex align-items-center">
-<div class="review-img">
-<a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-02.jpg' %}" alt="Post Image"></a>
-</div>
-<div class="review-info">
-<h3><a href="company-profile.html">creativerr</a></h3>
-<h5>Aug 12 • 9:37 AM</h5>
-</div>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
-</div>
-</div>
-</div>
-<div class="review-content no-padding">
-<h4>always amaze me with his skills</h4>
-<p class="mb-0">always amaze me with his skills. Recommend this top rated seller for anyone. Absolute best of best</p>
-<div class="review-top tab-reviews d-flex align-items-center">
-<div class="review-img">
-<a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-1.jpg' %}" alt="Post Image"></a>
-</div>
-<div class="review-info">
-<h3><a href="company-profile.html">adirajulk</a></h3>
-<h5>Aug 3 • 6:57 AM</h5>
-</div>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
-</div>
-</div>
-</div>
-<div class="review-content no-padding">
-<h4>They delivered great work! The delivery was prompt and the communication was excellent. </h4>
-<p class="mb-0">They delivered great work! The delivery was prompt and the communication was excellent. I will be using them in the future and recommend them to anyone who needs their services!</p>
-<div class="review-top tab-reviews d-flex align-items-center">
-<div class="review-img">
-<a href="company-profile.html"><img class="img-fluid" src="{% static 'assets/img/review/review-03.jpg' %}" alt="Post Image"></a>
-</div>
-<div class="review-info">
-<h3><a href="company-profile.html">james</a></h3>
-<h5>Aug 2 • 7:57 AM</h5>
-</div>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7</span>
-</div>
-</div>
-</div>
-<div class="col-md-12 text-center">
-<a href="#" class="btn more-btn"><img src="{% static 'assets/img/loader-icon.svg' %}" height="24" alt="User Image">Load More </a>
 </div>
 </div>
 </div>
 
-
-<div class="pro-post widget-box company-post post-comment">
-<h3 class="pro-title">Post a comment</h3>
-<form action="#">
-<div class="form-group">
-<label>Full Name</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group">
-<label>Email Address</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group">
-<label>Phone Number</label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group">
-<label>Your Rating</label>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-</div>
-</div>
-<div class="form-group">
-<textarea class="form-control" rows="4" placeholder="Message"></textarea>
-</div>
-<div class="post-btn">
-<button class="btn more-btn">Submit</button>
-</div>
-</form>
-</div>
-
-</div>
-</div>
 
 <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar company-profile">
 
@@ -277,27 +138,18 @@
 <h4 class="pro-title mb-0">Profile Overview</h4>
 </div>
 <ul class="latest-posts pro-content">
-<li><p>Company Name</p><h6>Amaze Tech PVT LTD.</h6></li>
-<li><p>Company Established</p><h6>02-12-2005</h6></li>
-<li><p>No of Employees</p><h6>1500 - 1850</h6></li>
-<li><p>Owner Name</p><h6>Charles Dickens</h6></li>
-<li><p>Email</p><h6><a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e4f434f544b5a4b4d465e585a00425a4a6e49434f4742004d4143">[email&#160;protected]</a></h6></li>
-<li><p>Website</p><h6>www.amazetechpvt.ltd.com</h6></li>
+<li><p>Company Name</p><h6>{{ employer.company_name }}</h6></li>
+<li><p>Company Established</p><h6>{{ employer.established_date }}</h6></li>
+<li><p>No of Employees</p><h6>{{ employer.team_size_min }} - {{ employer.team_size_max }}</h6></li>
+<li><p>Owner Name</p><h6>{{ employer.owner_name }}</h6></li>
+<li><p>Website</p><h6>{{ employer.website }}</h6></li>
+<li><p>Email</p><h6>{{ request.user.email }}</h6></li>
 </ul>
 <div class="contact-btn">
-<a href="#" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contact</a>
+<a href="tel:{{ employer.phone_number }}" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contact</a>
 </div>
 </div>
 
-
-<div class="pro-post widget-box location-widget">
-<div class="profile-head">
-<h4 class="pro-title">Company Location</h4>
-</div>
-<div class="map-location">
-<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d2965.0824050173574!2d-93.63905729999999!3d41.998507000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sWebFilings%2C+University+Boulevard%2C+Ames%2C+IA!5e0!3m2!1sen!2sus!4v1390839289319"></iframe>
-</div>
-</div>
 
 
 <div class="pro-post widget-box  working-days">

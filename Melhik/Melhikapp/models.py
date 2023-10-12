@@ -10,24 +10,16 @@ class CustomUser(AbstractUser):
   is_freelancer = models.BooleanField(default=False)
   is_employer = models.BooleanField(default=False)
   email = models.EmailField(unique=True)
+  photo = models.ImageField(upload_to='UserPhoto', null=True, blank=True)
 
   EMAIL_FIELD = 'email'
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
-class ChatRoom(models.Model):
-  user = models.ManyToManyField(CustomUser, related_name='chats')
-
-class Message(models.Model):
-  chat = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
-  sender = models.ForeignKey(CustomUser, related_name='sent_messages', on_delete=models.CASCADE) 
-  receiver = models.ForeignKey(CustomUser, related_name='received_messages', on_delete=models.CASCADE)
-  content = models.TextField()
-  timestamp = models.DateTimeField(auto_now_add=True)
 
 gender_list = [
-    ('male', 'Male'),
-    ('female', 'Female'),
+    ('M', 'Male'),
+    ('F', 'Female'),
 ]
 
 language_choices = [
@@ -44,7 +36,7 @@ class Freelancer(models.Model):
     hourly_rate = models.CharField(max_length=10, help_text='ETB', validators=[RegexValidator(r'^\d+$', 'Hourly rate must be a number')])
     contact_number = models.CharField(max_length=100)
     date_of_birth = models.DateField()
-    gender = models.CharField(max_length=10, choices=gender_list)
+    gender = models.CharField(max_length=1, choices=gender_list)
     language = models.CharField(max_length=100, choices=language_choices)
     profile_picture = models.ImageField(upload_to='freelancer_profiles')
     banner_image = models.ImageField(upload_to='freelancer_banners')
@@ -71,20 +63,28 @@ class Freelancer(models.Model):
     
 class Employer(models.Model):
   company_name = models.CharField(max_length=100) 
-  team_size = models.CharField(max_length=100)
+  owner_name = models.CharField(max_length=100)
+  team_size_min = models.IntegerField()
+  team_size_max = models.IntegerField()
   company_logo = models.FileField()
+  overview = models.TextField()
   established_date = models.DateField()
   phone_number = models.CharField(max_length=20)
   website = models.CharField(max_length=100)
   country = models.CharField(max_length=100)
   address_line_2 = models.CharField(max_length=100) 
   city = models.CharField(max_length=100)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
-     return self.user.username
+     return self.company_name
+
+  def get_team_size_range(self):
+    return f"{self.team_size_min}-{self.team_size_max}"
+
     
 class Job(models.Model):
-    author = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     project_title = models.CharField(max_length=100)
     category_type = models.CharField(max_length=100)
     price = models.IntegerField()
@@ -99,9 +99,9 @@ class Job(models.Model):
         return self.project_title
     
     def save(self, *args, **kwargs):
-      if not self.id:
-         self.author = self.request.user
-      super().save(*args, **kwargs)
+        if not self.id and self.author is None:
+            raise ValueError("Author must be set before saving the job.")
+        super().save(*args, **kwargs)
 
 class Review(models.Model):
   message = models.TextField()
@@ -124,3 +124,17 @@ class Transaction(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     tx_ref = models.CharField(max_length=200)
+
+class ProfileVisit(models.Model):
+    freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class ChatRoom(models.Model):
+  user = models.ManyToManyField(CustomUser, related_name='chats')
+
+class Message(models.Model):
+  chat = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+  sender = models.ForeignKey(CustomUser, related_name='sent_messages', on_delete=models.CASCADE) 
+  receiver = models.ForeignKey(CustomUser, related_name='received_messages', on_delete=models.CASCADE)
+  content = models.TextField()
+  timestamp = models.DateTimeField(auto_now_add=True)

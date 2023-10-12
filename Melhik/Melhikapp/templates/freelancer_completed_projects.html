@@ -7,7 +7,7 @@
 
 <body class="dashboard-page">
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -31,7 +31,7 @@
 <div class="content content-page">
 <div class="container-fluid">
 <div class="row">
-    {% include 'dashboard_free_navbar_link.html' %}
+    {% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
 
     <div class="settings-menu">
         <ul>
@@ -129,8 +129,9 @@
 </div>
 <div class="content-divider"></div>
 <div class="projects-action text-center project">
-<a href="{% static 'freelancer_view_project_detail' %}" class="projects-btn">View Details </a>
+    <a href="{% static 'freelancer_view_project_detail' %}" class="projects-btn">View Details </a>
 <h4 class="completed-badge"><span><i class="fas fa-medal me-2"></i></span>Completed</h4>
+<a data-bs-toggle="modal" href="#file" class="rating-btn">Write Review</a>
 </div>
 </div>
 </div>
@@ -158,6 +159,36 @@
 
 {% include 'footer.html' %}
 
+<div class="modal fade" id="file">
+<div class="modal-dialog modal-dialog-centered modal-md">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Review Freelancer</h4>
+<span class="modal-close"><a href="#" data-bs-dismiss="modal" aria-label="Close"><i class="far fa-times-circle"></i></a></span>
+</div>
+<div class="modal-body">
+<div class="modal-info">
+<form method="POST">
+  {% csrf_token %}
+
+  <div class="form-group">
+    {{ freelancer_review.message }} 
+  </div>
+
+  <div class="form-group">
+    {{ freelancer_review.rating }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    Submit
+  </button>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 {% include 'scripts.html' %}

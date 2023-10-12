@@ -20,6 +20,5 @@ def admin_user_required(view_func):
         if request.user.is_superuser or request.user.is_admin:            
             return view_func(request, *args, **kwargs)
         else:
-            #return redirect('admin')
             return HttpResponse('You are not authorized to access this content.')
     return wrapper_func

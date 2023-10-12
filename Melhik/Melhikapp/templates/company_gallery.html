@@ -8,7 +8,7 @@
 <body>
 
     <div class="main-wrapper">
-        {% include 'employer_header.html' %}
+        {% include 'employer_header.html' with employer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -72,25 +72,25 @@
 <nav class="provider-tabs mb-4 abouts-view">
 <ul class="nav nav-tabs nav-tabs-solid nav-justified">
 <li class="nav-item">
-<a class="nav-link " href="{% url 'company_profile' %}">
+<a class="nav-link " href="{% url 'company_profile' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-13.png' %}" alt="User Image">
 <p class="bg-red">About Us</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_project' %}">
+<a class="nav-link" href="{% url 'company_project' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-09.png' %}" alt="User Image">
 <p>Projects</p>
 </a>
 </li>
 <li class="nav-item ">
-<a class="nav-link active-about" href="{% url 'company_gallery' %}">
+<a class="nav-link active-about" href="{% url 'company_gallery' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-14.png' %}" alt="User Image">
 <p>Gallery</p>
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{% url 'company_review' %}">
+<a class="nav-link" href="{% url 'company_review' employer_id=employer.id %}">
 <img src="{% static 'assets/img/icon/tab-icon-11.png' %}" alt="User Image">
 <p>Reviews</p>
 </a>

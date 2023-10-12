@@ -21,7 +21,7 @@
     <a href="{% url 'projects' %}"><i data-feather="database"></i> <span>Jobs</span></a>
     </li>
     <li class="active">
-    <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancer</span></a>
+    <a href="{% url 'users' %}"><i data-feather="users"></i> <span>Freelancers</span></a>
     </li>
     <li>
     <a href="{% url 'withdrawn' %}"><i data-feather="user-check"></i> <span>Withdrawn</span></a>
@@ -30,7 +30,7 @@
     <a href="{% url 'reports' %}"><i data-feather="pie-chart"></i> <span>Reports</span></a>
     </li>
     <li>
-    <a href="{% url 'settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
+    <a href="{% url 'seo_settings' %}"><i data-feather="settings"></i> <span>Settings</span></a>
     </li>
     <li>
     <a href="{% url 'admin_logout' %}"><i data-feather="box"></i> <span>Logout</span></a>
@@ -68,7 +68,10 @@
 <div class="row align-items-center">
 <div class="col">
 <h3 class="page-title">All Freelancer</h3>
-<p>Total <span>57</span> Freelancer account</p>
+{% comment %} Count freelancers {% endcomment %}
+{% with total_freelancers=freelancers.count %}
+<p>Total <span>{{ total_freelancers }}</span> Freelancer account</p>
+{% endwith %}
 </div>
 </div>
 </div>
@@ -121,31 +124,33 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>
-<div class="table-avatar user-profile">
-<a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-14.jpg' %}" alt="User Image"></a>
-<div>
-<h5><a href="#">Janet Paden</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f592909a8792908290999986b5908d9498859990db969a98">[verified]</a></p>
-</div>
-</div>
-</td>
-<td>Frontend Developer</td>
-<td>21 April 2022</td>
-<td>10 May 2022</td>
-<td>
-<a href="#" class="user-active-btn">Active</a>
-</td>
-<td class="text-end three-dots">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-<div class="dropdown-menu user-menu-list">
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
-<a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
-</div>
-</td>
-</tr>
-</tbody>
+    {% for freelancer in freelancers %}
+    <tr>
+      <td>
+        <div class="table-avatar user-profile">
+          <a href="profile.html"><img class="avatar-img rounded-circle" src="{{ freelancer.profile_picture.url }}" alt="User Image"></a>
+          <div>
+            <h5><a href="#">{{ freelancer.user.first_name }}{{ freelancer.user.last_name }}</a></h5>
+          </div>
+        </div>
+      </td>
+      <td>{{ freelancer.hourly_rate }}</td>
+      <td>{{ freelancer.user.date_joined|date:"Y-m-d" }}</td>
+      <td>{{ freelancer.user.last_login }}</td>
+      <td>
+        <a href="{% url 'user_active' %}" class="user-active-btn">Active</a>
+      </td>
+      <td class="text-end three-dots">
+        <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
+        <div class="dropdown-menu user-menu-list">
+          <a class="dropdown-item" href="#"><img class="me-2" src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
+          <a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
 </table>
 </div>
 </div>

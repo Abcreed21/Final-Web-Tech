@@ -36,12 +36,13 @@ def admin_logout(request):
 @login_required
 @admin_user_required
 def admin_dashboard(request):
+    total_num_users = CustomUser.objects.count()
+    total_jobs = Job.objects.count()
     reviews = Review.objects.all() 
-
     for review in reviews:
      print(review.timestamp.isoformat())
      
-    return render(request, 'admin_dashboard.html', {'reviews': reviews})
+    return render(request, 'admin_dashboard.html', {'reviews': reviews, 'total_num_users': total_num_users, 'total_jobs': total_jobs})
 
 def activities(request):
     return render(request, 'activities.html')
@@ -110,7 +111,13 @@ def payment_settings(request):
     return render(request, 'payment_settings.html')
 
 def projects(request):
-    return render(request, 'projects.html')
+    jobs = Job.objects.select_related('author').all()
+    total_jobs = Job.objects.count()
+    context = {
+        'jobs': jobs,
+        'total_jobs': total_jobs
+    }
+    return render(request, 'projects.html', context)
 
 def project_bidding(request):
     return render(request, 'project_bidding.html')
@@ -122,7 +129,13 @@ def project_invoice(request):
     return render(request, 'project_invoice.html')
 
 def users(request):
-    return render(request, 'users.html')
+    freelancers = Freelancer.objects.all()
+
+    context = {
+        'freelancers': freelancers,
+    }
+
+    return render(request, 'users.html', context)
 
 def withdrawn(request):
     return render(request, 'withdrawn.html')

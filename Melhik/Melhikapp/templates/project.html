@@ -8,7 +8,7 @@
 <body class="dashboard-page">
 
     <div class="main-wrapper">
-        {% include 'freelance_header.html' %}
+        {% include 'freelance_header.html' with freelancer=request.user %}
 
 <div class="bread-crumb-bar">
 <div class="container">
@@ -138,8 +138,8 @@
                 <div class="author-heading">
                     <div class="profile-img">
                         <a href="#">
-                            <img src="{{ employer.img }}" alt="author">
-                        </a>
+                                <img src="{{ request.user.photo.url }}" alt="author" class="rounded">
+              </a>
                     </div>
                     <div class="profile-name">
                         <div class="author-location">{{ job.author.first_name }}<i class="fas fa-check-circle text-success verified"></i></div>
@@ -147,18 +147,17 @@
                     <div class="freelance-info">
                         
                         <h3><a href="#">{{ job.project_title }}</a></h3>
-                        <div class="freelance-location mb-1"><i class="fas fa-clock"></i> Posted in {{ job.author.first_name }}</div>
-                        <div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>{{ job.city }}, {{ job.country }}</div>
+                        <div class="freelance-location mb-1"><i class="fas fa-clock"></i> Posted On {{ job.timestamp|date:"M d, Y" }}</div>
                     <div class="freelance-tags">
                         <a href="javascript:void(0);"><span class="badge badge-pill badge-design"></span></a>
                     </div>
-                    <div class="freelancers-price">${{ job.price }}</div>
+                    <div class="freelancers-price"><div class="author-location"> Fixed </div>{{ job.price }} Birr</div>
                 </div>
                 <div class="counter-stats">
                     <ul>
                    <li>
-                      <h3 class="counter-value">In {{ job.duration }}</h3>
-                      <h5>Expiry</h5>
+                      <h3 class="counter-value">For {{ job.duration }}</h3>
+                      <h5>Duration</h5>
                    </li>
                    <li>
                       <h3 class="counter-value">15</h3>
@@ -168,7 +167,7 @@
             </div>
           </div><br>
           <div class="cart-hover">
-              <a href="{% url 'project_details' %}" class="btn-cart" tabindex="-1">Bid Now</a>
+              <a href="{% url 'project_details' job.id %}" class="btn-cart" tabindex="-1">Bid Now</a>
           </div>
           </div>
           </div>
