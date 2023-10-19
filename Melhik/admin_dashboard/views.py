@@ -6,6 +6,11 @@ from django.http import HttpResponse
 from Melhikapp.decorators import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from datetime import datetime
+from django.db.models import Count
+import time
+
 
 
 def admin_index(request):
@@ -38,11 +43,109 @@ def admin_logout(request):
 def admin_dashboard(request):
     total_num_users = CustomUser.objects.count()
     total_jobs = Job.objects.count()
-    reviews = Review.objects.all() 
-    for review in reviews:
-     print(review.timestamp.isoformat())
-     
-    return render(request, 'admin_dashboard.html', {'reviews': reviews, 'total_num_users': total_num_users, 'total_jobs': total_jobs})
+    reviews = Review.objects.all()
+
+    return render(request, 'admin_dashboard.html', {
+        'reviews': reviews,
+        'total_num_users': total_num_users,
+        'total_jobs': total_jobs,
+    })
+
+
+from django.db.models import Count
+from django.http import JsonResponse
+
+def get_jobs_count(request):
+    jobs_count = (
+        Job.objects
+        .values('timestamp__month')
+        .annotate(count=Count('id'))
+        .order_by('timestamp__month')
+    )
+    
+    month_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    month_colors = [
+        '#FF0000',  # Jan
+        '#00FF00',  # Feb
+        '#0000FF',  # Mar
+        '#FF00FF',  # Apr
+        '#FFFF00',  # May
+        '#00FFFF',  # Jun
+        '#FF8000',  # Jul
+        '#8000FF',  # Aug
+        '#008000',  # Sep
+        '#800000',  # Oct
+        '#000080',  # Nov
+        '#808080',  # Dec
+    ]
+    
+    data = {
+        'categories': month_categories,
+        'series': [{
+            'name': 'Count',
+            'data': [0] * 12,  # Initialize all counts as 0
+            'colors': month_colors  # Assign the colors for each column
+        }]
+    }
+    
+    for item in jobs_count:
+        month = item['timestamp__month']
+        count = item['count']
+        data['series'][0]['data'][month-1] = count
+    
+    return JsonResponse(data)
+
+
+def get_users_count(request):
+    users_count = (
+        CustomUser.objects
+        .values('date_joined__month')
+        .annotate(count=Count('id'))
+        .order_by('date_joined__month')
+    )
+
+    month_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    data = {
+        'categories': month_categories,
+        'series': [{
+            'name': 'Users',
+            'data': [0] * 12,  # Initialize all counts as 0
+        }]
+    }
+
+    for item in users_count:
+        month = item['date_joined__month']
+        count = item['count']
+        data['series'][0]['data'][month-1] = count
+
+    return JsonResponse(data)
+
+
+def fetch_chart_data(request):
+    freelancers_count = CustomUser.objects.filter(is_freelancer=True).count()
+    jobs_count = Job.objects.count()
+    employers_count = CustomUser.objects.filter(is_employer=True).count()
+
+    # Convert count values to integers
+    freelancers_count = int(freelancers_count)
+    jobs_count = int(jobs_count)
+    employers_count = int(employers_count)
+
+    # Get current timestamp
+    current_timestamp = int(time.time())
+
+    # Prepare the data in the format expected by the chart
+    response_data = {
+        'freelancers': [{'x': current_timestamp, 'y': freelancers_count}],
+        'jobs': [{'x': current_timestamp, 'y': jobs_count}],
+        'employers': [{'x': current_timestamp, 'y': employers_count}],
+        'categories': ['Freelancers', 'Jobs', 'Employers']
+    }
+
+    return JsonResponse(response_data)
+
 
 def activities(request):
     return render(request, 'activities.html')
@@ -191,7 +294,7 @@ def skills(request):
 def verify_identity(request):
     return render(request, 'verify_identity.html')
 
-def settings(request):
+def admin_settings(request):
     return render(request, 'settings.html')
 
 def user_active(request):
@@ -219,8 +322,18 @@ def others_settings(request):
     return render(request, 'others_settings.html')
 
 def seo_settings(request):
-    return render(request, 'seo_settings.html')
-
+    seo_settings_obj = SEOSettings.objects.first()
+    
+    if request.method == 'POST':
+        form = SEOSettingsForm(request.POST, instance=seo_settings_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Home Page Details Was Been Updated')
+    else:
+        form = SEOSettingsForm(instance=seo_settings_obj)
+    
+    return render(request, 'seo_settings.html', {'form': form})
+        
 def user_suspended(request):
     return render(request, 'user_suspended.html')
 

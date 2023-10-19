@@ -26,28 +26,30 @@
 </div>
 </div>
 </div>
-
-
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
 <div class="content">
 <div class="container">
 <div class="row">
 <div class="col-lg-8 col-md-12">
 <div class="developer-box project-box-view">
 <h2>{{ project.project_title }}</h2>
-<h3><a href="company-profile.html">{{ project.author.first_name }}</a> <i class="fas fa-check-circle"></i></h3>
+<h3><a href="{% url 'project_proposals' job_id=project.id %}">{{ project.author.first_name }}</a> <i class="fas fa-check-circle"></i></h3>
 <ul class="develope-list-rate project-rate align-items-center">
 <li><i class="fas fa-clock"></i>Posted On {{ project.timestamp|date:"M d, Y" }}</li>
 </ul>
 <div class="proposal-box">
-<div class="proposal-value">
-<h4>$20.00</h4>
-<span>( Per Hour )</span>
-</div>
-<a data-bs-toggle="modal" href="#hire" class="btn favourites-btn btn-primary favour-border">Favourite <i class="fas fa-heart"></i></a>
+<a data-bs-toggle="modal" href="#hire" class="btn favourites-btn btn-primary favour-border">Message <i class="fas fa-heart"></i></a>
 <a data-bs-toggle="modal" href="#file" class="btn proposal-btn btn-primary">Send Proposal <i class="fas fa-long-arrow-alt-right"></i> </a>
 </div>
 </div>
 <div class="pro-view project-details-view">
+  
 
 <div class="post-widget">
 <div class="pro-content">
@@ -55,8 +57,8 @@
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex">
 <div class="pro-post job-type d-flex align-items-center">
 <div class="pro-post-head">
-<p>Job Expiry </p>
-<h6>4 Days Left</h6>
+<p>Start Date </p>
+<h6>{{ project.start_date}}</h6>
 </div>
 <div class="post-job-icon blue-color">
 <img class="img-fluid" alt src="{% static 'assets/img/icon/icon-15.svg' %}">
@@ -195,24 +197,15 @@
 
 
 <div class="pro-post project-widget widget-box">
-<h3 class="pro-title">project requirements</h3>
+<h3 class="pro-title">project documentation</h3>
 <div class="pro-content">
 <div class="row">
 <div class="col-md-3">
 <div class="requirement-img"><br>
-<a href="#"><img class="img-fluid" alt src="{% static 'assets/img/require-01.jpg"></a>
+<a href="{{ project.documents }}"><img class="img-fluid" alt src="{% static 'assets/img/require-01.jpg' %}"></a>
 <div class="file-name">
 <h4>Filename</h4>
-<h5>PDF</h5>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="requirement-img"><br>
-<a href="#"><img class="img-fluid" alt src="{% static 'assets/img/require-01.jpg"></a>
-<div class="file-name">
-<h4>Filename</h4>
-<h5>DOCX</h5>
+<h5>Document</h5>
 </div>
 </div>
 </div>
@@ -224,61 +217,9 @@
 </div>
 
 <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar project-client-view">
-<div class="freelance-widget widget-author mt-2 pro-post">
-<div class="freelance-content">
-<div class="author-heading">
-<div class="profile-img">
-<a href="company-profile.html">
-<img src="{% static 'assets/img/company/img-1.png' %}" alt="author">
-<span class="project-verified"><i class="fas fa-check-circle"></i></span>
-</a>
-</div>
-<div class="profile-name">
-<div class="author-location"><a href="company-profile.html">Amaze Tech </a></div>
-</div>
-<div class="freelance-info">
-<h4>UI/UX Designer</h4>
-<div class="rating">
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star filled"></i>
-<i class="fas fa-star "></i>
-<i class="fas fa-star"></i>
-<span class="average-rating">4.7 (32)</span>
-</div>
-<div class="freelance-location"><i class="fas fa-map-marker-alt me-1"></i>Alabama, USA</div>
-</div>
-<div class="pro-member">
-<div class="row align-items-center">
-<div class="col">
-<h6 class="text-start mb-0">
-Member Since
-</h6>
-</div>
-<div class="col-auto">
-<span>January 1, 2021</span>
-</div>
-</div>
-<hr class="my-3">
-<div class="row align-items-center">
-<div class="col">
-<h6 class=" text-start mb-0">
-Total Jobs
-</h6>
-</div>
-<div class="col-auto">
-<span>127</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
 
 <div class="pro-post widget-box post-widget develop-social-link">
-<h3 class="pro-title">Share</h3>
+<h3 class="pro-title">Contact Us</h3>
 <ul class="social-link-profile">
 <li><a href="#"><i class="fas fa-share-alt"></i></a></li>
 <li><a href="#"><i class="fab fa-facebook"></i></a></li>
@@ -296,106 +237,7 @@ Total Jobs
 </div>
 
 
-<footer class="footer">
-<div class="footer-top">
-<div class="container">
-<div class="row">
-<div class="col-xl-3 col-md-6">
-<div class="footer-widget footer-menu">
-<h2 class="footer-title">Useful Links</h2>
-<ul>
-<li><a href="about.html"><i class="fas fa-angle-right me-1"></i>About Us</a></li>
-<li><a href="blog-list.html"><i class="fas fa-angle-right me-1"></i>Blog</a></li>
-<li><a href="login.html"><i class="fas fa-angle-right me-1"></i>Login</a></li>
-<li><a href="register.html"><i class="fas fa-angle-right me-1"></i>Register</a></li>
-<li><a href="forgot-password.html"><i class="fas fa-angle-right me-1"></i>Forgot Password</a></li>
-</ul>
-</div>
-</div>
-<div class="col-xl-3 col-md-6">
-<div class="footer-widget footer-menu">
-<h2 class="footer-title">Help & Support</h2>
-<ul>
-<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Browse Candidates</a></li>
-<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Employers Dashboard</a></li>
-<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Job Packages</a></li>
-<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Jobs Featured</a></li>
-<li><a href="javascript:;"><i class="fas fa-angle-right me-1"></i>Post A Job</a></li>
-</ul>
-</div>
-</div>
-<div class="col-xl-2 col-md-6">
-<div class="footer-widget footer-menu">
-<h2 class="footer-title">Other Links</h2>
-<ul>
-<li><a href="freelancer-dashboard.html"><i class="fas fa-angle-right me-1"></i>Freelancers</a></li>
-<li><a href="freelancer-portfolio.html"><i class="fas fa-angle-right me-1"></i>Freelancer Details</a></li>
-<li><a href="project.html"><i class="fas fa-angle-right me-1"></i>Project</a></li>
-<li><a href="project-details.html"><i class="fas fa-angle-right me-1"></i>Project Details</a></li>
-<li><a href="post-project.html"><i class="fas fa-angle-right me-1"></i>Post Project</a></li>
-</ul>
-</div>
-</div>
-<div class="col-xl-4 col-md-6">
-<div class="footer-widget footer-menu">
-<h2 class="footer-title">Join our Newsletter</h2>
-<p>We help our customers harness the power of AI to make smarter decisions</p>
-<div class="banner-content">
-<form class="form" name="store" method="post" action="https://kofejob.dreamguystech.com/template/project.html">
-<div class="form-inner">
-<div class="input-group">
-<input type="email" class="form-control" placeholder="Your Email address.....">
-<button class="btn btn-primary sub-btn" type="submit"><i class="fas fa-long-arrow-alt-right long-arrow"></i></button>
-</div>
-</div>
-</form>
-</div>
-<div class="social-icon d-flex">
-<span>Follow us on : </span>
-<ul>
-<li><a href="#" class="icon" target="_blank"><i class="fab fa-facebook-f"></i> </a></li>
-<li><a href="#" class="icon" target="_blank"><i class="fab fa-instagram"></i> </a></li>
-<li><a href="#" class="icon" target="_blank"><i class="fab fa-twitter"></i> </a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<div class="footer-bottom">
-<div class="container">
-
-<div class="copyright">
-<div class="row">
-<div class="col-md-6 col-lg-6 ">
-<div class="footer-bottom-logo">
-<a href="{% url 'dashboard' %}" class="menu-logo">
-<img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Logo">
-</a>
-</div>
-</div>
-<div class="col-md-6 col-lg-6 right-text">
-<ul class="nav footer-bottom-nav">
-<li><a href="chats.html">Chat</a></li>
-<li><a href="faq.html">Faq</a></li>
-<li><a href="review.html">Reviews</a></li>
-<li><a href="privacy-policy.html">Privacy Policy</a></li>
-<li><a href="term-condition.html">Terms of use</a></li>
-</ul>
-<div class="copyright-text">
-<p class="mb-0">Copyright 2023 © KofeJob. All right reserved. Powered by Dreamguys Technologies</p>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-</footer>
+{% include 'footer.html' %}
 
 </div>
 
@@ -462,34 +304,37 @@ Add Attachment <input type="file" />
 </div>
 <div class="modal-body">
 <div class="modal-info">
-<form action="{% url 'freelancer_project_proposals' %}">
-<div class="feedback-form">
-<div class="row">
-<div class="col-md-6 form-group">
-<input type="text" class="form-control" placeholder="Your Price">
-</div>
-<div class="col-md-6 form-group">
-<input type="email" class="form-control" placeholder="Estimated Hours">
-</div>
-<div class="col-md-12 form-group">
-<textarea rows="5" class="form-control" placeholder="Cover Letter"></textarea>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-md-12 submit-section">
-<label class="custom_check">
-<input type="checkbox" name="select_time">
-<span class="checkmark"></span> I agree to the Terms And Conditions
-</label>
-</div>
-<div class="col-md-12 submit-section text-end">
-<button class="btn btn-primary submit-btn" type="submit">SUBMIT PROPOSAL</button>
-</div>
-</div>
-</form>
-</div>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="feedback-form">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          {{ form.price.label_tag }}
+          {{ form.price }}
+        </div>
+        <div class="col-md-6 form-group">
+          {{ form.hours.label_tag }}
+          {{ form.hours }}
+        </div>
+        <div class="col-md-12 form-group">
+          {{ form.cover_letter.label_tag }}
+          {{ form.cover_letter }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 submit-section">
+        <label class="custom_check">
+          {{ form.agree_terms }}
+          <span class="checkmark"></span> I agree to the Terms And Conditions
+        </label>
+      </div>
+      <div class="col-md-12 submit-section text-end">
+        <button class="btn btn-primary submit-btn" type="submit">SUBMIT PROPOSAL</button>
+      </div>
+    </div>
+  </form>
+    </div>
 </div>
 </div>
 </div>

@@ -86,33 +86,22 @@
 <div class="col-xl-9 col-md-8">
 <div class="dashboard-sec">
 <div class="row">
-<div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-6">
 <div class="dash-widget">
 <div class="dash-info">
-<div class="dash-widget-info">Completed Jobs</div>
-<div class="dash-widget-count">30</div>
+<div class="dash-widget-info">Posted Jobs</div>
+<div class="dash-widget-count">0</div>
 </div>
 <div class="dash-widget-more">
 <a href="{% url 'freelancer_completed_projects' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
 </div>
 </div>
 </div>
-<div class="col-md-6 col-lg-4">
-<div class="dash-widget">
-<div class="dash-info">
-<div class="dash-widget-info">Task Completed</div>
-<div class="dash-widget-count">5</div>
-</div>
-<div class="dash-widget-more">
-<a href="{% url 'freelancer_completed_projects' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-6">
 <div class="dash-widget">
 <div class="dash-info">
 <div class="dash-widget-info">Reviews</div>
-<div class="dash-widget-count">25</div>
+<div class="dash-widget-count">0</div>
 </div>
 <div class="dash-widget-more">
 <a href="{% url 'freelancer_review' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
@@ -142,26 +131,28 @@ View All
 <thead class="thead-pink">
 <tr>
 <th>Details</th>
-<th>Job Type</th>
+<th>Skill Needed</th>
 <th>Budget</th>
 <th>Created on</th>
 <th>Proposals</th>
 <th class="text-end">Action</th>
 </tr>
 </thead>
+{% for job in jobs %}
 <tbody>
 <tr>
 <td>
-<span class="detail-text">I want some customization and installation on wordpress</span>
-<span class="d-block text-expiry">Expiring on : February 3, 2019</span>
+<span class="detail-text">{{ job.project_title }}</span>
+<span class="d-block text-expiry">Duration on : {{ job.duration }}</span>
 </td>
-<td>Full-Time</td>
-<td><span class="table-budget">BUDGET</span> <span class="d-block text-danger">$600 - $1500</span></td>
-<td>12 July, 2021</td>
-<td>47</td>
+<td>{{ job.category_type }}</td>
+<td><span class="table-budget">BUDGET</span> <span class="d-block text-danger">{{ job.price }}</span></td>
+<td>{{ job.start_date }}</td>
+<td>0</td>
 <td class="text-end"><a href="{% url 'view_project_detail' %}" class="text-success">View</a></td>
 </tr>
 </tbody>
+{% endfor %}
 </table>
 </div>
 </div>

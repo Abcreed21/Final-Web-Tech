@@ -33,50 +33,49 @@
 
         <div class="content content-page">
             <div class="container-fluid">
-                <div class="row">
-                    {% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
-
-                    <div class="settings-menu">
-                        <ul>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_dashboard' %}" class="nav-link">
-                        <i class="material-icons">verified_user</i> Dashboard
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_project_proposals' %}" class="nav-link">
-                        <i class="material-icons">business_center</i> Projects
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_review' %}" class="nav-link">
-                        <i class="material-icons">record_voice_over</i> Reviews
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'chats' %}" class="nav-link">
-                        <i class="material-icons">chat</i> Messages
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_withdraw_money' %}" class="nav-link active">
-                        <i class="material-icons">wifi_tethering</i> Payments
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'freelancer_profile_settings' %}" class="nav-link">
-                        <i class="material-icons">settings</i> Settings
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="{% url 'index' %}" class="nav-link">
-                        <i class="material-icons">power_settings_new</i> Logout
-                        </a>
-                        </li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>
+            <div class="row">
+            {% include 'dashboard_free_navbar_link.html' with freelancer=request.user %}
+            <div class="settings-menu">
+            <ul>
+            <li class="nav-item">
+            <a href="{% url 'freelancer_dashboard' %}" class="nav-link">
+            <i class="material-icons">verified_user</i> Dashboard
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'freelancer_project_proposals' %}" class="nav-link">
+            <i class="material-icons">business_center</i> Projects
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'freelancer_review' %}" class="nav-link">
+            <i class="material-icons">record_voice_over</i> Reviews
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'chats' %}" class="nav-link">
+            <i class="material-icons">chat</i> Messages
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'freelancer_withdraw_money' %}" class="nav-link active">
+            <i class="material-icons">wifi_tethering</i> Payments
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'freelancer_profile_settings' %}" class="nav-link">
+            <i class="material-icons">settings</i> Settings
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+            <i class="material-icons">power_settings_new</i> Logout
+            </a>
+            </li>
+            </ul>
+            </div>
+            </div>
+            </div>
 
                     <div class="col-xl-9 col-md-8">
                         <nav class="user-tabs mb-4">
@@ -108,10 +107,6 @@
                                             <label class="custom_radio me-4">
                                                 <input type="radio" name="payment_method" value="Chapa" checked>
                                                 <span class="checkmark"></span> Chapa
-                                            </label>&nbsp;&nbsp;&nbsp;
-                                            <label class="custom_radio">
-                                                <input type="radio" name="payment_method" value="Yene Pay">
-                                                <span class="checkmark"></span> Yene Pay
                                             </label>
                                             <div class="col-md-8 btn-pad">
                                                 <input type="hidden" name="currency" value="ETB" />
@@ -186,7 +181,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-6 mb-2">
                             <div class="card">
                                 <div class="wallet-detail card-body">
@@ -198,7 +192,7 @@
                                                 aria-hidden="true"></i></span>
                                         <div class="wallet-amt">
                                             <p>Available Balance</p>
-                                            <h3 class="mb-0">250.00 Birr </h3>
+                                            <h3 class="mb-0">0 Birr </h3>
                                         </div>
                                     </div>
                                 </div>

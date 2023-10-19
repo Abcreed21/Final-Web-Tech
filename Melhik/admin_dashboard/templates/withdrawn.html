@@ -5,144 +5,7 @@
 
 {% include 'admin_head.html' %}
 <body>
-
-<div class="main-wrapper">
-
-<div class="header">
-
-<div class="header-left">
-<a href="index.html" class="logo">
-<img src="{% static 'asset/img/logo.png' %}" alt="Logo">
-</a>
-<a href="index.html" class="logo logo-small">
-<img src="{% static 'asset/img/logo-small.png' %}" alt="Logo" width="30" height="30">
-</a>
-
-<a href="javascript:void(0);" id="toggle_btn">
-<i class="feather-chevrons-left"></i>
-</a>
-
-
-<a class="mobile_btn" id="mobile_btn">
-<i class="feather-chevrons-left"></i>
-</a>
-
-</div>
-
-
-<div class="top-nav-search">
-<form>
-<input type="text" class="form-control" placeholder="Start typing your Search...">
-<button class="btn" type="submit"><i class="feather-search"></i></button>
-</form>
-</div>
-
-
-<ul class="nav user-menu">
-
-<li class="nav-item dropdown">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-<i class="feather-bell"></i> <span class="badge badge-pill">5</span>
-</a>
-<div class="dropdown-menu notifications">
-<div class="topnav-dropdown-header">
-<span class="notification-title">Notifications</span>
-<a href="javascript:void(0)" class="clear-noti"> Clear All</a>
-</div>
-<div class="noti-content">
-<ul class="notification-list">
-<li class="notification-message">
-<a href="#">
-<div class="media d-flex">
-<span class="avatar avatar-sm flex-shrink-0">
-<img class="avatar-img rounded-circle" alt src="{% static 'asset/img/profiles/avatar-02.jpg' %}">
-</span>
-<div class="media-body flex-grow-1">
-<p class="noti-details"><span class="noti-title">Brian Johnson</span> paid the invoice <span class="noti-title">#DF65485</span></p>
-<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-</div>
-</div>
-</a>
-</li>
-<li class="notification-message">
-<a href="#">
-<div class="media d-flex">
-<span class="avatar avatar-sm flex-shrink-0">
-<img class="avatar-img rounded-circle" alt src="{% static 'asset/img/profiles/avatar-03.jpg' %}">
-</span>
-<div class="media-body flex-grow-1">
-<p class="noti-details"><span class="noti-title">Marie Canales</span> has accepted your estimate <span class="noti-title">#GTR458789</span></p>
-<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-</div>
-</div>
-</a>
-</li>
-<li class="notification-message">
-<a href="#">
-<div class="media d-flex">
-<div class="avatar avatar-sm flex-shrink-0">
-<span class="avatar-title rounded-circle bg-primary-light"><i class="far fa-user"></i></span>
-</div>
-<div class="media-body flex-grow-1">
-<p class="noti-details"><span class="noti-title">New user registered</span></p>
-<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-</div>
-</div>
-</a>
-</li>
-<li class="notification-message">
-<a href="#">
-<div class="media d-flex">
-<span class="avatar avatar-sm flex-shrink-0">
-<img class="avatar-img rounded-circle" alt src="{% static 'asset/img/profiles/avatar-04.jpg' %}">
-</span>
-<div class="media-body flex-grow-1">
-<p class="noti-details"><span class="noti-title">Barbara Moore</span> declined the invoice <span class="noti-title">#RDW026896</span></p>
-<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-</div>
-</div>
-</a>
-</li>
-<li class="notification-message">
-<a href="#">
-<div class="media d-flex">
-<div class="avatar avatar-sm flex-shrink-0">
-<span class="avatar-title rounded-circle bg-info-light"><i class="far fa-comment"></i></span>
-</div>
-<div class="media-body flex-grow-1">
-<p class="noti-details"><span class="noti-title">You have received a new message</span></p>
-<p class="noti-time"><span class="notification-time">2 days ago</span></p>
-</div>
-</div>
-</a>
-</li>
-</ul>
-</div>
-<div class="topnav-dropdown-footer">
-<a href="#">View all Notifications</a>
-</div>
-</div>
-</li>
-
-
-<li class="nav-item dropdown has-arrow main-drop">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-<span class="user-img">
-<img src="{% static 'asset/img/profiles/avatar-07.jpg' %}" alt>
-<span class="status online"></span>
-</span>
-</a>
-<div class="dropdown-menu">
-<a class="dropdown-item" href="profile.html"><i data-feather="user" class="me-1"></i> Profile</a>
-<a class="dropdown-item" href="settings.html"><i data-feather="settings" class="me-1"></i> Settings</a>
-<a class="dropdown-item" href="login.html"><i data-feather="log-out" class="me-1"></i> Logout</a>
-</div>
-</li>
-
-</ul>
-
-</div>
-
+    {% include 'admin_header.html' with messages=messages %}
 
 <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
@@ -193,7 +56,7 @@
 <div class="row align-items-center">
 <div class="col">
 <h3 class="page-title">History</h3>
-<p>Total <span>57</span> Transaction</p>
+<p>Total <span>0</span> Transaction</p>
 </div>
 </div>
 </div>
@@ -246,42 +109,6 @@
 <th>Status</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>&nbsp; 1
-</td>
-<td>#24586414</td>
-<td>
-<div class="table-avatar user-profile">
-<a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-14.jpg' %}" alt="User Image"></a>
-<div>
-<h5><a href="#">Janet Paden</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7017151f02171507151c1c03301508111d001c155e131f1d">[email&#160;protected]</a></p>
-</div>
-</div>
-</td>
-<td>
-<div class="table-avatar content-user">
-<div>
-<h5>Withdraw Funds</h5>
-<p> Dec 08, 2021</p>
-</div>
-</div>
-</td>
-<td class="content-user"><p>PayPal</p></td>
-<td>
-<div class="table-avatar content-user">
-<div>
-<h5 class="text-danger">- 4,165,000 USD </h5>
-<p> Balance : 1,335.006 USD</p>
-</div>
-</div>
-</td>
-<td>
-<a href="#" class="user-active-btn">Completed</a>
-</td>
-</tr>
-</tbody>
 </table>
 </div>
 </div>

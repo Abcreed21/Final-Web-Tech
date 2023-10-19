@@ -81,33 +81,22 @@
 <div class="col-xl-9 col-md-8">
 <div class="dashboard-sec">
 <div class="row">
-<div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-6">
 <div class="dash-widget">
 <div class="dash-info">
 <div class="dash-widget-info">Completed Jobs</div>
-<div class="dash-widget-count">30</div>
+<div class="dash-widget-count">0</div>
 </div>
 <div class="dash-widget-more">
 <a href="{% url 'freelancer_completed_projects' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
 </div>
 </div>
 </div>
-<div class="col-md-6 col-lg-4">
-<div class="dash-widget">
-<div class="dash-info">
-<div class="dash-widget-info">Task Completed</div>
-<div class="dash-widget-count">5</div>
-</div>
-<div class="dash-widget-more">
-<a href="{% url 'freelancer_completed_projects' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-6">
 <div class="dash-widget">
 <div class="dash-info">
 <div class="dash-widget-info">Reviews</div>
-<div class="dash-widget-count">25</div>
+<div class="dash-widget-count">0</div>
 </div>
 <div class="dash-widget-more">
 <a href="{% url 'freelancer_review' %}" class="d-flex">View Details <i class="fas fa-arrow-right ms-auto"></i></a>
@@ -121,8 +110,8 @@
 <div class="col-xl-12 d-flex">
 <div class="card flex-fill">
 <div class="pro-head">
-<h2>Ongoing Projects</h2>
-<a href="{% url 'freelancer_ongoing_projects' %}" class="btn fund-btn">View All</a>
+<h2>New Projects</h2>
+<a href="{% url 'project' %}" class="btn fund-btn">View All</a>
 </div>
 {% for job in jobs %}
 <div class="pro-body p-0">
@@ -139,7 +128,7 @@
 </li>
 <li>
 <div class="slot">
-<p>Project Price</p>
+<p>Job Price</p>
 <h5>{{ job.price }}</h5>
 </div>
 </li>
@@ -163,7 +152,7 @@
 </div>
 </div>
 </div>
-</div>
+
 {% endif %}
 
 {% include 'footer.html' %}

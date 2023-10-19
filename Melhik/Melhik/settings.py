@@ -129,3 +129,8 @@ EMAIL_HOST_USER = 'abcreed21@gmail.com'
 EMAIL_HOST_PASSWORD = 'anib gqcj vzbf dtlv'  
 EMAIL_USE_TLS = True 
 DEFAULT_FROM_EMAIL = 'abcreed21@gmail.com'
+
+
+TELEGRAM_BOT_TOKEN = '6575514030:AAFO2CwLOdy7dkZKyMosGNmZuVMPXHL0ZlQ'
+
+

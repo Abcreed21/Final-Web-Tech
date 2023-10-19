@@ -13,21 +13,32 @@ from .decorators import *
 import telegram
 from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 import requests
 import random
 import string
-from django.core.mail import send_mail
+
 
 def index(request):
-    reviews = Review.objects.filter()
+    reviews = Review.objects.all()
     jobs = Job.objects.all()
     freelancers = Freelancer.objects.all()
     employers = Employer.objects.all()
+    seo_data = SEOSettings.objects.first()  
     context = {
       'jobs': jobs,
       'reviews': reviews,
       'freelancers': freelancers,
-      'employers': employers 
+      'employers': employers,
+      'seo_data': seo_data
     }
     return render(request, 'index.html', context)
 
@@ -104,35 +115,39 @@ def job_search(request):
 
     return render(request, 'job_search.html', context)
 
-def onboard(request):
-  if request.method == 'POST':
-    form = RegistrationForm(request.POST, request.FILES)
-    if form.is_valid():
-      freelancer = form.save(commit=False)
-      freelancer.is_freelancer = True
-      freelancer.save()
-      messages.success(request, 'New freelancer registered successfully!')
-      return redirect('login')
-    
-  else:
-    form = RegistrationForm()
 
-  return render(request, 'onboard_screen.html', {'form': form, 'messages': messages.get_messages(request)})
+def onboard(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            freelancer = form.save(commit=False)
+            freelancer.is_freelancer = True
+            freelancer.save()
+            messages.success(request, 'New freelancer registered successfully!')
+        else:
+            return redirect('login')
+    
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'onboard_screen.html', {'form': form, 'messages': messages.get_messages(request)})
 
 
 def onboard_screen_employer(request):
-  if request.method == 'POST':
-    form = RegistrationForm(request.POST, request.FILES) 
-    if form.is_valid():
-      employer = form.save(commit=False)
-      employer.is_employer = True
-      employer.save()
-      messages.success(request, 'New employer registered successfully!')
-      return redirect('login')
-  else: 
-    form = RegistrationForm()
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            employer = form.save(commit=False)
+            employer.is_employer = True
+            employer.save()
+            messages.success(request, 'New employer registered successfully!')
+                
+        return redirect('login')
+    else:
+        form = RegistrationForm()
 
-  return render(request, 'onboard_screen_employer.html', {'emp': form, 'messages': messages.get_messages(request)})
+    return render(request, 'onboard_screen_employer.html', {'emp': form, 'messages': messages.get_messages(request)})
+
 
 
 def login_view(request):
@@ -187,11 +202,9 @@ def company_gallery(request, employer_id):
 
 def company_profile(request, employer_id):
     employer = get_object_or_404(Employer, id=employer_id)
-
     context = {
         'employer': employer
     }
-
     return render(request, 'company_profile.html', context)
 
 def company_project(request, employer_id):
@@ -225,7 +238,11 @@ def delete_review(request, review_id):
 @login_required
 @employer_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    jobs = Job.objects.all()
+    context = {
+       'jobs': jobs
+    }
+    return render(request, 'dashboard.html', context)
 
 def delete_account(request):
     return render(request, 'delete_account.html')
@@ -270,7 +287,6 @@ def freelancer_bookmarks(request):
 def freelancer_cancelled_projects(request):
     return render(request, 'freelancer_cancelled_projects.html')
 
-@login_required
 def freelancer_change_password(request):
   if request.method == 'POST':
     form = PasswordChangingForm(request.user, request.POST)
@@ -284,6 +300,7 @@ def freelancer_change_password(request):
   else: 
     form = PasswordChangeForm(request.user)
   return render(request, 'freelancer_change_password.html', {'form': form})
+
 
 def user_chat(request):
   chat_room = ChatRoom.objects.filter(user = request.user)
@@ -447,10 +464,6 @@ def freelancer_profile(request, freelancer_id):
 
     return render(request, 'freelancer_profile.html', context)
 
-
-def freelancer_project_proposals(request):
-    return render(request, 'freelancer_project_proposals.html')
-
 def freelancer_review(request):
     reviews = Review.objects.all() 
     return render(request, 'freelancer_review.html',{'reviews': reviews})
@@ -542,7 +555,7 @@ def freelancer_withdraw_money(request):
                 "MerchantId": "SB2564",
                 "MerchantOrderId": tx_ref,  # Use the transaction reference as the order ID
                 "ItemId": "1",  # Example item ID
-                "ItemName": "Freelancer name",  # Example item name
+                "ItemName": "Visitor name",  # Example item name
                 "UnitPrice": amount,  # Example unit price
                 "Quantity": "1",  # Example quantity
             }
@@ -556,37 +569,59 @@ def freelancer_withdraw_money(request):
     else:
         return render(request, 'freelancer_withdraw_money.html')
 
+
+
 def logoutUser(request):
     logout(request)
     return redirect ('index')
 
-
 def forgot_password(request):
-  form = ForgotPasswordForm()
-  if request.method == 'POST':
-    form = ForgotPasswordForm(request.POST)
-    if form.is_valid():
-      username = form.cleaned_data['username']
-      try:
-          user = CustomUser.objects.get(username=username) 
-      except CustomUser.DoesNotExist:
-          messages.error(request, 'User not found')
-      else:
-          password = user.password
-          email = user.email
-          # sent email
-          send_mail(
-          'Recover Your Password',
-          f'Your password is: {password}',
-          'from@example.com',
-          [username],
-          fail_silently=False
-          )
+    if request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            try:
+                user = CustomUser.objects.get(username=username)
+            except CustomUser.DoesNotExist:
+                messages.error(request, 'User not found')
+            else:
+                # Generate a password reset token
+                token_generator = default_token_generator
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = token_generator.make_token(user)
 
-          messages.success(request, 'Password sent to your email')
-          return redirect('login')
-  return render(request, 'forgot_password.html', {'form': form})
+                # Build the password reset URL
+                current_site = get_current_site(request)
+                reset_url = f"{current_site.domain}/reset/{uid}/{token}/"
 
+                # Send the password reset email
+                subject = 'Reset Your Password'
+                message = render_to_string('reset_password_email.html', {
+                    'user': user,
+                    'reset_url': reset_url,
+                })
+                send_mail(subject, message, 'from@example.com', [user.email], fail_silently=False)
+
+                messages.success(request, 'Password reset link sent to your email')
+                return redirect('login')
+    else:
+        form = ForgotPasswordForm()
+    return render(request, 'forgot_password.html', {'form': form})
+
+
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.urls import reverse_lazy
+
+class FreelancerPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'login.html'
+    form_class = SetPasswordForm
+
+    def form_valid(self, form):
+        # Call the parent form_valid method to handle password reset logic
+        response = super().form_valid(form)
+
+        # Redirect to the desired URL after resetting the password
+        return redirect(reverse_lazy('login', args=[self.kwargs['freelancer_id']]))
 
 def manage_projects(request):
     return render(request, 'manage_projects.html')
@@ -606,7 +641,7 @@ def project_form(request):
     form = JobForm()
     if request.method == 'POST':
         form = JobForm(request.POST)
-        print("*********post method entered**********")
+        print("*********Telegram Details Mangement**********")
         print(form.errors)
         print(form.is_valid())
 
@@ -619,7 +654,7 @@ def project_form(request):
             text = (
                 f"New Job Alert: {job.project_title}\n"
                 f"Category: {job.category_type}\n" 
-                f"Price: {job.price}\n Birr"
+                f"Price: {job.price}Birr\n"
                 f"Duration: {job.duration}\n"
                 f"Start Date: {job.start_date}\n" 
                 f"Reference Links: {job.reference_links}\n"
@@ -641,7 +676,6 @@ def project_form(request):
                 print('Error sending message:')
                 print(response.text)
             messages.success(request, 'New Job Posted successfully!')
-            return redirect('project')
         
     context = {
         'form': form,
@@ -652,6 +686,7 @@ def project_form(request):
 def privacy_policy(request):
     return render(request, 'privacy_policy.html')
 
+@employer_required
 def profile_settings(request):
     if request.method == 'POST':
         form = EmployerForm(request.POST or None, request.FILES or None)
@@ -659,14 +694,14 @@ def profile_settings(request):
             employer = form.save(commit=False)
             employer.user = request.user
             employer.save()
-            return redirect('company_profile', employer_id=employer.id)
+            messages.success(request, 'Profile Posted successfully!')
+            # return redirect('company_profile', employer_id=employer.id)
     else:
         form = EmployerForm(instance=request.user)
     context = {
         'form': form
     }
     return render(request, 'profile_settings.html', context)
-
 
 def user_account_details(request):
   freelancer_profile = Freelancer.objects.get(user=request.user)
@@ -679,16 +714,77 @@ def user_account_details(request):
 def project_payment(request):
     return render(request, 'project_payment.html')
 
-def project_proposals(request):
-    return render(request, 'project_proposals.html')
-
-def project(request):
-  jobs = Job.objects.all()
-  return render(request, 'project.html', {'jobs': jobs})
-
+@login_required
 def project_details(request, project_id):
     project = Job.objects.get(id=project_id)
-    return render(request, 'project_details.html', {'project': project})
+    proposals = ProjectProposal.objects.filter(job=project)
+    
+    if request.method == 'POST':
+        form = ProposalForm(request.POST)
+        if form.is_valid():
+            price = form.cleaned_data['price']
+            hours = form.cleaned_data['hours']
+            cover_letter = form.cleaned_data['cover_letter']
+            
+            # Save the proposal to the database
+            proposal = ProjectProposal(
+                job=project,  # Assign the associated Job instance
+                price=price,
+                hours=hours,
+                cover_letter=cover_letter,
+                freelancer=request.user  # Assign the logged-in user directly
+            )
+            proposal.save()
+            
+            # Refresh the proposals queryset with the updated data
+            proposals = ProjectProposal.objects.filter(job=project)
+            
+            # Add success message
+            messages.success(request, 'Proposal has been sent. The client will contact you soon.')
+            
+            # Redirect to the same page to prevent form resubmission
+            return redirect('project_details', project_id=project_id)
+    else:
+        form = ProposalForm()
+    
+    return render(request, 'project_details.html', {'project': project, 'proposals': proposals, 'form': form})
+
+def create_check_room(request, pk):
+    user_one = request.user
+    user_two = CustomUser.objects.get(pk=pk)
+    common_room = ChatRoom.objects.filter(user = user_one).filter(user=user_two)
+    if common_room.exists():
+        return redirect(messages_view, user_id=user_one.id, room_id = common_room.first().id)
+    else:
+        obj = ChatRoom()
+        obj.save()
+
+        obj.user.set(user_one,user_two)
+        return redirect(messages_view, user_id=user_one.id, room_id = common_room.first().id)
+    
+
+@employer_required
+def project_proposals(request, job_id):
+    job = get_object_or_404(Job, id=job_id)
+    proposals = ProjectProposal.objects.filter(job=job)
+    freelancer = Freelancer.objects.filter(user=request.user)
+    proposal_count = proposals.count()
+
+    return render(request, 'project_proposals.html', {'job': job, 'proposals': proposals, 'proposal_count': proposal_count, 'freelancer': freelancer})
+
+def freelancer_project_proposals(request):
+    return render(request, 'freelancer_project_proposals.html')
+
+def project(request):
+    jobs = Job.objects.all()
+    num_projects = Job.objects.count()
+    project_title = request.GET.get('project_title')
+    if project_title:
+      jobs = jobs.filter(project_title__icontains=project_title)
+    print("Filter by: ", request.GET.get('project_title'))
+    total_projects = Job.objects.all().count()
+    return render(request, 'project.html', {'jobs': jobs, 'num_projects': num_projects, 'total_projects': total_projects})
+
 
 def tasks(request):
     return render(request, 'tasks.html')
@@ -714,4 +810,8 @@ def voice_call(request):
 
 def invoices(request):
     return render(request, 'invoices.html')
+
+
+
+
 

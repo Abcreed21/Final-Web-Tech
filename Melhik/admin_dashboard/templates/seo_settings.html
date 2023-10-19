@@ -60,9 +60,6 @@
 <li class="nav-item active">
 <a class="nav-link" href="{% url 'seo_settings' %}">General Settings</a>
 </li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'social_links' %}">Social Links</a>
-</li>
 </ul>
 </div>
 
@@ -73,28 +70,32 @@
 <div class="card-header">
 <h5 class="card-title">SEO Settings</h5>
 </div>
-<form>
-<div class="settings-form">
-<div class="form-group form-placeholder">
-<label>Meta Title <span class="star-red">*</span></label>
-<input type="text" class="form-control">
-</div>
-<div class="form-group">
-<label>Meta Keywords <span class="star-red">*</span></label>
-<input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="Meta Keywords" name="services" value="Lorem,Ipsum" id="services">
-</div>
-<div class="form-group">
-<label>Meta Description <span class="star-red">*</span></label>
-<textarea class="form-control"></textarea>
-</div>
-<div class="form-group mb-0">
-<div class="settings-btns">
-<button type="submit" class="btn btn-orange">Submit</button>
-<button type="submit" class="btn btn-grey">Cancel</button>
-</div>
-</div>
-</div>
-</form>
+
+<form method="POST" action="{% url 'seo_settings' %}">
+    {% csrf_token %}
+    <div class="settings-form">
+      <div class="form-group form-placeholder">
+        <label>Meta Title <span class="star-red">*</span></label>
+        <input type="text" class="form-control" name="meta_title" value="{{ form.meta_title.value }}">
+      </div>
+      <div class="form-group">
+        <label>Meta Keywords <span class="star-red">*</span></label>
+        <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="Meta Keywords" name="meta_keywords" value="{{ form.meta_keywords.value }}" id="services">
+      </div>
+      <div class="form-group">
+        <label>Meta Description <span class="star-red">*</span></label>
+        <textarea class="form-control" name="meta_description">{{ form.meta_description.value }}</textarea>
+      </div>
+      <div class="form-group mb-0">
+        <div class="settings-btns">
+          <button type="submit" class="btn btn-orange">Submit</button>
+          <button type="submit" class="btn btn-grey">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+
 </div>
 </div>
 </div>

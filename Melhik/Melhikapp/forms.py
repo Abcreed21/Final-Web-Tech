@@ -329,3 +329,31 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['message', 'rating']
+
+
+class ProposalForm(forms.Form):
+    price = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Price'}))
+    hours = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Estimated Hours'}))
+    cover_letter = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '5', 'placeholder': 'Cover Letter'}))
+    agree_terms = forms.BooleanField(required=True)
+
+
+class TelegramRegistrationForm(RegistrationForm):
+    telegram_chat_id = forms.CharField(max_length=255, required=True)
+
+    class Meta(RegistrationForm.Meta):
+        model = CustomUser
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.telegram_chat_id = self.cleaned_data['telegram_chat_id']
+        if commit:
+            user.save()
+        return user
+    
+
+
+class SEOSettingsForm(forms.ModelForm):
+    class Meta:
+        model = SEOSettings
+        fields = ('meta_title', 'meta_keywords', 'meta_description')

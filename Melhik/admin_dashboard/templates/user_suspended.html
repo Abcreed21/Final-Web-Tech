@@ -58,7 +58,6 @@
     <div class="subscribe-employe users-list">
     <ul>
     <li><a href="{% url 'users' %}">All Freelancer </a></li>
-    <li><a href="{% url 'user_active' %}">Active Freelancer</a></li>
     <li class="active"><a href="{% url 'user_suspended' %}">Suspended</a></li>
     </ul>
     </div>
@@ -67,7 +66,7 @@
 <div class="row align-items-center">
 <div class="col">
 <h3 class="page-title">Suspended Freelancer</h3>
-<p>Total <span>25</span> Freelancer</p>
+<p>Total <span>0</span> Freelancer</p>
 </div>
 </div>
 </div>
@@ -119,56 +118,7 @@
 <th></th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>
-<div class="table-avatar user-profile">
-<a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-16.jpg' %}" alt="User Image"></a>
-<div>
-<h5><a href="profile.html">Andrew Glover</a></h5>
-<p><a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55143b3127302232393a23302715302d34382539307b363a38">[verified]</a></p>
-</div>
-</div>
-</td>
-<td>PHP Developer</td>
-<td>15 Dec 2022</td>
-<td>18 April 2022</td>
-<td>
-<a href="#" class="user-suspended">Suspended</a>
-</td>
-<td class="text-end three-dots">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-<div class="dropdown-menu user-menu-list">
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
-<a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<div class="table-avatar user-profile">
-<a href="profile.html"><img class="avatar-img rounded-circle " src="{% static 'asset/img/profiles/avatar-14.jpg' %}" alt="User Image"></a>
-<div>
-<h5><a href="profile.html">Janet Paden</a></h5>
-<p> <a href="https://kofejob.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e88f8d879a8f8d9f8d84849ba88d90898598848dc68b8785">[verified]</a></p>
-</div>
-</div>
-</td>
-<td>Frontend Developer</td>
-<td>21 Jun 2022</td>
-<td>01 July 2015</td>
-<td>
-<a href="#" class="user-suspended">Suspended</a>
-</td>
-<td class="text-end three-dots">
-<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-<div class="dropdown-menu user-menu-list">
-<a class="dropdown-item" href="#"><img class="me-2 " src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Suspend user</a>
-<a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
-</div>
-</td>
-</tr>
-</tbody>
+
 </table>
 </div>
 </div>

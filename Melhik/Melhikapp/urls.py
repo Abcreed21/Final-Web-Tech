@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+from .views import FreelancerPasswordResetConfirmView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -11,6 +13,7 @@ urlpatterns = [
     path('cancelled_projects/', views.cancelled_projects, name='cancelled_projects'),
     path('change_password/', views.change_password, name='change_password'),
     path('chats/', views.user_chat, name='chats'),
+    path('check-room/<str:pk>', views.create_check_room, name="check-room"),
     path('messages_view/<int:user_id>/<int:room_id>', views.messages_view, name='messages_view'),
     path('company_details/', views.company_details, name='company_details'),
     path('company_gallery/<int:employer_id>/', views.company_gallery, name='company_gallery'),
@@ -31,6 +34,7 @@ urlpatterns = [
     path('invited_favourites/', views.invited_favourites, name='invited_favourites'),
     path('files/', views.files, name='files'),
     path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('reset/<uidb64>/<token>/', FreelancerPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('freelancer_bookmarks/', views.freelancer_bookmarks, name='freelancer_bookmarks'),
     path('freelancer_cancelled_projects/', views.freelancer_cancelled_projects, name='freelancer_cancelled_projects'),
     path('freelancer_change_password/', views.freelancer_change_password, name='freelancer_change_password'),
@@ -40,6 +44,7 @@ urlpatterns = [
     path('freelancer_delete_account/', views.freelancer_delete_account, name='freelancer_delete_account'),
     path('freelancer_favourites/', views.freelancer_favourites, name='freelancer_favourites'),
     path('freelancer_files/', views.freelancer_files, name='freelancer_files'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('freelancer_invitation/', views.freelancer_invitation, name='freelancer_invitations'),
     path('freelancer_invoices/', views.freelancer_invoices, name='freelancer_invoices'),
     path('freelancer_membership/', views.freelancer_membership, name='freelancer_membership'),
@@ -49,7 +54,6 @@ urlpatterns = [
     path('freelancer_portfoilo/', views.freelancer_portfoilo, name='freelancer_portfoilo'),
     path('freelancer_profile_settings/', views.freelancer_profile_settings, name='freelancer_profile_settings'),
     path('freelancer_profile/<int:freelancer_id>/', views.freelancer_profile, name='freelancer_profile'),
-    path('freelancer_project_proposals/', views.freelancer_project_proposals, name='freelancer_project_proposals'),
     path('freelancer_review/', views.freelancer_review, name='freelancer_review'),
     path('freelancer_task/', views.freelancer_task, name='freelancer_task'),
     path('freelancer_transaction_history/', views.freelancer_transaction_history, name='freelancer_transaction_history'),
@@ -69,7 +73,8 @@ urlpatterns = [
     path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
     path('profile_settings/', views.profile_settings, name='profile_settings'),
     path('project_payment/', views.project_payment, name='project_payment'),
-    path('project_proposals/', views.project_proposals, name='project_proposals'),
+    path('project_proposals/<int:job_id>/', views.project_proposals, name='project_proposals'),
+    path('freelancer_project_proposals', views.freelancer_project_proposals, name='freelancer_project_proposals'),
     path('project/', views.project, name='project'),
     path('project_details/<int:project_id>/', views.project_details, name='project_details'),
     path('review/', views.review, name='review'),
@@ -83,7 +88,6 @@ urlpatterns = [
     path('view_invoice/', views.view_invoice, name='view_invoice'),
     path('view_project_detail/', views.view_project_detail, name='view_project_detail'),
     path('voice_call/', views.voice_call, name='voice_call'),
-
 ]
 
 

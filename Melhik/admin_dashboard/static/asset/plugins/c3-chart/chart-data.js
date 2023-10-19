@@ -445,43 +445,6 @@
 		},
 	});
 
-	/*chart-bar*/
-	var chart = c3.generate({
-		bindto: '#chart-bar', // id of chart wrapper
-		data: {
-			columns: [
-				// each columns data
-				['data1', 11, 8, 15, 18, 19, 17, 10, 8, 15, 5, 13, 5]
-			],
-			type: 'bar', // default type of chart
-			colors: {
-				data1: '#F38345'
-			},
-			names: {
-				// name of each serie
-				'data1': 'Maximum',
-				'data2': 'Minimum'
-			}
-		},
-		axis: {
-			x: {
-				type: 'category',
-				// name of each category
-				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul' , 'Aug', 'Sep' , 'Oct', 'Nov', 'Dec']
-			},
-		},
-		bar: {
-			width: 16
-		},
-		legend: {
-			  show: false, //hide legend
-		},
-		padding: {
-			bottom: 0,
-			top: 0
-		},
-	});
-
  /*chart-bar*/
 	var chart = c3.generate({
 		bindto: '#chart-monthly', // id of chart wrapper

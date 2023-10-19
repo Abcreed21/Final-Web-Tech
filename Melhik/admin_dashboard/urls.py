@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
+from .views import fetch_chart_data
 
 urlpatterns = [
     path('admin/', views.admin_index, name='admin'),
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('data/', fetch_chart_data, name='fetch_chart_data'),
     path('admin_logout/', views.admin_logout, name='admin_logout'),
     path('activities/', views.activities, name='activities'),
     path('categories/', views.categories, name='categories'),
@@ -52,9 +54,11 @@ urlpatterns = [
     path('roles_permission/', views.roles_permission, name='roles_permission'),
     path('skills/', views.skills, name='skills'),
     path('verify_identity/', views.verify_identity, name='verify_identity'),
-    path('settings/', views.settings, name='settings'),
+    path('settings/', views.admin_settings, name='settings'),
     path('social_links/', views.social_links, name='social_links'),
     path('others_settings/', views.others_settings, name='others_settings'),
     path('seo_settings/', views.seo_settings, name='seo_settings'),
     path('social_settings/', views.social_settings, name='social_settings'),
+    path('get_jobs_count/', views.get_jobs_count, name='get_jobs_count'),
+    path('get_users_count/', views.get_users_count, name='get_users_count'),
 ]

@@ -24,13 +24,6 @@
     </div>
     
     
-    <div class="top-nav-search">
-    <form>
-    <input type="text" class="form-control" placeholder="Start typing your Search...">
-    <button class="btn" type="submit"><i class="feather-search"></i></button>
-    </form>
-    </div>
-    
     
     <ul class="nav user-menu">
     
@@ -73,9 +66,8 @@
         </span>
         </a>
         <div class="dropdown-menu">
-        <a class="dropdown-item" href="{% url 'profile' %}"><i data-feather="user" class="me-1"></i> Profile</a>
-        <a class="dropdown-item" href="{% url 'settings' %}"><i data-feather="settings" class="me-1"></i> Settings</a>
-        <a class="dropdown-item" href="{% url 'admin' %}"><i data-feather="log-out" class="me-1"></i> Logout</a>
+        <a class="dropdown-item" href="{% url 'seo_settings' %}"><i data-feather="settings" class="me-1"></i> Settings</a>
+        <a class="dropdown-item" href="{% url 'admin_logout' %}"><i data-feather="log-out" class="me-1"></i> Logout</a>
         </div>
         </li>
         

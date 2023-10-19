@@ -208,65 +208,83 @@ Version      : 1.0
 	
 	// Chat
 
-	var chatAppTarget = $('.chat-window');
-	(function() {
-		if ($(window).width() > 991)
-			chatAppTarget.removeClass('chat-slide');
-		
-		$(document).on("click",".chat-window .chat-users-list a.media",function () {
-			if ($(window).width() <= 991) {
-				chatAppTarget.addClass('chat-slide');
-			}
-			return false;
-		});
-		$(document).on("click","#back_user_list",function () {
-			if ($(window).width() <= 991) {
-				chatAppTarget.removeClass('chat-slide');
-			}	
-			return false;
-		});
-	})();
-
-	if($('#chart').length > 0) {
+	if ($('#chart').length > 0) {
 		var options = {
-	     	series: [{
-	      name: 'freelance',
-	      color: '#ff5b37',
-	      data: [31, 40, 28, 51, 42, 109, 100]
-	    }, {
-	      name: 'Project',
-	      color: '#ffb8a8',
-	      data: [11, 32, 45, 32, 34, 52, 41]
-	    },{
-	      name: 'Employers',
-	      color: '#feb019',
-	      data: [12, 36, 42, 30, 39, 58, 40]
-	    }],
-	      chart: {
-	      height: 335,
-	      type: 'area'
-	    },
-	    dataLabels: {
-	      enabled: false
-	    },
-	    stroke: {
-	      curve: 'smooth'
-	    },
+		  series: [{
+			name: 'Freelancers',
+			color: '#ff5b37',
+			data: []
+		  }, {
+			name: 'Jobs',
+			color: '#ffb8a8',
+			data: []
+		  }, {
+			name: 'Employers',
+			color: '#feb019',
+			data: []
+		  }],
+		  chart: {
+			height: 335,
+			type: 'area'
+		  },
+		  dataLabels: {
+			enabled: false
+		  },
+		  stroke: {
+			curve: 'smooth'
+		  },
+		  xaxis: {
+			type: 'datetime',
+			categories: ['Freelancers', 'Jobs', 'Employers']
+		  },
+		  tooltip: {
+			y: {
+			  format: 'dd/MM/yy HH:mm'
+			},
+		  },
+		};
+	  
+		var chart = new ApexCharts(document.querySelector("#chart"), options);
+		chart.render();
+	  
+		function updateChartData() {
+		  // Make an AJAX request to fetch the real-time data
+		  $.ajax({
+			url: '/data/',  // Replace with the actual URL to fetch the data
+			method: 'GET',
+			success: function(response) {
+				// Extract the counts from the fetched data
+				var freelancersData = response.freelancers;
+				var jobsData = response.jobs;
+				var employersData = response.employers;
 
-	    xaxis: {
-	      type: 'datetime',
-	      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-	    },
-	    tooltip: {
-	      x: {
-	        format: 'dd/MM/yy HH:mm'
-	      },
-	    },
-	    };
-	    var chart = new ApexCharts(document.querySelector("#chart"), options);
-	    chart.render();
-	}
-
+			  // Extract the count values from the data arrays
+			  var freelancersCount = freelancersData.length > 0 ? freelancersData[freelancersData.length - 1].y : 0;
+			  var jobsCount = jobsData.length > 0 ? jobsData[jobsData.length - 1].y : 0;
+			  var employersCount = employersData.length > 0 ? employersData[employersData.length - 1].y : 0;
+	  
+			  // Update the chart series with the fetched data
+			  chart.updateSeries([
+				{ name: 'Freelancers', data: freelancersData },
+				{ name: 'Jobs', data: jobsData },
+				{ name: 'Employers', data: employersData }
+			  ]);
+	  
+			  // Update the total counts in the HTML
+			  $('#freelancersCount').text(freelancersCount);
+			  $('#jobsCount').text(jobsCount);
+			  $('#employersCount').text(employersCount);
+			},
+			error: function(error) {
+			  console.log(error);
+			}
+		  });
+		}
+	  
+		// Call the updateChartData function initially and every 5 seconds
+		updateChartData();
+		setInterval(updateChartData, 5000);
+	  }
 	// Project Chart
 	
 	// Logo Hide Btn
