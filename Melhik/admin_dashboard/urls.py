@@ -1,11 +1,10 @@
 from django.urls import path
 from . import views
-from .views import fetch_chart_data
 
 urlpatterns = [
     path('admin/', views.admin_index, name='admin'),
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
-    path('data/', fetch_chart_data, name='fetch_chart_data'),
+
     path('admin_logout/', views.admin_logout, name='admin_logout'),
     path('activities/', views.activities, name='activities'),
     path('categories/', views.categories, name='categories'),
@@ -24,11 +23,6 @@ urlpatterns = [
     path('freelance_list/', views.freelance_list, name='freelance_list'),
     path('localization_details/', views.localization_details, name='localization_details'),
     path('users/', views.users, name='users'),
-    path('profile/', views.profile, name='profile'),
-    path('user_active/', views.user_active, name='user_active'),
-    path('user_administrator/', views.user_administrator, name='user_administrator'),
-    path('user_inactive/', views.user_inactive, name='user_inactive'),
-    path('user_profile/', views.user_profile, name='user_profile'),
     path('user_suspended/', views.user_suspended, name='user_suspended'),
     path('withdrawn/', views.withdrawn, name='withdrawn'),
     path('withdrawn_pending/', views.withdrawn_pending, name='withdrawn_pending'),
@@ -61,4 +55,5 @@ urlpatterns = [
     path('social_settings/', views.social_settings, name='social_settings'),
     path('get_jobs_count/', views.get_jobs_count, name='get_jobs_count'),
     path('get_users_count/', views.get_users_count, name='get_users_count'),
+    path('get_user_growth/', views.get_user_growth, name='get_user_growth'),
 ]

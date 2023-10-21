@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.db.models import Count
 import time
+from django.db.models.functions import TruncDay
 
 
 
@@ -97,54 +98,47 @@ def get_jobs_count(request):
     return JsonResponse(data)
 
 
-def get_users_count(request):
-    users_count = (
-        CustomUser.objects
-        .values('date_joined__month')
-        .annotate(count=Count('id'))
-        .order_by('date_joined__month')
-    )
 
-    month_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+def get_users_count(request):
+    user_count = CustomUser.objects.count()
+    job_count = Job.objects.count()
 
     data = {
-        'categories': month_categories,
-        'series': [{
-            'name': 'Users',
-            'data': [0] * 12,  # Initialize all counts as 0
-        }]
+        'series': [
+            {
+                'name': 'Users',
+                'y': user_count
+            },
+            {
+                'name': 'Jobs',
+                'y': job_count
+            }
+        ]
     }
-
-    for item in users_count:
-        month = item['date_joined__month']
-        count = item['count']
-        data['series'][0]['data'][month-1] = count
 
     return JsonResponse(data)
 
 
-def fetch_chart_data(request):
-    freelancers_count = CustomUser.objects.filter(is_freelancer=True).count()
-    jobs_count = Job.objects.count()
-    employers_count = CustomUser.objects.filter(is_employer=True).count()
+@login_required
+@admin_user_required
+def get_user_growth(request):
+    user_data = CustomUser.objects.annotate(date=TruncDay('date_joined')).values('date').annotate(total=Count('id')).order_by('date')
 
-    # Convert count values to integers
-    freelancers_count = int(freelancers_count)
-    jobs_count = int(jobs_count)
-    employers_count = int(employers_count)
+    dates = [entry['date'].strftime('%Y-%m-%d') for entry in user_data]
+    totals = [entry['total'] for entry in user_data]
 
-    # Get current timestamp
-    current_timestamp = int(time.time())
-
-    # Prepare the data in the format expected by the chart
-    response_data = {
-        'freelancers': [{'x': current_timestamp, 'y': freelancers_count}],
-        'jobs': [{'x': current_timestamp, 'y': jobs_count}],
-        'employers': [{'x': current_timestamp, 'y': employers_count}],
-        'categories': ['Freelancers', 'Jobs', 'Employers']
+    data = {
+        'dates': dates,
+        'series': [{
+            'name': 'Total Users',
+            'data': totals
+        }]
     }
 
-    return JsonResponse(response_data)
+    return JsonResponse(data)
+
+
 
 
 def activities(request):
@@ -297,23 +291,31 @@ def verify_identity(request):
 def admin_settings(request):
     return render(request, 'settings.html')
 
-def user_active(request):
-    return render(request, 'user_active.html')
 
-def profile(request):
-    return render(request, 'profile.html')
+def users(request):
+    # Get the freelancers
+    freelancers = CustomUser.objects.filter(is_freelancer=True)
 
-def user_administrator(request):
-    return render(request, 'user_administrator.html')
+    # Update the status of each freelancer to active
+    for freelancer in freelancers:
+        freelancer.status = 'active'
+        freelancer.save()
 
-def user_inactive(request):
-    return render(request, 'user_inactive.html')
-
-def user_profile(request):
-    return render(request, 'user_profile.html')
+    # Render the users.html template with the freelancers
+    return render(request, 'users.html', {'freelancers': freelancers})
 
 def user_suspended(request):
+    # Get the freelancers
+    freelancers = CustomUser.objects.filter(is_freelancer=True)
+
+    # Update the status of each freelancer to suspended
+    for freelancer in freelancers:
+        freelancer.status = 'suspended'
+        freelancer.save()
+
+    # Render the user_suspended.html template
     return render(request, 'user_suspended.html')
+
 
 def social_links(request):
     return render(request, 'social_links.html')

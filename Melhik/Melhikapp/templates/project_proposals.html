@@ -156,7 +156,7 @@
             {% for proposal in proposals %}
             <!-- Display proposal count for the job -->
             <div class="prj-proposal-count text-center">
-                <span>{{ proposal.proposal_count }}</span>
+                <span>{{ proposal_count }}</span>
                 <h3>Proposals</h3>
             </div>
             <!-- End of display proposal count for a project -->
@@ -177,7 +177,7 @@
                 <div class="proposals-info">
                     <div class="proposer-info">
                         <div class="proposer-img">
-                          <img src="{{ employer.user.photo.url }}" alt="Pro_Picture">
+     
                         </div>
                         <div class="proposer-detail">
                             <h4>{{ proposal.freelancer.first_name }} {{ proposal.freelancer.last_name }}</h4>

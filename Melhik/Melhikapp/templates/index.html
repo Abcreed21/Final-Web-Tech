@@ -231,7 +231,7 @@
 </div>
 <div class="review-info">
 <h3><a href="{% url 'review' %}">{{ freelancer.user.first_name }}</a></h3>
-<h5>{{ freelancer.name }}Project Lead</h5>
+<h5>{{ freelancer.user.name }}Project Lead</h5>
 <div class="rating">
   {% for i in review.rating|stringformat:"s" %}
   {% if forloop.counter <= review.rating %}

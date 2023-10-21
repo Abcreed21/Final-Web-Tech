@@ -118,7 +118,31 @@
 <th></th>
 </tr>
 </thead>
-
+{% for freelancer in freelancers %}
+    <tr>
+      <td>
+        <div class="table-avatar user-profile">
+          <a href="profile.html"><img class="avatar-img rounded-circle" src="{{ freelancer.profile_picture.url }}" alt="User Image"></a>
+          <div>
+            <h5><a href="#">{{ freelancer.user.first_name }}{{ freelancer.user.last_name }}</a></h5>
+          </div>
+        </div>
+      </td>
+      <td>{{ freelancer.hourly_rate }}</td>
+      <td>{{ freelancer.user.date_joined|date:"Y-m-d" }}</td>
+      <td>{{ freelancer.user.last_login }}</td>
+      <td>
+        <a href="{% url 'user_suspended' %}" class="user-active-btn">Suspended</a>
+      </td>
+      <td class="text-end three-dots">
+        <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
+        <div class="dropdown-menu user-menu-list">
+          <a class="dropdown-item" href="#"><img class="me-2" src="{% static 'asset/img/icon/icon-04.svg' %}" alt> Active user</a>
+          <a class="dropdown-item mb-0" href="#"><i data-feather="trash-2" class="me-2 text-danger"></i> Delete</a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
 </table>
 </div>
 </div>

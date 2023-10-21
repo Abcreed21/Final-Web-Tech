@@ -44,8 +44,8 @@
                                             
                                             <a href="{% url 'messages_view' user_id=j.pk room_id=i.pk %}" class="media-chat d-flex">
                                                 <div class="media-img-wrap flex-shrink-0">
-                                                    <div class="avatar avatar-away">
-                                                        <img src="{% static 'assets/img/img-02.jpg' %}" alt="User Image"
+                                                    <div class="avatar avatar">
+                                                        <img src="{{ j.photo.url }}" alt="User Image"
                                                             class="avatar-img rounded-circle">
                                                     </div>
                                                 </div>
@@ -80,14 +80,13 @@
                                     </a>
                                     <div class="media d-flex">
                                         <div class="media-img-wrap flex-shrink-0">
-                                            <div class="avatar avatar-online">
+                                            <div class="avatar">
                                                 <img src="{% static 'assets/img/img-05.jpg' %}" alt="User Image"
                                                     class="avatar-img rounded-circle">
                                             </div>
                                         </div>
                                         <div class="media-body flex-grow-1">
                                             <div class="user-name">{{user.first_name}} {{user.last_name}}</div>
-                                            <div class="user-status">online</div>
                                         </div>
                                     </div>
 

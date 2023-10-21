@@ -115,7 +115,7 @@
 <thead>
 <tr>
 <th>Freelancer</th>
-<th>Pay/Hour</th>
+<th>Email</th>
 <th>Joined Date</th>
 <th>Last Login</th>
 <th>Status</th>
@@ -127,17 +127,16 @@
     <tr>
       <td>
         <div class="table-avatar user-profile">
-          <a href="profile.html"><img class="avatar-img rounded-circle" src="{{ freelancer.profile_picture.url }}" alt="User Image"></a>
-          <div>
-            <h5><a href="#">{{ freelancer.user.first_name }}{{ freelancer.user.last_name }}</a></h5>
+
+            <h5><a href="#">{{ freelancer.first_name }} {{ freelancer.last_name }}</a></h5>
           </div>
         </div>
       </td>
-      <td>{{ freelancer.hourly_rate }}</td>
-      <td>{{ freelancer.user.date_joined|date:"Y-m-d" }}</td>
-      <td>{{ freelancer.user.last_login }}</td>
+      <td>{{ freelancer.email }}</td>
+      <td>{{ freelancer.date_joined|date:"Y-m-d" }}</td>
+      <td>{{ freelancer.last_login }}</td>
       <td>
-        <a href="{% url 'user_active' %}" class="user-active-btn">Active</a>
+        <a href="{% url 'users' %}" class="user-active-btn">Active</a>
       </td>
       <td class="text-end three-dots">
         <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>

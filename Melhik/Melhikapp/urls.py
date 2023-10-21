@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('index_2/', views.index_2, name='index_2'),
     path('404_page/', views.error_404, name='error_404'),
+    path('telegram_conversation/', views.telegram_conversation, name='telegram_conversation'),
     path('about/', views.about, name='about'),
     path('User_logout/', views.User_logout, name='User_logout'),
     path('blog_grid/', views.blog_grid, name='blog_grid'),
